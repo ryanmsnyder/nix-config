@@ -1,22 +1,28 @@
 { config, pkgs, lib, name, email, ... }:
 
+let name = "Ryan Snyder";
+    email = "ryansnyder4@gmail.com";
+in
+
 {
-    enable = true;
-    ignores = [ "*.swp" ];
-    userName = name;  # You can replace this with a variable if needed
-    userEmail = email;  # Same as above, replace with a variable if needed
-
-    lfs = {
+    programs.git = {
         enable = true;
-    };
+        ignores = [ "*.swp" ];
+        userName = name;
+        userEmail = email;
 
-    extraConfig = {
-        init.defaultBranch = "main";
-        core = { 
-        editor = "vim";
-        autocrlf = "input";
+        lfs = {
+            enable = true;
         };
-        pull.rebase = true;
-        rebase.autoStash = true;
+
+        extraConfig = {
+            init.defaultBranch = "main";
+            core = { 
+            editor = "vim";
+            autocrlf = "input";
+            };
+            pull.rebase = true;
+            rebase.autoStash = true;
+        };
     };
 }

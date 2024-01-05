@@ -1,7 +1,11 @@
 { config, pkgs, lib, user, ... }:
 
+let user = "ryansnyder";
+
+in
 
 {
+  programs.ssh = {
     enable = true;
 
     extraConfig = lib.mkMerge [
@@ -12,12 +16,13 @@
       ''
       (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
         ''
-          IdentityFile /home/${user}/.ssh/id_github
+          IdentityFile /home/${user}/.ssh/github_id_ed25519
         '')
       (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
         ''
-          IdentityFile /Users/${user}/.ssh/id_github
+          IdentityFile /Users/${user}/.ssh/github_id_ed25519
         '')
     ];
+  };
 }
 

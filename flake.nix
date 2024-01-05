@@ -1,5 +1,5 @@
 {
-  description = "Starter Configuration for MacOS and NixOS";
+  description = "Configuration for MacOS and NixOS";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";

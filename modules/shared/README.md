@@ -6,11 +6,12 @@ This configuration gets imported by both modules. Some configuration examples in
 ## Layout
 ```
 .
-├── config             # Config files not written in Nix
-├── cachix             # Defines cachix, a global cache for builds
+├── config/            # Config files not written in Nix (NeoVim, lf, etc)
+├── cachix/            # Defines cachix, a global cache for builds
+├── programs/          # Programs that can be installed using home-manager
 ├── default.nix        # Defines how we import overlays 
 ├── files.nix          # Non-Nix, static configuration files (now immutable!)
-├── home-manager.nix   # The goods; most all shared config lives here
+├── home-manager.nix   # Imports the individual program files from the programs directory
 ├── packages.nix       # List of packages to share
 
 ```
