@@ -49,7 +49,7 @@ in
         stateVersion = "23.11";
       };
 
-        # Import home-manager programs
+        # Import home-manager programs shared between MacOS and nixOS
         imports = [
           ../shared/home-manager.nix
         ];

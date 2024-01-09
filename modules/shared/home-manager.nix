@@ -15,4 +15,12 @@ in
     ./programs/zoxide.nix
     ./programs/zsh.nix
   ];
+
+  # Set shared environment variables
+  home.sessionVariables = {
+    # Set the EDITOR environment variable
+    EDITOR = "vim";
+    LESS="-R";
+    PAGER="bat";
+  };
 }

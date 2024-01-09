@@ -3,6 +3,7 @@
 with pkgs; [
   # Development Tools
   wezterm
+  kitty  # just for kitty command line tool for previewing images in lf
   vscode
 
   # System Management Utilities
