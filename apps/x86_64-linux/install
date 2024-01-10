@@ -14,6 +14,10 @@ cleanup() {
   rm -rf nixos-config-main.zip nixos-config-main nixos-config
 }
 
+install_unzip() {
+  nix-env -iA nixos.unzip
+}
+
 download_config() {
   curl -LJ0 https://github.com/ryanmsnyder/nixos-config/archive/main.zip -o nixos-config-main.zip
   unzip nixos-config-main.zip
@@ -71,6 +75,7 @@ prompt_reboot() {
 
 cleanup
 check_installer
+install_unzip
 download_config
 run_apply
 run_disko
