@@ -7,6 +7,7 @@ let
 in
 
 {
+  # Import config for home-manager programs
   imports = [
     ./programs/git.nix
     ./programs/lf.nix

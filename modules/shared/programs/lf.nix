@@ -3,7 +3,7 @@ let
   # Create a Python environment with the necessary packages for a custom script
   # that moves items to the trash so they can be restored if needed
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-    # List your required Python packages here
+    # required Python packages
     cffi
     pycparser
     xattr
