@@ -30,9 +30,9 @@ let user = "ryansnyder";
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking = {
-    hostName = "%HOST%"; # Define your hostname.
+    hostName = "ryan"; # Define your hostname.
     useDHCP = false;
-    interfaces."%INTERFACE%".useDHCP = true;
+    # interfaces."%INTERFACE%".useDHCP = true;
   };
 
   # Turn on flag for proprietary software

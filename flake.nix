@@ -29,7 +29,7 @@
   };
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko } @inputs:
     let
-      user = "ryansnyder";
+      user = "ryan";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
@@ -75,7 +75,7 @@
       darwinConfigurations = let user = "ryansnyder"; in {
         macos = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = inputs;
+          specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
@@ -97,20 +97,40 @@
         };
       };
 
-      nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = inputs;
-        modules = [
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.${user} = import ./modules/nixos/home-manager.nix;
-            };
-          }
-          ./hosts/nixos
-        ];
-     });
+    #   nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
+    #     inherit system;
+    #     specialArgs = inputs;
+    #     modules = [
+    #       disko.nixosModules.disko
+    #       home-manager.nixosModules.home-manager {
+    #         home-manager = {
+    #           useGlobalPkgs = true;
+    #           useUserPackages = true;
+    #           users.${user} = import ./modules/nixos/desktop/home-manager-desktop.nix;
+    #         };
+    #       }
+    #       ./hosts/nixos
+    #     ];
+    #  });
+
+      nixosConfigurations = {
+        cloud-vps = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
+          modules = [
+            disko.nixosModules.disko
+            home-manager.nixosModules.home-manager {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.${user} = import ./modules/nixos/server/home-manager-server.nix;
+              };
+            }
+            ./hosts/nixos/cloud-vps.nix
+            # ./hosts/nixos/hetzner.nix
+            # ./hosts/nixos/linux.nix
+          ];
+        };
+      };
   };
 }

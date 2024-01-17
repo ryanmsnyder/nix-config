@@ -4,7 +4,7 @@ with pkgs; [
   # Development Tools
   wezterm
   kitty  # just for kitty command line tool for previewing images in lf
-  vscode
+  vscode # FIXME: need to exclude from nixos server environments
 
   # System Management Utilities
   btop
