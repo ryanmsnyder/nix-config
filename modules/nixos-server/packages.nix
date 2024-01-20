@@ -1,8 +1,13 @@
 { pkgs }:
 
 with pkgs;
-let shared-packages = import ../../shared/packages.nix { inherit pkgs; }; in
-shared-packages ++ [
+let 
+  sharedPackagesSet = import ../shared/packages.nix { inherit pkgs; };
+  sharedCommandLinePackages = sharedPackagesSet.shared-command-line-pkgs;
+  sharedNixOSPackages = sharedPackagesSet.shared-nixos-pkgs;
+in
+
+sharedCommandLinePackages ++ sharedNixOSPackages ++ [
 
   # Security and authentication
   yubikey-agent
@@ -11,7 +16,6 @@ shared-packages ++ [
   appimage-run
   gnumake
   cmake
-  home-manager
 
   # Media and design tools
   fontconfig
@@ -23,7 +27,6 @@ shared-packages ++ [
   cava # Terminal audio visualizer
 
   # Testing and development tools
-  direnv
   rnix-lsp # lsp-mode for nix
   postgresql
 

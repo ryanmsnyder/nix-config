@@ -73,7 +73,7 @@
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
       darwinConfigurations = let user = "ryansnyder"; in {
-        macos = darwin.lib.darwinSystem {
+        macbookpro = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
           modules = [
@@ -92,7 +92,30 @@
                 autoMigrate = true;
               };
             }
-            ./hosts/darwin
+            ./hosts/macos/macbookpro.nix
+          ];
+        };
+
+        work-macbookpro = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
+          modules = [
+            home-manager.darwinModules.home-manager
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                user = "${user}";
+                taps = {
+                  "homebrew/homebrew-core" = homebrew-core;
+                  "homebrew/homebrew-cask" = homebrew-cask;
+                  "homebrew/homebrew-bundle" = homebrew-bundle;
+                };
+                mutableTaps = false;
+                autoMigrate = true;
+              };
+            }
+            ./hosts/macos/work-macbookpro.nix
           ];
         };
       };
@@ -114,21 +137,20 @@
     #  });
 
       nixosConfigurations = {
-        cloud-vps = nixpkgs.lib.nixosSystem {
+        hetzner-vps = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs user; }; # this allows inputs to be passed explicitly to other modules
           modules = [
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager {
               home-manager = {
+                extraSpecialArgs = { inherit user; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.${user} = import ./modules/nixos/server/home-manager-server.nix;
+                users.${user} = import ./modules/nixos-server/home-manager.nix;
               };
             }
-            ./hosts/nixos/cloud-vps.nix
-            # ./hosts/nixos/hetzner.nix
-            # ./hosts/nixos/linux.nix
+            ./hosts/nixos/hetzner-vps.nix
           ];
         };
       };

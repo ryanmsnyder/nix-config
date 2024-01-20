@@ -1,13 +1,13 @@
-{ config, inputs, pkgs, modulesPath, ... }:
+{ user, config, inputs, pkgs, modulesPath, ... }:
 
-let user = "ryan";
-    keys = [ (builtins.readFile ../../keys/hetzner-vps_id_rsa.pub) ]; 
+let 
+  keys = [ (builtins.readFile ../../keys/hetzner-vps_id_rsa.pub) ]; 
 in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
-    ../../modules/nixos/disk-config.nix
+    ../../modules/nixos-server/disk-config.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
@@ -78,7 +78,6 @@ in
 
 
   };
-
 
   # Add docker daemon
   virtualisation = {

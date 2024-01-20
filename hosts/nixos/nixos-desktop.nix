@@ -227,7 +227,7 @@ let user = "ryansnyder";
 
   # It's me, it's you, it's everyone
   users.users = {
-    ${user} = {
+    "${user}" = {
       isNormalUser = true;
       extraGroups = [
         "wheel" # Enable ‘sudo’ for the user.

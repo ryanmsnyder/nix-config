@@ -1,47 +1,62 @@
 { pkgs }:
 
-with pkgs; [
-  # Development Tools
-  wezterm
-  kitty  # just for kitty command line tool for previewing images in lf
-  vscode # FIXME: need to exclude from nixos server environments
+{
+  # Packages shared between NixOS server and desktop, and MacOS
+  shared-command-line-pkgs = with pkgs; [
+    # Development Tools
+    kitty # command line tool for lf image viewing
+    btop
+    coreutils
+    pandoc
+    sqlite
+    wget
+    zip
+    direnv
 
-  # System Management Utilities
-  btop
-  coreutils
-  pandoc
-  sqlite
-  wget
-  zip
+    # Terminal Enhancements and Utilities
+    zoxide    # better cd
+    bat       # better cat
+    lsd       # better ls
+    starship  # zsh prompt
+    fzf       # fuzzy finder
+    lf        # file manager
 
-  # Terminal Enhancements and Utilities
-  zoxide    # better cd
-  bat       # better cat
-  lsd       # better ls
-  starship  # zsh prompt
-  fzf       # fuzzy finder
-  # lf        # file manager
+    # Cloud-Related Tools and SDKs
+    docker
+    docker-compose
+    flyctl
 
-  # Cloud-Related Tools and SDKs
-  docker
-  docker-compose
-  flyctl
+    # Text and Terminal Utilities
+    ffmpeg
+    fd
+    font-awesome
+    htop
+    iftop
+    jq
+    ripgrep
+    tree
+    tmux
+    unrar
+    unzip
+  ];
 
-  # Productivity Tools
-  obsidian
+  # Shared GUI packages used by NixOS desktop and MacOS environments
+  shared-gui-pkgs = with pkgs; [
+    wezterm
+    vscode
+    obsidian
+    # google-chrome  # not packaged for MacOs
+  ];
 
-  # Media-Related Packages
-  ffmpeg
-  fd
-  font-awesome
+  # Packages shared between NixOS desktop and NixOS server environments
+  shared-nixos-pkgs = with pkgs; [
+    home-manager
+  ];
 
-  # Text and Terminal Utilities
-  htop
-  iftop
-  jq
-  ripgrep
-  tree
-  tmux
-  unrar
-  unzip
-]
+  # Packages shared between MacOS machines
+  shared-macos-pkgs = with pkgs; [
+    raycast
+    dockutil
+  ];
+
+}

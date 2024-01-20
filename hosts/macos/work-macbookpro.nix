@@ -5,7 +5,7 @@ let user = "ryansnyder"; in
 {
 
   imports = [
-    ../../modules/darwin/home-manager.nix
+    ../../modules/macos-work/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];

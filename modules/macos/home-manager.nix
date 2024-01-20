@@ -21,7 +21,7 @@ in
 
   homebrew = {
     enable = true;
-    casks = pkgs.callPackage ./casks.nix {};
+    # casks = pkgs.callPackage ./casks.nix {};
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store
@@ -31,7 +31,8 @@ in
     # $ mas search <app name>
     #
     masApps = {
-      "1password" = 1333542190;
+      "magnet" = 441258766;
+      "bitwarden" = 1352778147;  # currently not in nixpkgs for darwin
     };
   };
 
