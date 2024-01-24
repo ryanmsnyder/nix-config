@@ -40,7 +40,7 @@ This repository contains my configuration for
     - [Install configuration](#3-install-configuration)
     - [Set user password](#4-set-user-password)
   - [NixOS server](#nixos-server)
-    - [Install `nix` on source machine](#1-install-nix)
+    - [Install `nix` on source machine](#1-install-nix-on-source-machine)
     - [Setup server and enable SSH access](#2-setup-server-and-enable-ssh-access)
     - [Optional: Setup secrets](#3-optional-setup-secrets)
     - [Deploy configuration using `nixos-anywhere`](#4-deploy-configuration-using-nixos-anywhere)
