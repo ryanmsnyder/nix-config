@@ -19,7 +19,6 @@
     lsd       # better ls
     starship  # zsh prompt
     fzf       # fuzzy finder
-    lf        # file manager
 
     # Cloud-Related Tools and SDKs
     docker
