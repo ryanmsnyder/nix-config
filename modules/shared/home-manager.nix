@@ -2,7 +2,6 @@
 
 let
     name = "Ryan Snyder";
-    user = "ryansnyder";
     email = "ryansnyder4@gmail.com";
 in
 
@@ -15,13 +14,18 @@ in
     ./programs/starship.nix
     ./programs/zoxide.nix
     ./programs/zsh.nix
+    ./programs/neovim.nix
   ];
 
   # Set shared environment variables
   home.sessionVariables = {
     # Set the EDITOR environment variable
-    EDITOR = "vim";
     LESS="-R";
     PAGER="bat";
   };
+
+  # TODO: find a better home for this. Since Wezterm is a package and not a home-manager program, 
+  # I've linked the wezterm config to the ~/.config folder here. With programs such as lf, etc,
+  # I linked their config inside of their dedicated file in the programs directory
+  home.file.".config/wezterm".source = ./config/wezterm; 
 }

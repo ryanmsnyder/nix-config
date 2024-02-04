@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-let user = "ryansnyder"; in
+let user = "ryan"; in
 
 {
 
@@ -83,6 +83,7 @@ let user = "ryansnyder"; in
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToControl = true;
+      # remapCapsLockToEscape = true;
     };
   };
 }

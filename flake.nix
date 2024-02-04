@@ -72,7 +72,7 @@
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = let user = "ryansnyder"; in {
+      darwinConfigurations = let user = "ryan"; in {
         macbookpro = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
@@ -101,20 +101,20 @@
           specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
           modules = [
             home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                user = "${user}";
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                };
-                mutableTaps = false;
-                autoMigrate = true;
-              };
-            }
+            # nix-homebrew.darwinModules.nix-homebrew
+            # {
+            #   nix-homebrew = {
+            #     enable = true;
+            #     user = "${user}";
+            #     taps = {
+            #       "homebrew/homebrew-core" = homebrew-core;
+            #       "homebrew/homebrew-cask" = homebrew-cask;
+            #       "homebrew/homebrew-bundle" = homebrew-bundle;
+            #     };
+            #     mutableTaps = false;
+            #     autoMigrate = true;
+            #   };
+            # }
             ./hosts/macos/work-macbookpro.nix
           ];
         };

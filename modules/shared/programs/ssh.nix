@@ -1,6 +1,6 @@
 { config, pkgs, lib, user, ... }:
 
-let user = "ryansnyder";
+let user = "ryan";
 
 in
 
@@ -17,12 +17,12 @@ in
 
       (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
         ''
-          IdentityFile /home/${user}/.ssh/github_id_ed25519
+          IdentityFile /home/${user}/.ssh/github-id_ed25519
         '')
 
       (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
         ''
-          IdentityFile /Users/${user}/.ssh/github_id_ed25519
+          IdentityFile /Users/${user}/.ssh/github-id_ed25519
         '')
 
       ''

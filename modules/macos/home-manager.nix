@@ -1,7 +1,7 @@
 { config, pkgs, lib, home-manager, ... }:
 
 let
-  user = "ryansnyder";
+  user = "ryan";
   # Define the content of your file as a derivation
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
@@ -68,7 +68,9 @@ in
     { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Obsidian.app"; }
     { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
     { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Visual\ Studio\ Code.app"; }
-    { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"; }
+    { path = "${config.users.users.${user}.home}/.nix-profile/Applications/WezTerm.app"; }
+    { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"; }  # hard code Safari path since it ships with MacOS
+
     {
       path = "${config.users.users.${user}.home}/Downloads";
       section = "others";
