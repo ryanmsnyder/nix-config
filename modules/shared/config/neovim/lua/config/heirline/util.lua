@@ -83,7 +83,7 @@ local get_heirline_theme = function()
   return require(theme_highlights_module)
 end
 
--- mege theme highlight with defualt_hl, overriding defualt_hl where there are collisions
+-- merge theme highlight with defualt_hl, overriding defualt_hl where there are collisions
 util.highlights = function()
   local default_hl = get_default_hl()
   local theme_highlights = get_heirline_theme().highlights()

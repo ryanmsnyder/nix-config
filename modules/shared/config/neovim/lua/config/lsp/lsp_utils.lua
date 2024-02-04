@@ -4,10 +4,31 @@ local icons = require "icons.icons"
 
 local M = {}
 
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+-- autoformats on save by running any formatters that are attached to the buffer
+local function autoformat_on_save(client, bufnr)
+  local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format({ bufnr = bufnr, async = false })
+      end,
+    })
+  end
+end
+
 function M.on_attach(client, bufnr)
+
+  -- autoformat buffer on save
+  autoformat_on_save(client, bufnr)
+
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end

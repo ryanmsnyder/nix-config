@@ -155,31 +155,17 @@ return {
     end,
   },
 
-  {
-    "L3MON4D3/LuaSnip",
-    dependncies = {
-      "rafamadriz/friendly-snippets",
-    },
-    config = function()
-      require "config.luasnip"
-    end,
-  },
-
   -- {
-  --   "hrsh7th/nvim-cmp",
-  --   event = { "InsertEnter", "CmdlineEnter" },
-  --   dependencies = {
-  --     { "hrsh7th/cmp-buffer" },
-  --     { "hrsh7th/cmp-cmdline" },
-  --     { "hrsh7th/cmp-nvim-lsp" },
-  --     { "hrsh7th/cmp-path" },
-  --     { "hrsh7th/cmp-nvim-lsp-signature-help" },
-  --     { "saadparwaiz1/cmp_luasnip" },
+  --   "L3MON4D3/LuaSnip",
+  --   dependncies = {
+  --     "rafamadriz/friendly-snippets",
   --   },
   --   config = function()
-  --     require "config.cmp"
+  --     require "config.luasnip"
   --   end,
   -- },
+
+
 
   -- {
   --   "williamboman/mason.nvim",
@@ -204,17 +190,48 @@ return {
   --   },
   -- },
 
+  -- {
+  --   'VonHeikemen/lsp-zero.nvim', branch = 'v3.x',
+  --   lazy = false, -- change this 
+  --   dependencies = {
+  --     'neovim/nvim-lspconfig',
+  --     'hrsh7th/cmp-nvim-lsp',
+  --     'hrsh7th/nvim-cmp',
+  --     'L3MON4D3/LuaSnip'
+  --   },
+  --   config = function()
+  --     require "config.lsp.lsp"
+  --   end,
+  -- },
+
   {
-    'VonHeikemen/lsp-zero.nvim', branch = 'v3.x',
-    lazy = false, -- change this 
+    'neovim/nvim-lspconfig',
+    cmd = 'LspInfo',
+    event = {'BufReadPre', 'BufNewFile'},
     dependencies = {
-      'neovim/nvim-lspconfig',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/nvim-cmp',
-      'L3MON4D3/LuaSnip'
+      'L3MON4D3/LuaSnip',
+      'folke/neodev.nvim'
     },
     config = function()
       require "config.lsp.lsp"
+    end,
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    event = { "InsertEnter", "CmdlineEnter" },
+    dependencies = {
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-cmdline" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-nvim-lsp-signature-help" },
+      { "saadparwaiz1/cmp_luasnip" },
+    },
+    config = function()
+      require "config.cmp"
     end,
   },
 
@@ -233,7 +250,7 @@ return {
   -- {
   --   "williamboman/mason-lspconfig.nvim",
   --   dependencies = {
-  --     "williamboman/mason.nvim",
+  --     "williamboman/mason.nvim", 
   --     "neovim/nvim-lspconfig",
   --   },
   -- },
@@ -309,18 +326,18 @@ return {
     end,
   },
 
-  {
-    "mattn/emmet-vim",
-    event = "BufReadPost",
-    ft = {
-      "typescript",
-      "typescriptreact",
-      "javascript",
-      "javascriptreact",
-      "html",
-      "css",
-    },
-  },
+  -- {
+  --   "mattn/emmet-vim",
+  --   event = "BufReadPost",
+  --   ft = {
+  --     "typescript",
+  --     "typescriptreact",
+  --     "javascript",
+  --     "javascriptreact",
+  --     "html",
+  --     "css",
+  --   },
+  -- },
 
   {
     "folke/which-key.nvim",

@@ -10,8 +10,47 @@
         viAlias = true;
         vimAlias = true; 
 
+        # Install LSPs, formatters, linters, DAPs
         extraPackages = with pkgs; [
+            # Language servers
+            # ccls
+            emmet-ls
+            # gopls
+            # jdt-language-server
+            # ltex-ls
             lua-language-server
+            # nil
+            nodePackages.bash-language-server
+            # nodePackages.graphql-language-service-cli
+            nodePackages.svelte-language-server
+            nodePackages.typescript-language-server
+            # prisma-ls
+            pyright
+            ruff-lsp
+            nodePackages.vscode-langservers-extracted
+            # typst-lsp
+
+            # efm-langserver sources
+            alejandra
+            # asmfmt
+            black
+            # cppcheck
+            deadnix
+            # editorconfig-checker
+            efm-langserver
+            gitlint
+            # gofumpt
+            # nodePackages.alex
+            nodePackages.prettier
+            python3Packages.flake8
+            # shellcheck
+            # shellharden
+            # shfmt
+            statix
+            stylua
+
+            # DAP servers
+            # delve
         ];
     };
 

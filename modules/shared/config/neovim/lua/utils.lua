@@ -32,9 +32,9 @@ function M.toggle_diagnostics()
   end
 end
 
-function M.format_sync()
-  vim.lsp.buf.format { async = true }
-end
+-- function M.format_sync()
+--   vim.lsp.buf.format { async = true }
+-- end
 
 function M.try(fn, ...)
   local args = { ... }
