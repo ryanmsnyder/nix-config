@@ -15,7 +15,7 @@
 
     # Terminal Enhancements and Utilities
     zoxide    # better cd
-    bat       # better cat
+    # bat       # better cat
     lsd       # better ls
     starship  # zsh prompt
     fzf       # fuzzy finder
