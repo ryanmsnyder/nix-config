@@ -8,6 +8,7 @@ in
 {
   # Import config for home-manager programs
   imports = [
+    ./programs/bat.nix
     ./programs/git.nix
     ./programs/lf.nix
     ./programs/ssh.nix
