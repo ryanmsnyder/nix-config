@@ -44,6 +44,7 @@
     wezterm
     vscode
     obsidian
+    spotify
     # google-chrome  # not packaged for MacOs
   ];
 
