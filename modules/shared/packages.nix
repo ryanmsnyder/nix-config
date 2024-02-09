@@ -1,5 +1,11 @@
 { pkgs }:
 
+let
+  # Import custom Darwin
+  customDarwinPackagesPath = ../../custom-packages/macos;
+  brunoDarwin = pkgs.callPackage (customDarwinPackagesPath + "/bruno.nix") {};
+in
+
 {
   # Packages shared between NixOS server and desktop, and MacOS
   shared-command-line-pkgs = with pkgs; [
@@ -15,7 +21,6 @@
 
     # Terminal Enhancements and Utilities
     zoxide    # better cd
-    # bat       # better cat
     lsd       # better ls
     starship  # zsh prompt
     fzf       # fuzzy finder
@@ -57,6 +62,7 @@
   shared-macos-pkgs = with pkgs; [
     raycast
     dockutil
+    brunoDarwin
   ];
 
 }

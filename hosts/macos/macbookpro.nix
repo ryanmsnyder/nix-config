@@ -35,7 +35,7 @@ let user = "ryan"; in
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs; (import ../../modules/macos/packages.nix { inherit pkgs; });
+  # environment.systemPackages = with pkgs; (import ../../modules/macos/packages.nix { inherit pkgs; });
 
   # Enable fonts dir
   fonts.fontDir.enable = true;

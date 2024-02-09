@@ -6,23 +6,19 @@ let
   sharedGuiPackages = sharedPackagesSet.shared-gui-pkgs;
   sharedMacOSPackages = sharedPackagesSet.shared-macos-pkgs;
 
-  customDarwinPackagesPath = ./custom-packages;
-  customDarwinPackages = let
-    isNixFile = name: builtins.match ".*\\.nix$" name != null;
-    readCustomPackages = dirname: 
-      builtins.filter isNixFile (builtins.attrNames (builtins.readDir dirname));
+  # customDarwinPackagesPath = ../../custom-packages/macos;
 
-    loadPackage = name: pkgs.callPackage (builtins.path { path = customDarwinPackagesPath + "/${name}"; }) {};
-  in
-    builtins.map loadPackage (readCustomPackages customDarwinPackagesPath);
+  # Directly import the bruno.nix package
+  # bruno = pkgs.callPackage (customDarwinPackagesPath + "/bruno.nix") {};
 
 in
   with pkgs;
   sharedCommandLinePackages ++ 
   sharedGuiPackages ++ 
   sharedMacOSPackages ++ 
-  customDarwinPackages ++ 
   [
+    # Add brunoPackage to the list of custom packages
+    # bruno
     # Packages specific to MacOS personal machine
     qbittorrent
   ]

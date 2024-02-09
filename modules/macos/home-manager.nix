@@ -32,7 +32,7 @@ in
     #
     masApps = {
       "magnet" = 441258766;
-      "bitwarden" = 1352778147;  # currently not in nixpkgs for darwin
+      "bitwarden" = 1352778147;  # currently not in nixpkgs for darwin so install via mas
     };
   };
 
@@ -63,19 +63,49 @@ in
   };
 
   # Fully declarative dock using the latest from Nix Store
-  local.dock.enable = true;
-  local.dock.entries = [
-    { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Obsidian.app"; }
-    { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
-    { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Visual\ Studio\ Code.app"; }
-    { path = "${config.users.users.${user}.home}/.nix-profile/Applications/WezTerm.app"; }
-    { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"; }  # hard code Safari path since it ships with MacOS
+  # local.dock.enable = true;
+  # local.dock.entries = [
+  #   # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Obsidian.app"; }
+  #   { path = "${config.users.users.${user}.home}/Applications/Home Manager Apps/Obsidian.app"; }
+  #   # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
+  #   # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Visual\ Studio\ Code.app"; }
+  #   # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/WezTerm.app"; }
+  #   { path = "${config.users.users.${user}.home}/Applications/Home Manager Apps/WezTerm.app"; }
+  #   # { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"; }  # hard code Safari path since it ships with MacOS
 
-    {
-      path = "${config.users.users.${user}.home}/Downloads";
-      section = "others";
-      options = "--sort name --view grid --display folder";
-    }
-  ];
+  #   {
+  #     path = "${config.users.users.${user}.home}/Downloads";
+  #     section = "others";
+  #     options = "--sort name --view grid --display folder";
+  #   }
+  # ];
+
+    local = {
+      dock.enable = true;
+      dock.entries = [
+        # { path = "/Applications/Slack.app/"; }
+        # { path = "/System/Applications/Messages.app/"; }
+        # { path = "/System/Applications/Facetime.app/"; }
+        # { path = "/Applications/Telegram.app/"; }
+        { path = "${pkgs.wezterm}/Applications/WezTerm.app/"; }
+        # { path = "/System/Applications/Music.app/"; }
+        # { path = "/System/Applications/News.app/"; }
+        # { path = "/System/Applications/Photos.app/"; }
+        # { path = "/System/Applications/Photo Booth.app/"; }
+        # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
+        { path = "${pkgs.obsidian}/Applications/Obsidian.app/"; }
+        { path = "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"; }
+        { path = "${pkgs.spotify}/Applications/Spotify.app/"; }
+        { path = "/System/Applications/Reminders.app/"; }
+        # { path = "/Applications/TablePlus.app/"; }
+        # { path = "/Applications/Drafts.app/"; }
+        # { path = "/System/Applications/Home.app/"; }
+        {
+          path = "${config.users.users.${user}.home}/Downloads";
+          section = "others";
+          options = "--sort name --view grid --display folder";
+        }
+      ];
+  };
 
 }

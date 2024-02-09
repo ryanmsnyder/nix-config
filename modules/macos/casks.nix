@@ -27,7 +27,7 @@ _:
   "vlc"
 
   # Productivity Tools
-  "raycast"
+  # "raycast"
   "asana"
 
   # Browsers
