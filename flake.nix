@@ -93,7 +93,8 @@
             #     autoMigrate = true;
             #   };
             # }
-            ./hosts/macos/macbookpro.nix
+            # ./hosts/macos/macbookpro.nix
+            ./hosts/macbookpro
           ];
         };
 

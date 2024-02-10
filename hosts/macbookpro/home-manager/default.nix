@@ -3,8 +3,8 @@
 let
   user = "ryan";
   # Define the content of your file as a derivation
-  sharedFiles = import ../shared/files.nix { inherit config pkgs; };
-  additionalFiles = import ./files.nix { inherit user config pkgs; };
+#   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
+#   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
   imports = [
@@ -42,17 +42,18 @@ in
     users.${user} = { pkgs, config, lib, ... }: {
       home = {
         enableNixpkgsReleaseCheck = false;
+        # Packages/apps that will only be exposed to the user via ~/.nix-profile
         packages = pkgs.callPackage ./packages.nix {};
-        file = lib.mkMerge [
-          sharedFiles
-          additionalFiles
-        ];
+        # file = lib.mkMerge [
+        #   sharedFiles
+        #   additionalFiles
+        # ];
         stateVersion = "23.11";
       };
 
         # Import home-manager programs shared between MacOS and nixOS
         imports = [
-          ../shared/home-manager.nix
+          ../../../shared/home-manager
         ];
 
 

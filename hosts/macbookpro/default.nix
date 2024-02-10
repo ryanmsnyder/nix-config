@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
 
-let user = "ryansnyder"; in
+let user = "ryan"; in
 
 {
 
   imports = [
-    ../../modules/macos-work/home-manager.nix
-    ../../modules/shared
-    ../../modules/shared/cachix
+    ./home-manager
+    ../../shared
+    ../../shared/cachix
   ];
 
   # Auto upgrade nix package and the daemon service.
@@ -34,8 +34,8 @@ let user = "ryansnyder"; in
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 
-  # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs; (import ../../modules/shared/packages.nix { inherit pkgs; });
+  # Install system-wide packages
+  # environment.systemPackages = with pkgs; (import ./packages.nix { inherit pkgs; });
 
   # Enable fonts dir
   fonts.fontDir.enable = true;
@@ -83,6 +83,7 @@ let user = "ryansnyder"; in
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToControl = true;
+      # remapCapsLockToEscape = true;
     };
   };
 }

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# clear image from screen with kitty
+kitty +kitten icat --clear --stdin no --silent --transfer-mode file < /dev/null > /dev/tty

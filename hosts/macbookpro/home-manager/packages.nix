@@ -1,15 +1,10 @@
 { pkgs }:
 
 let 
-  sharedPackagesSet = import ../shared/packages.nix { inherit pkgs; };
+  sharedPackagesSet = import ../../../shared/home-manager/packages.nix { inherit pkgs; };
   sharedCommandLinePackages = sharedPackagesSet.shared-command-line-pkgs;
   sharedGuiPackages = sharedPackagesSet.shared-gui-pkgs;
   sharedMacOSPackages = sharedPackagesSet.shared-macos-pkgs;
-
-  # customDarwinPackagesPath = ../../custom-packages/macos;
-
-  # Directly import the bruno.nix package
-  # bruno = pkgs.callPackage (customDarwinPackagesPath + "/bruno.nix") {};
 
 in
   with pkgs;
@@ -17,7 +12,7 @@ in
   sharedGuiPackages ++ 
   sharedMacOSPackages ++ 
   
-  # Packages specific to MacOS personal machine
+  # Packages specific to MacOS personal machine that will be installed system-wide
   [
-    qbittorrent
+    
   ]
