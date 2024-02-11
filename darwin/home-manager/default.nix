@@ -7,9 +7,9 @@ let
 #   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
-  imports = [
-    ./dock
-  ];
+  # imports = [
+  #   ./dock
+  # ];
 
   # It me
   users.users.${user} = {
@@ -53,7 +53,7 @@ in
 
         # Import home-manager programs shared between MacOS and nixOS
         imports = [
-          ../../../shared/home-manager
+          ../../shared/home-manager
         ];
 
 
@@ -81,32 +81,32 @@ in
   #   }
   # ];
 
-  local = {
-    dock.enable = true;
-    dock.entries = [
-      # { path = "/Applications/Slack.app/"; }
-      # { path = "/System/Applications/Messages.app/"; }
-      # { path = "/System/Applications/Facetime.app/"; }
-      # { path = "/Applications/Telegram.app/"; }
-      { path = "${pkgs.wezterm}/Applications/WezTerm.app/"; }
-      # { path = "/System/Applications/Music.app/"; }
-      # { path = "/System/Applications/News.app/"; }
-      # { path = "/System/Applications/Photos.app/"; }
-      # { path = "/System/Applications/Photo Booth.app/"; }
-      # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
-      { path = "${pkgs.obsidian}/Applications/Obsidian.app/"; }
-      { path = "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"; }
-      { path = "${pkgs.spotify}/Applications/Spotify.app/"; }
-      { path = "/System/Applications/Reminders.app/"; }
-      # { path = "/Applications/TablePlus.app/"; }
-      # { path = "/Applications/Drafts.app/"; }
-      # { path = "/System/Applications/Home.app/"; }
-      {
-        path = "${config.users.users.${user}.home}/Downloads";
-        section = "others";
-        options = "--sort name --view grid --display folder";
-      }
-    ];
-  };
+  # local = {
+  #   dock.enable = true;
+  #   dock.entries = [
+  #     # { path = "/Applications/Slack.app/"; }
+  #     # { path = "/System/Applications/Messages.app/"; }
+  #     # { path = "/System/Applications/Facetime.app/"; }
+  #     # { path = "/Applications/Telegram.app/"; }
+  #     { path = "${pkgs.wezterm}/Applications/WezTerm.app/"; }
+  #     # { path = "/System/Applications/Music.app/"; }
+  #     # { path = "/System/Applications/News.app/"; }
+  #     # { path = "/System/Applications/Photos.app/"; }
+  #     # { path = "/System/Applications/Photo Booth.app/"; }
+  #     # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
+  #     { path = "${pkgs.obsidian}/Applications/Obsidian.app/"; }
+  #     { path = "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"; }
+  #     { path = "${pkgs.spotify}/Applications/Spotify.app/"; }
+  #     { path = "/System/Applications/Reminders.app/"; }
+  #     # { path = "/Applications/TablePlus.app/"; }
+  #     # { path = "/Applications/Drafts.app/"; }
+  #     # { path = "/System/Applications/Home.app/"; }
+  #     {
+  #       path = "${config.users.users.${user}.home}/Downloads";
+  #       section = "others";
+  #       options = "--sort name --view grid --display folder";
+  #     }
+  #   ];
+  # };
 
 }

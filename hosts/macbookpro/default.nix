@@ -5,85 +5,41 @@ let user = "ryan"; in
 {
 
   imports = [
-    ./home-manager
+    ../../darwin/home-manager
     ../../shared
     ../../shared/cachix
+    ../../darwin/system-config.nix
+    ../../darwin/home-manager/dockutil.nix
   ];
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
-  # Setup user, packages, programs
-  nix = {
-    package = pkgs.nixUnstable;
-    settings.trusted-users = [ "@admin" "${user}" ];
-
-    gc = {
-      user = "root";
-      automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
-      options = "--delete-older-than 30d";
-    };
-
-    # Turn this on to make command line easier
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+  # Configure applications that should appear in Dock
+  local = {
+    dock.enable = true;
+    dock.entries = [
+      # { path = "/Applications/Slack.app/"; }
+      # { path = "/System/Applications/Messages.app/"; }
+      # { path = "/System/Applications/Facetime.app/"; }
+      # { path = "/Applications/Telegram.app/"; }
+      { path = "${pkgs.wezterm}/Applications/WezTerm.app/"; }
+      # { path = "/System/Applications/Music.app/"; }
+      # { path = "/System/Applications/News.app/"; }
+      # { path = "/System/Applications/Photos.app/"; }
+      # { path = "/System/Applications/Photo Booth.app/"; }
+      # { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
+      { path = "${pkgs.obsidian}/Applications/Obsidian.app/"; }
+      { path = "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"; }
+      { path = "${pkgs.spotify}/Applications/Spotify.app/"; }
+      { path = "/System/Applications/Reminders.app/"; }
+      # { path = "/Applications/TablePlus.app/"; }
+      # { path = "/Applications/Drafts.app/"; }
+      # { path = "/System/Applications/Home.app/"; }
+      {
+        path = "${config.users.users.${user}.home}/Downloads";
+        section = "others";
+        options = "--sort name --view grid --display folder";
+      }
+    ];
   };
 
-  # Turn off NIX_PATH warnings now that we're using flakes
-  system.checks.verifyNixPath = false;
 
-  # Install system-wide packages
-  # environment.systemPackages = with pkgs; (import ./packages.nix { inherit pkgs; });
-
-  # Enable fonts dir
-  fonts.fontDir.enable = true;
-
-  system = {
-    stateVersion = 4;
-
-    defaults = {
-      NSGlobalDomain = {
-        AppleShowAllExtensions = true;
-        ApplePressAndHoldEnabled = false;
-
-        # 120, 90, 60, 30, 12, 6, 2
-        KeyRepeat = 2;
-
-        # 120, 94, 68, 35, 25, 15
-        InitialKeyRepeat = 15;
-
-        "com.apple.mouse.tapBehavior" = 1;
-        "com.apple.sound.beep.volume" = 0.0;
-        "com.apple.sound.beep.feedback" = 0;
-      };
-
-      dock = {
-        autohide = true;  # hide dock
-        autohide-delay = 0.00;  # delay before dock shows
-        autohide-time-modifier = 0.50;  # speed of dock animation when showing/hiding
-        show-recents = false;
-        launchanim = true;
-        orientation = "bottom";
-        tilesize = 48;
-        wvous-bl-corner = 4; # hot corner that shows desktop when hovering mouse over bottom left corner
-      };
-
-      finder = {
-        _FXShowPosixPathInTitle = false;
-      };
-
-      trackpad = {
-        Clicking = true;
-        TrackpadThreeFingerDrag = true;
-      };
-    };
-
-    keyboard = {
-      enableKeyMapping = true;
-      remapCapsLockToControl = true;
-      # remapCapsLockToEscape = true;
-    };
-  };
 }
