@@ -2,7 +2,7 @@
 
 let
   # Import custom Darwin
-  customDarwinPackagesPath = ../../custom-packages/macos;
+  customDarwinPackagesPath = ../../../custom-packages/macos;
   brunoDarwin = pkgs.callPackage (customDarwinPackagesPath + "/bruno.nix") {};
 in
 
@@ -48,6 +48,7 @@ in
   # Shared GUI packages used by NixOS desktop and MacOS environments
   shared-gui-pkgs = with pkgs; [
     wezterm
+    slack
     vscode
     obsidian
     spotify

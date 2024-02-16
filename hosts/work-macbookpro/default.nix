@@ -1,12 +1,6 @@
 { config, pkgs, ... }:
 
-let 
-  # set name of home folder
-  user = "ryan"; 
-
-  # packages that should only be installed on specific host/machine
-  hostSpecificPackages = with pkgs; [ qbittorrent ];
-in
+let user = "ryan"; in
 
 {
 
@@ -17,14 +11,6 @@ in
     ../../modules/darwin/system-config.nix
     ../../modules/darwin/home-manager/dockutil.nix
   ];
-
-  # set custom config option set in modules/shared/default.nix so username can be accessed
-  # in other modules
-  users.myUser = user;
-
-  # install packages via home-manager that are specific to this host/machine
-  # these will be installed in addition to other packages defined in modules/darwin/home-manager/default.nix
-  home-manager.users.${user}.home.packages = hostSpecificPackages;
 
   # Configure applications that should appear in Dock
   local = {

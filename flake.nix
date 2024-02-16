@@ -79,21 +79,6 @@
           specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
           modules = [
             home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            # {
-            #   nix-homebrew = {
-            #     enable = true;
-            #     user = "${user}";
-            #     taps = {
-            #       "homebrew/homebrew-core" = homebrew-core;
-            #       "homebrew/homebrew-cask" = homebrew-cask;
-            #       "homebrew/homebrew-bundle" = homebrew-bundle;
-            #     };
-            #     mutableTaps = false;
-            #     autoMigrate = true;
-            #   };
-            # }
-            # ./hosts/macos/macbookpro.nix
             ./hosts/macbookpro
           ];
         };
@@ -103,20 +88,6 @@
           specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
           modules = [
             home-manager.darwinModules.home-manager
-            # nix-homebrew.darwinModules.nix-homebrew
-            # {
-            #   nix-homebrew = {
-            #     enable = true;
-            #     user = "${user}";
-            #     taps = {
-            #       "homebrew/homebrew-core" = homebrew-core;
-            #       "homebrew/homebrew-cask" = homebrew-cask;
-            #       "homebrew/homebrew-bundle" = homebrew-bundle;
-            #     };
-            #     mutableTaps = false;
-            #     autoMigrate = true;
-            #   };
-            # }
             ./hosts/macos/work-macbookpro.nix
           ];
         };

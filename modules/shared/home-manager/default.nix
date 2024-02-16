@@ -28,5 +28,5 @@ in
   # TODO: find a better home for this. Since Wezterm is a package and not a home-manager program, 
   # I've linked the wezterm config to the ~/.config folder here. With programs such as lf, etc,
   # I linked their config inside of their dedicated file in the programs directory
-  home.file.".config/wezterm".source = ./config/wezterm; 
+  home.file.".config/wezterm".source = ./config/wezterm;
 }

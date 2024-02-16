@@ -1,17 +1,23 @@
-{ config, pkgs, ... }:
+{ lib, ... }:
 
 {
+  options = {
+    users.myUser = lib.mkOption {
+      type = lib.types.str;
+      default = "ryan";
+      description = "Username for the user configuration.";
+    };
+  };
 
-  nixpkgs = {
-    config = {
+  config = {
+    nixpkgs.config = {
       allowUnfree = true;
       allowBroken = true;
       allowInsecure = false;
       allowUnsupportedSystem = true;
     };
 
-    overlays =
-      # Apply each overlay found in the /overlays directory
+    nixpkgs.overlays =
       let path = ../../overlays; in with builtins;
       map (n: import (path + ("/" + n)))
           (filter (n: match ".*\\.nix" n != null ||
