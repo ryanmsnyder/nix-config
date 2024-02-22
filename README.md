@@ -6,7 +6,7 @@ This is a modified version of [this repo](https://github.com/dustinlyons/nixos-c
 
 Nix is a powerful package manager for Linux and Unix systems that ensures reproducible, declarative, and reliable software management.
 
-This repository contains my configuration for
+This repository contains my configuration for:
 
 - personal M1 MacBook Pro
 - work M1 MacBook Pro (haven't tested yet)

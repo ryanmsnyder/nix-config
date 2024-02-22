@@ -18,7 +18,7 @@ in
     ../../modules/darwin/home-manager/dockutil.nix
   ];
 
-  # set custom config option set in modules/shared/default.nix so username can be accessed
+  # set custom config option that's defined in modules/shared/default.nix so username can be accessed
   # in other modules
   users.myUser = user;
 

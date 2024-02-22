@@ -120,10 +120,10 @@
                 extraSpecialArgs = { inherit user; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.${user} = import ./modules/nixos-server/home-manager.nix;
+                users.${user} = import ./modules/nixos/home-manager.nix;
               };
             }
-            ./hosts/nixos/hetzner-vps.nix
+            ./hosts/hetzner-vps
           ];
         };
       };
