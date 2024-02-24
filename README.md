@@ -76,26 +76,29 @@ This repository contains my configuration for:
 - **Same Environment Everywhere**: Easily share config across Linux and Mac (both Nix and Home Manager)
 - **MacOS Dream Setup**: Fully declarative MacOS, including UI, dock and MacOS App Store apps
 - **Simple Bootstrap**: Simple Nix commands to start from zero, both x86 and MacOS platforms
-- **Managed Homebrew**: Zero maintenance homebrew environment with `nix-darwin` and `nix-homebrew`
 - **Disk Management**: Declarative disk management with `disko`, say goodbye to disk utils
 - **Secrets Management**: Declarative secrets with `agenix` for SSH, PGP, syncthing, and other tools
-- **Super Fast Emacs**: Bleeding edge Emacs that fixes itself, thanks to a community overlay
 - **Built In Home Manager**: `home-manager` module for seamless configuration (no extra clunky CLI steps)
 - **NixOS Environment**: Extensively configured NixOS including clean aesthetic + window animations
 - **Nix Overlays**: [Auto-loading of Nix overlays](https://github.com/dustinlyons/nixos-config/tree/main/overlays): drop a file in a dir and it runs (great for patches!)
 - **Declarative Sync**: No-fuss Syncthing: managed keys, certs, and configuration across all platforms
-- **Emacs Literate Configuration**: [Large Emacs literate configuration](https://github.com/dustinlyons/nixos-config/blob/main/modules/shared/config/emacs/config.org) to explore (if that's your thing)
+- **NeoVim Configuration**: Installs LSPs, linters, formatters, DAPs but let's lazy.nvim handle the installation of plugins as well as lazy loading plugins
 - **Simplicity and Readability**: Optimized for simplicity and readability in all cases, not small files everywhere
 - **Backed by Continuous Integration**: Flake automatically updates weekly if changes don't break starter build
 
-## Disclaimer
+## Disclaimers
 
-Installing Nix on MacOS will create an entirely separate volume. It will exceed many gigabytes in size.
+1. Installing Nix on MacOS will create an entirely separate volume. It will exceed many gigabytes in size.
 
 Some folks don't like this. If this is you, turn back now!
 
 > [!NOTE]
 > Don't worry; you can always [uninstall](https://github.com/DeterminateSystems/nix-installer#uninstalling) Nix later.
+
+2. This config installs all packages via Home Manager, meaning the packages will only be available to the user of this config (they won't be available system-wide). The reason for this decision is two-fold:
+    1. My current machines that are using this config don't have a need for system-wide installation.
+    2. Making a distinction between packages that are installed system-wide vs packages that are only installed in my user's directory (via Home Manager) would complicate this config a little more.
+
 
 ## Videos
 
