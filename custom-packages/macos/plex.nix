@@ -30,5 +30,3 @@ pkgs.stdenv.mkDerivation rec {
     platforms = [ "aarch64-darwin" ];
   };
 }
-
-# https://downloads.plex.tv/plex-media-server-new/1.40.0.7998-c29d4c0c8/macos/PlexMediaServer-1.40.0.7998-c29d4c0c8-universal.zip
