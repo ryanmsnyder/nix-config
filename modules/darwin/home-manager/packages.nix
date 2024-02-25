@@ -2,12 +2,12 @@
 
 let 
   sharedPackagesSet = import ../../shared/home-manager/packages.nix { inherit pkgs; };
-  sharedCommandLinePackages = sharedPackagesSet.shared-command-line-pkgs;
+  sharedNonGuiPackages = sharedPackagesSet.shared-non-gui-pkgs;
   sharedGuiPackages = sharedPackagesSet.shared-gui-pkgs;
   sharedMacOSPackages = sharedPackagesSet.shared-macos-pkgs;
 
 in
   with pkgs;
-  sharedCommandLinePackages ++ 
+  sharedNonGuiPackages ++ 
   sharedGuiPackages ++ 
   sharedMacOSPackages

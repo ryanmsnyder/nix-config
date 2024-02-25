@@ -9,7 +9,7 @@ in
 
 {
   # Packages shared between NixOS server and desktop, and MacOS
-  shared-command-line-pkgs = with pkgs; [
+  shared-non-gui-pkgs = with pkgs; [
     # Development Tools
     kitty # command line tool for lf image viewing
     btop
@@ -44,6 +44,9 @@ in
     unrar
     unzip
 
+    # Fonts
+    berkeley-mono-font # from overlays. installs to $HOME/Library/Fonts/HomeManager on MacOS
+
   ];
 
   # Shared GUI packages used by NixOS desktop and MacOS environments
@@ -65,8 +68,8 @@ in
   shared-macos-pkgs = with pkgs; [
     raycast
     dockutil
-    brunoDarwin
-    plexDarwin
+    brunoDarwin # from custom-packages
+    plexDarwin # from custom-packages
     monitorcontrol
   ];
 

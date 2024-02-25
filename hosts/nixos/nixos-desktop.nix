@@ -265,6 +265,7 @@ let user = "ryansnyder";
     noto-fonts-emoji
   ];
 
+  # system-wide installation
   environment.systemPackages = with pkgs; [
     gitAndTools.gitFull
     inetutils

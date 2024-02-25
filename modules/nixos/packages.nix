@@ -3,11 +3,11 @@
 with pkgs;
 let 
   sharedPackagesSet = import ../shared/packages.nix { inherit pkgs; };
-  sharedCommandLinePackages = sharedPackagesSet.shared-command-line-pkgs;
+  sharedNonGuiPackages = sharedPackagesSet.shared-non-gui-pkgs;
   sharedNixOSPackages = sharedPackagesSet.shared-nixos-pkgs;
 in
 
-sharedCommandLinePackages ++ sharedNixOSPackages ++ [
+sharedNonGuiPackages ++ sharedNixOSPackages ++ [
 
   # Security and authentication
   yubikey-agent
