@@ -1,6 +1,11 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }: 
+
+{
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+
+  # Install karabiner-elements. The config file is symlinked as part of home-manager
+  services.karabiner-elements.enable = true;
 
   # Setup user, packages, programs
   nix = {
@@ -64,9 +69,6 @@
     };
   };
 
-  system.keyboard = {
-    enableKeyMapping = true;
-    remapCapsLockToControl = true;
-    # remapCapsLockToEscape = true;
-  };
+
+
 }

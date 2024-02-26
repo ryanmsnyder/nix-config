@@ -45,6 +45,7 @@ in
         #   sharedFiles
         #   additionalFiles
         # ];
+        file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
         stateVersion = "23.11";
       };
 

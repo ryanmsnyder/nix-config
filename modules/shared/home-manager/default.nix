@@ -29,4 +29,6 @@ in
   # I've linked the wezterm config to the ~/.config folder here. With programs such as lf, etc,
   # I linked their config inside of their dedicated file in the programs directory
   home.file.".config/wezterm".source = ./config/wezterm;
+
+  
 }

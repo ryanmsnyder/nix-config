@@ -198,8 +198,6 @@ You can search for packages on the [official NixOS website](https://search.nixos
 
 **Review these files**
 
-* `darwin/casks`
-
 * `darwin/packages`
 
 * `nixos/packages`
@@ -295,6 +293,20 @@ Finally, alter your system with this command:
 ```sh
 nix run .#build-switch
 ```
+
+### 11. Enable/Allow Karabiner-Elements items
+
+A couple of system messages relating to Karabiner-Elements will appear:
+
+1. Click allow in Settings > Privacy & Security for the Karabiner-related item that appears in the Security section.
+
+2. Enable karabiner_grabber and karabiner_observer in Settings > Privacy & Security > Input Monitoring.
+
+
+### 12. Restart Mac
+
+Restart your Mac so the Karabiner-Elements config will take effect.
+
 
 > [!WARNING]
 > On MacOS, your `.zshrc` file will be replaced with the [`zsh` configuration](https://github.com/dustinlyons/nixos-config/blob/main/templates/starter/modules/shared/home-manager.nix#L8) from this repository. So make some changes here first if you'd like.
