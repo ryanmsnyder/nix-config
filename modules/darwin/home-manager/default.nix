@@ -45,7 +45,7 @@ in
         #   sharedFiles
         #   additionalFiles
         # ];
-        file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+        file.".config/karabiner/karabiner.json".source = ../../shared/home-manager/config/karabiner/karabiner.json;
         stateVersion = "23.11";
       };
 
@@ -60,6 +60,135 @@ in
       manual.manpages.enable = false;
     };
   };
+
+  system.defaults = {
+    NSGlobalDomain = {
+      AppleShowAllExtensions = true;
+      ApplePressAndHoldEnabled = false;
+
+      # Key repeat settings
+      KeyRepeat = 2;
+      InitialKeyRepeat = 15;
+
+      # Mouse and sound settings
+      "com.apple.mouse.tapBehavior" = 1;
+      "com.apple.sound.beep.volume" = 0.0;
+      "com.apple.sound.beep.feedback" = 0;
+    };
+
+    dock = {
+      autohide = true;  # hide dock
+      autohide-delay = 0.00;  # delay before dock shows
+      autohide-time-modifier = 0.50;  # speed of dock animation when showing/hiding
+      show-recents = false;
+      launchanim = true;
+      orientation = "bottom";
+      tilesize = 48;
+      wvous-bl-corner = 4; # hot corner that shows desktop when hovering mouse over bottom left corner
+    };
+
+    finder = {
+      _FXShowPosixPathInTitle = false;
+    };
+
+    trackpad = {
+      Clicking = true;
+      TrackpadThreeFingerDrag = true;
+    };
+
+    # Raycast settings. Launch Raycast with CMD-SPC
+    CustomUserPreferences = {
+      "com.raycast.macos" = {
+        NSNavLastRootDirectory = "~/src/scripts/raycast";
+        "NSStatusItem Visible raycastIcon" = 0;
+        commandsPreferencesExpandedItemIds = [
+          "extension_noteplan-3__00cda425-a991-4e4e-8031-e5973b8b24f6"
+          "builtin_package_navigation"
+          "builtin_package_scriptCommands"
+          "builtin_package_floatingNotes"
+        ];
+        "emojiPicker_skinTone" = "mediumLight";
+        initialSpotlightHotkey = "Command-49";  
+        navigationCommandStyleIdentifierKey = "legacy";
+        "onboarding_canShowActionPanelHint" = 0;
+        "onboarding_canShowBackNavigationHint" = 0;
+        "onboarding_completedTaskIdentifiers" = [
+          "startWalkthrough"
+          "calendar"
+          "setHotkeyAndAlias"
+          "snippets"
+          "quicklinks"
+          "installFirstExtension"
+          "floatingNotes"
+          "windowManagement"
+          "calculator"
+          "raycastShortcuts"
+          "openActionPanel"
+        ];
+        organizationsPreferencesTabVisited = 1;
+        popToRootTimeout = 60;
+        raycastAPIOptions = 8;
+        raycastGlobalHotkey = "Command-49"; # launch Raycast with command-space
+        raycastPreferredWindowMode = "default";
+        raycastShouldFollowSystemAppearance = 1;
+        raycastWindowPresentationMode = 1;
+        showGettingStartedLink = 0;
+        "store_termsAccepted" = 1;
+        suggestedPreferredGoogleBrowser = 1;
+      };
+    };
+  };
+
+  # remap Spotlight to CTRL-SPC so Raycast can use CMD-SPC (no restart needed for this to work)
+  # only applies to current user
+  system.activationScripts.postActivation.text = ''
+    defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 64 "
+    <dict>
+      <key>enabled</key><true/>
+      <key>value</key><dict>
+        <key>type</key><string>standard</string>
+        <key>parameters</key>
+        <array>
+          <integer>32</integer>
+          <integer>49</integer>
+          <integer>262144</integer>
+        </array>
+      </dict>
+    </dict>
+    "
+
+    defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 60 "
+    <dict>
+      <key>enabled</key><false/>
+      <key>value</key><dict>
+        <key>type</key><string>standard</string>
+        <key>parameters</key>
+        <array>
+          <integer>32</integer>
+          <integer>49</integer>
+          <integer>262144</integer>
+        </array>
+      </dict>
+    </dict>
+    "
+
+    defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 61 "
+    <dict>
+      <key>enabled</key><true/>
+      <key>value</key><dict>
+        <key>type</key><string>standard</string>
+        <key>parameters</key>
+        <array>
+          <integer>32</integer>
+          <integer>49</integer>
+          <integer>1572864</integer>
+        </array>
+      </dict>
+    </dict>
+    "
+
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
 
 
 }

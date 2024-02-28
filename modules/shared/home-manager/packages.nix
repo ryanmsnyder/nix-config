@@ -66,7 +66,7 @@ in
 
   # Packages shared between MacOS machines
   shared-macos-pkgs = with pkgs; [
-    raycast
+    # raycast
     dockutil
     brunoDarwin # from custom-packages
     plexDarwin # from custom-packages
