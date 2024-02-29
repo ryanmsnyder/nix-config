@@ -51,6 +51,7 @@
 
             # DAP servers
             # delve
+            debugpy
         ];
     };
 

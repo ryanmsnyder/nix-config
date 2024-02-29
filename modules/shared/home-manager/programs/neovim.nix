@@ -51,6 +51,10 @@
 
             # DAP servers
             # delve
+            # Create a custom Python environment with debugpy for DAP
+            (python311.withPackages (ps: with ps; [
+                debugpy
+            ]))
         ];
     };
 

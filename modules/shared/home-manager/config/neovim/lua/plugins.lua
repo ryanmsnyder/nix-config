@@ -156,39 +156,6 @@ return {
 	},
 
 	-- {
-	--   "L3MON4D3/LuaSnip",
-	--   dependncies = {
-	--     "rafamadriz/friendly-snippets",
-	--   },
-	--   config = function()
-	--     require "config.luasnip"
-	--   end,
-	-- },
-
-	-- {
-	--   "williamboman/mason.nvim",
-	--   build = ":MasonUpdate",
-	--   cmd = {
-	--     "Mason",
-	--     "MasonInstall",
-	--     "MasonUninstall",
-	--     "MasonUninstallAll",
-	--     "MasonLog",
-	--   },
-	--   config = function()
-	--     require("mason").setup()
-	--   end,
-	-- },
-
-	-- {
-	--   "williamboman/mason-lspconfig.nvim",
-	--   dependencies = {
-	--     "williamboman/mason.nvim",
-	--     "neovim/nvim-lspconfig",
-	--   },
-	-- },
-
-	-- {
 	--   'VonHeikemen/lsp-zero.nvim', branch = 'v3.x',
 	--   lazy = false, -- change this
 	--   dependencies = {
@@ -233,75 +200,40 @@ return {
 		end,
 	},
 
-	-- {
-	--   "neovim/nvim-lspconfig",
-	--   event = "BufReadPost",
-	--   dependencies = {
-	--     "hrsh7th/cmp-nvim-lsp",
-	--     -- "williamboman/mason-lspconfig.nvim",
-	--   },
-	--   config = function()
-	--     require "config.lsp.lsp"
-	--   end,
-	-- },
+	{
+		"mfussenegger/nvim-dap",
+		event = "VeryLazy",
+		config = function()
+			require("config.dap.nvim-dap")
+		end,
+	},
 
-	-- {
-	--   "williamboman/mason-lspconfig.nvim",
-	--   dependencies = {
-	--     "williamboman/mason.nvim",
-	--     "neovim/nvim-lspconfig",
-	--   },
-	-- },
+	{
+		"mfussenegger/nvim-dap-python",
+		event = "VeryLazy",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+		},
+	},
 
-	-- {
-	--   -- allows for automatically installing formatters like stylua, prettier, and black
-	--   "jay-babu/mason-null-ls.nvim",
-	--   event = { "BufReadPre", "BufNewFile" },
-	--   dependencies = {
-	--     "williamboman/mason.nvim",
-	--     {
-	--       "jose-elias-alvarez/null-ls.nvim",
-	--       event = "BufReadPost",
-	--       dependencies = { "lukas-reineke/lsp-format.nvim", "nvim-lua/plenary.nvim" },
-	--       config = function()
-	--         require "config.lsp.null-ls"
-	--       end,
-	--     },
-	--   },
-	--   config = function()
-	--     require "config.lsp.mason-null-ls"
-	--   end,
-	-- },
+	{
+		"rcarriga/nvim-dap-ui",
+		event = "VeryLazy",
+		lazy = false,
+		dependencies = { "mfussenegger/nvim-dap", "mfussenegger/nvim-dap-python" },
+		config = function()
+			require("config.dap.nvim-dap-ui")
+		end,
+	},
 
-	-- {
-	--   "jay-babu/mason-nvim-dap.nvim", -- automatically installs debug adapters
-	--   ft = { "python", "javascript", "typescript" },
-	--   dependencies = {
-	--     "williamboman/mason.nvim",
-	--     "mfussenegger/nvim-dap",
-	--     "rcarriga/nvim-dap-ui",
-	--   },
-	--   config = function()
-	--     require "config.dap.mason-nvim-dap"
-	--   end,
-	-- },
-
-	-- {
-	--   "rcarriga/nvim-dap-ui",
-	--   dependencies = { "mfussenegger/nvim-dap", "jay-babu/mason-nvim-dap.nvim" },
-	--   config = function()
-	--     require "config.dap.nvim-dap-ui"
-	--   end,
-	-- },
-
-	-- {
-	--   "Weissle/persistent-breakpoints.nvim",
-	--   event = "BufReadPost",
-	--   dependencies = { "mfussenegger/nvim-dap" },
-	--   config = function()
-	--     require "config.dap.persistent-breakpoints"
-	--   end,
-	-- },
+	{
+		"Weissle/persistent-breakpoints.nvim",
+		event = "BufReadPost",
+		dependencies = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("config.dap.persistent-breakpoints")
+		end,
+	},
 
 	{
 		"windwp/nvim-autopairs",
