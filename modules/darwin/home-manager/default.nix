@@ -30,6 +30,7 @@ in
       "magnet" = 441258766;
       "bitwarden" = 1352778147;  # currently not in nixpkgs for darwin so install via mas
       "amphetamine" = 937984704;
+      "numbers" = 409203825;
     };
   };
 
