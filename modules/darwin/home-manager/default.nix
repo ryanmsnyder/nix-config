@@ -17,8 +17,6 @@ in
 
   homebrew = {
     enable = true;
-    # casks = pkgs.callPackage ./casks.nix {};
-
     # These app IDs are from using the mas CLI app
     # mas = mac app store
     # https://github.com/mas-cli/mas
@@ -26,6 +24,7 @@ in
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
     #
+    # These apps won't be automatically uninstalled if removed
     masApps = {
       "magnet" = 441258766;
       "bitwarden" = 1352778147;  # currently not in nixpkgs for darwin so install via mas

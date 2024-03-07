@@ -21,7 +21,7 @@
 
     # Turn this on to make command line easier
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env
     '';
   };
 

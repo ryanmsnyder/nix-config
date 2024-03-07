@@ -160,7 +160,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 * You can always add secrets later.
 
 ```sh
-mkdir -p nixos-config && (cd nixos-config && nix flake --extra-experimental-features 'nix-command flakes' init -t github:dustinlyons/nixos-config#starter)
+mkdir -p nix-config && (cd nix-config && nix flake --extra-experimental-features 'nix-command flakes' init -t github:dustinlyons/nixos-config#starter)
 ```
 
 **Full version with secrets management**
@@ -170,7 +170,7 @@ mkdir -p nixos-config && (cd nixos-config && nix flake --extra-experimental-feat
 * This template offers you a place to keep passwords, private keys, etc. *as part of your configuration*.
 
 ```sh
-mkdir -p nixos-config && (cd nixos-config && nix flake --extra-experimental-features 'nix-command flakes' init -t github:dustinlyons/nixos-config#starter-with-secrets)
+mkdir -p nix-config && (cd nix-config && nix flake --extra-experimental-features 'nix-command flakes' init -t github:dustinlyons/nixos-config#starter-with-secrets)
 ```
 
 ### 4. Make apps executable
@@ -606,7 +606,7 @@ in
 }
 ```
 
-Finally, I'd commit all changes to the `nix-secrets` repository, go back to my `nixos-config` and run `nix flake update` to update the lock file.
+Finally, I'd commit all changes to the `nix-secrets` repository, go back to my `nix-config` and run `nix flake update` to update the lock file.
 
 The secret is now ready to use. Here's an [example](https://github.com/dustinlyons/nixos-config/blob/3b95252bc6facd7f61c6c68ceb1935481cb6b457/nixos/secrets.nix#L28) from my configuration. In the end, this creates a symlink to a decrypted file in the Nix Store that reflects my original file.
 

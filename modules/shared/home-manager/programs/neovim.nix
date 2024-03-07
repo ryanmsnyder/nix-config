@@ -50,7 +50,6 @@
             stylua
 
             # DAP servers
-            # delve
             # Create a custom Python environment with debugpy for DAP
             (python311.withPackages (ps: with ps; [
                 debugpy
@@ -62,6 +61,6 @@
     # store (in this case, directly to the modules/config/neovim directory). However, it appears to not work correctly on MacOS
     # because ~/.config/nvim is still symlinked to the nix store. However, it still solved my issue, which was that my
     # lazy-lock.json file wasn't writeable. Using mkOutOfStoreSymlink gave the file write permissions.
-    home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/modules/shared/home-manager/config/neovim";
+    home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/modules/shared/home-manager/config/neovim";
 
 }

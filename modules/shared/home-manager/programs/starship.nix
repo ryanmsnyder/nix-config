@@ -11,9 +11,9 @@
             add_newline = true;
 
             character = {
-            success_symbol = "[➜](green)";
-            error_symbol = "[❯](red)";
-            vicmd_symbol = "[❮](green)";
+                success_symbol = "[➜](green)";
+                error_symbol = "[❯](red)";
+                vicmd_symbol = "[❮](green)";
             };
 
             directory = {
@@ -22,50 +22,58 @@
             };
 
             git_commit = {
-            commit_hash_length = 8;
-            style = "bold white";
+                commit_hash_length = 8;
+                style = "bold white";
             };
 
             git_state = {
-            format = "[\\($state( $progress_current of $progress_total)\\)]($style) ";
+                format = "[\\($state( $progress_current of $progress_total)\\)]($style) ";
             };
 
             git_status = {
-            conflicted = "⚔️ ";
-            ahead = "🏎️💨×$count ";
-            behind = "🐢×$count ";
-            diverged = "🔱 🏎️💨×$ahead_count 🐢×$behind_count ";
-            untracked = "🛤️×$count ";
-            stashed = "📦 ";
-            modified = "📝×$count ";
-            staged = "🗃️×$count ";
-            renamed = "📛×$count ";
-            deleted = "🗑️×$count ";
-            style = "bright-white";
-            format = "$all_status$ahead_behind";
+                conflicted = "⚔️ ";
+                ahead = "🏎️💨×$count ";
+                behind = "🐢×$count ";
+                diverged = "🔱 🏎️💨×$ahead_count 🐢×$behind_count ";
+                untracked = "🛤️×$count ";
+                stashed = "📦 ";
+                modified = "📝×$count ";
+                staged = "🗃️×$count ";
+                renamed = "📛×$count ";
+                deleted = "🗑️×$count ";
+                style = "bright-white";
+                format = "$all_status$ahead_behind";
             };
 
             cmd_duration = {
-            min_time = 10000; # Show command duration over 10,000 milliseconds (=10 sec)
-            format = " took [$duration]($style)";
+                min_time = 10000; # Show command duration over 10,000 milliseconds (=10 sec)
+                format = " took [$duration]($style)";
             };
 
             package = {
-            disabled = true;
+                disabled = true;
             };
 
             python = {
-            format = "[$symbol$version]($style)";
-            style = "bold yellow";
+                format = "[$symbol$version]($style)";
+                style = "bold yellow";
             };
 
             nodejs = {};
 
             hostname = {
-            ssh_only = true;
-            format = "on [$hostname](bold red) ";
-            style = "bold dimmed white";
-            disabled = false;
+                ssh_only = true;
+                format = "on [$hostname](bold red) ";
+                style = "bold dimmed white";
+                disabled = false;
+            };
+
+
+            nix_shell = {
+                impure_msg = "[impure shell](bold red)";
+                pure_msg = "[pure shell](bold green)";
+                unknown_msg = "[unknown shell](bold yellow)";
+                format = " via [❄️ $state( \($name\))](bold blue) ";
             };
 
             palettes = {
