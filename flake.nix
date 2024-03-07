@@ -60,6 +60,7 @@
     {
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      templates = import ./templates;
 
       darwinConfigurations = let user = "ryan"; in {
         macbookpro = darwin.lib.darwinSystem {
