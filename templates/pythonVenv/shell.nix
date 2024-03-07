@@ -4,15 +4,12 @@ let
   pythonPackages = pkgs.python3Packages;
 in
 pkgs.mkShell {
+  name = "venv";
   buildInputs = [
     pythonPackages.python
     pythonPackages.venvShellHook
   ];
   venvDir = "./.venv";
-
-  shellHook = ''
-    export name="venv-shell"
-  '';
 
   postVenvCreation = ''
     unset SOURCE_DATE_EPOCH

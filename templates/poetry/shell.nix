@@ -4,16 +4,13 @@ let
   pythonPackages = pkgs.python3Packages;
 in
 pkgs.mkShell {
+  name = "poetry";
   buildInputs = [
     pythonPackages.python
     pythonPackages.venvShellHook
   ];
   packages = [ pkgs.poetry ];
   venvDir = "./.venv";
-  
-  shellHook = ''
-    export name="poetry-shell"
-  '';
 
   postVenvCreation = ''
     unset SOURCE_DATE_EPOCH
