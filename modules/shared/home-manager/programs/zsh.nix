@@ -46,6 +46,8 @@
 
             # lf (file manager)
             # lf = "lfcd";
+
+            nd = "nix develop --command zsh";
         };
 
         initExtraFirst = ''

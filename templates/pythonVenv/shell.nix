@@ -9,6 +9,11 @@ pkgs.mkShell {
     pythonPackages.venvShellHook
   ];
   venvDir = "./.venv";
+
+  shellHook = ''
+    export name="venv-shell"
+  '';
+
   postVenvCreation = ''
     unset SOURCE_DATE_EPOCH
   '';

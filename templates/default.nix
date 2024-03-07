@@ -7,4 +7,8 @@
     path = ./pythonVenv;
     description = "Python development shell using mkShell and venvHook";
   };
+  test = {
+    path = ./test;
+    description = "Python development shell using mkShell and venvHook";
+  };
 }

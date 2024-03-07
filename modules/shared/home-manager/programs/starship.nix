@@ -55,7 +55,7 @@
             };
 
             python = {
-                format = "[$symbol$version]($style)";
+                format = "[🐍$version]($style)";
                 style = "bold yellow";
             };
 
@@ -68,12 +68,13 @@
                 disabled = false;
             };
 
-
             nix_shell = {
-                impure_msg = "[impure shell](bold red)";
+                impure_msg = "";
                 pure_msg = "[pure shell](bold green)";
                 unknown_msg = "[unknown shell](bold yellow)";
-                format = " via [❄️ $state( \($name\))](bold blue) ";
+                symbol = "❄️";
+                format = " via [$symbol(\($name\))](bold blue) ";
+                heuristic = true;
             };
 
             palettes = {
