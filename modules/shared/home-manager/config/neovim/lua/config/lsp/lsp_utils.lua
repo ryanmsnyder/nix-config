@@ -4,9 +4,6 @@ local icons = require("icons.icons")
 
 local M = {}
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
 -- keep outside of autoformat_on_save function
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
@@ -119,5 +116,6 @@ M.handlers = {
 		border = "rounded",
 	}),
 }
+
 
 return M
