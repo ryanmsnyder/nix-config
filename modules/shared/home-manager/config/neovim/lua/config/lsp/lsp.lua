@@ -261,31 +261,11 @@ require("neodev").setup({
   lspconfig = true,
 })
 
---- Create the default capabilities to use for LSP server configuration.
----@return lsp.ClientCapabilities
-local function lsp_default_capabilities()
-  -- Use default vim.lsp capabilities and apply some tweaks on capabilities.completion for nvim-cmp
-  local capabilities = vim.tbl_deep_extend("force",
-    vim.lsp.protocol.make_client_capabilities(),
-    require('cmp_nvim_lsp').default_capabilities()
-  )  --[[@as lsp.ClientCapabilities]]
-
-  -- [Additional capabilities customization]
-  -- Large workspace scanning may freeze the UI; see https://github.com/neovim/neovim/issues/23291
-  if vim.fn.has('nvim-0.9') > 0 then
-    -- enable neovim LSP file watching so LSP servers can respond to file watching events
-    -- this is needed when installing new packages to projects, otherwise NeoVim or the LSP would need to be restarted
-    -- to detect the added packages
-    capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-  end
-  return capabilities
-end
-
 for _, server in pairs(servers) do
   ---@type table<string, boolean|function|table>
   local config = {
     on_attach = lsp_utils.on_attach,
-    capabilities = lsp_default_capabilities(),
+    capabilities = lsp_utils.lsp_default_capabilities(),
   }
 
   if server_configs[server] ~= nil then

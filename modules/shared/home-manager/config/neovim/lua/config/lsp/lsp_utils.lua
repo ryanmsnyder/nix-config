@@ -35,6 +35,26 @@ function M.on_attach(client, bufnr)
 	M.set_keys(client, bufnr)
 end
 
+--- Create the default capabilities to use for LSP server configuration.
+---@return lsp.ClientCapabilities
+function M.lsp_default_capabilities()
+	-- Use default vim.lsp capabilities and apply some tweaks on capabilities.completion for nvim-cmp
+	local capabilities = vim.tbl_deep_extend("force",
+	  vim.lsp.protocol.make_client_capabilities(),
+	  require('cmp_nvim_lsp').default_capabilities()
+	)  --[[@as lsp.ClientCapabilities]]
+  
+	-- [Additional capabilities customization]
+	-- Large workspace scanning may freeze the UI; see https://github.com/neovim/neovim/issues/23291
+	if vim.fn.has('nvim-0.9') > 0 then
+	  -- enable neovim LSP file watching so LSP servers can respond to file watching events
+	  -- this is needed when installing new packages to projects, otherwise NeoVim or the LSP would need to be restarted
+	  -- to detect the added packages
+	  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+	end
+	return capabilities
+end
+
 function M.format()
 	vim.lsp.buf.format()
 end
