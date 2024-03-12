@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd("User", {
 	pattern = "VeryLazy",
 	callback = function()
 		require("commands")
-		require("mappings")
+		require("keymaps")
 		require("icons.icons")
 	end,
 })

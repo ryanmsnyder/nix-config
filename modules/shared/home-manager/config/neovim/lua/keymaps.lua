@@ -1,5 +1,9 @@
 local wk = require("which-key")
 local utils = require("utils")
+local map = utils.map
+local feedkeys, feedkeys_count = utils.feedkeys, utils.feedkeys_count
+local bo, o, wo, v, fn = vim.bo, vim.o, vim.wo, vim.v, vim.fn
+-- local map = vim.keymap.set
 
 vim.o.timeoutlen = 300
 
@@ -11,60 +15,72 @@ wk.setup({
 })
 
 -- set ; to enter command mode
-vim.keymap.set("n", ";", ":", { noremap = true })
+-- set silent to false so the colon appears in the command line area when the semicolon is pressed
+map("n", ";", ":", { silent = false })
 
 -- move between NeoVim and Wezterm panes via smart-splits.nvim
-vim.keymap.set("n", "<C-h>", "<cmd>SmartCursorMoveLeft<CR>", { desc = "move cursor left" })
-vim.keymap.set("n", "<C-l>", "<cmd>SmartCursorMoveRight<CR>", { desc = "move cursor right" })
-vim.keymap.set("n", "<C-k>", "<cmd>SmartCursorMoveUp<CR>", { desc = "move cursor up" })
-vim.keymap.set("n", "<C-j>", "<cmd>SmartCursorMoveDown<CR>", { desc = "move cursor down" })
-vim.keymap.set("n", "<C-a>r", "<cmd>SmartResizeMode<CR>", { desc = "resize split" })
+map("n", "<C-h>", "<cmd>SmartCursorMoveLeft<CR>", { desc = "move cursor left" })
+map("n", "<C-l>", "<cmd>SmartCursorMoveRight<CR>", { desc = "move cursor right" })
+map("n", "<C-k>", "<cmd>SmartCursorMoveUp<CR>", { desc = "move cursor up" })
+map("n", "<C-j>", "<cmd>SmartCursorMoveDown<CR>", { desc = "move cursor down" })
+map("n", "<C-a>r", "<cmd>SmartResizeMode<CR>", { desc = "resize split" })
 
 -- go to first non-empty char of current line
-vim.keymap.set("n", "H", "^", { desc = "go to first non-empty char of current line" })
+map("n", "H", "^", { desc = "go to first non-empty char of current line" })
 -- to to last non-empty char of current line
-vim.keymap.set("n", "L", ":normal! g_<CR>", { desc = "go to last non-empty char of current line" })
+map("n", "L", ":normal! g_<CR>", { desc = "go to last non-empty char of current line" })
 
 -- -- Better window navigation
--- vim.keymap.set("n", "<C-j>", "<C-w>j")
--- vim.keymap.set("n", "<C-k>", "<C-w>k")
--- vim.keymap.set("n", "<C-h>", "<C-w>h")
--- vim.keymap.set("n", "<C-l>", "<C-w>l")
+-- map("n", "<C-j>", "<C-w>j")
+-- map("n", "<C-k>", "<C-w>k")
+-- map("n", "<C-h>", "<C-w>h")
+-- map("n", "<C-l>", "<C-w>l")
 
 -- -- Resize window using <Shift+> arrow keys
--- vim.keymap.set("n", "<S-Up>", "<CMD>resize +2<CR>")
--- vim.keymap.set("n", "<S-Down>", "<CMD>resize -2<CR>")
--- vim.keymap.set("n", "<S-Left>", "<CMD>vertical resize -2<CR>")
--- vim.keymap.set("n", "<S-Right>", "<CMD>vertical resize +2<CR>")
+-- map("n", "<S-Up>", "<CMD>resize +2<CR>")
+-- map("n", "<S-Down>", "<CMD>resize -2<CR>")
+-- map("n", "<S-Left>", "<CMD>vertical resize -2<CR>")
+-- map("n", "<S-Right>", "<CMD>vertical resize +2<CR>")
 
 -- Switch buffers with tab
-vim.keymap.set("n", "<S-TAB>", "<CMD>bprevious<CR>")
-vim.keymap.set("n", "<TAB>", "<CMD>bnext<CR>")
+map("n", "<S-TAB>", "<CMD>bprevious<CR>")
+map("n", "<TAB>", "<CMD>bnext<CR>")
 
 -- Clear search with <esc>
-vim.keymap.set({ "i", "n" }, "<esc>", "<CMD>noh<CR><esc>")
-vim.keymap.set("n", "gw", "*N")
-vim.keymap.set("x", "gw", "*N")
+map('n', '<Esc>', function()
+	if vim.v.hlsearch == 1 then
+	  vim.cmd.nohlsearch()
+	elseif bo.modifiable then
+	  utils.clear_lsp_references()
+	elseif #vim.api.nvim_list_wins() > 1 then
+	  return feedkeys('<C-w>c')
+	end
+  
+	utils.close_floating_windows()
+end, 'Close window if not modifiable, otherwise clear LSP references')
+
+map("n", "gw", "*N")
+map("x", "gw", "*N")
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-vim.keymap.set("n", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
-vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true })
-vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true })
+map("n", "n", "'Nn'[v:searchforward]", { expr = true })
+map("x", "n", "'Nn'[v:searchforward]", { expr = true })
+map("o", "n", "'Nn'[v:searchforward]", { expr = true })
+map("n", "N", "'nN'[v:searchforward]", { expr = true })
+map("x", "N", "'nN'[v:searchforward]", { expr = true })
+map("o", "N", "'nN'[v:searchforward]", { expr = true })
 
 -- save in insert mode
-vim.keymap.set("i", "<C-s>", "<CMD>:w<CR><esc>")
+map("i", "<C-s>", "<CMD>:w<CR><esc>")
 -- save in normal mode
-vim.keymap.set("n", "<C-s>", "<CMD>:w<CR><esc>")
+map("n", "<C-s>", "<CMD>:w<CR><esc>")
 
 -- better indenting
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
 -- copy whole file
-vim.keymap.set("n", "<C-c>", "<cmd> %y+ <CR>")
+map("n", "<C-c>", "<cmd> %y+ <CR>")
 
 -- save current TelescopeResultsTitle highlights to global variable before changing its color
 -- for Telescope command_history (to display keybindings)
