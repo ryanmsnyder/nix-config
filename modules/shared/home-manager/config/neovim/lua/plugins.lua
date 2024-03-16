@@ -44,6 +44,34 @@ return {
 	},
 
 	{
+		"kevinhwang91/nvim-ufo",
+		lazy = false,
+		dependencies = "kevinhwang91/promise-async",
+		config = function()
+			require("config.nvim-ufo")
+		end,
+	},
+
+	{
+		"stevearc/aerial.nvim",
+		opts = {
+			attach_mode = "global",
+			close_on_select = true,
+			highlight_on_hover = true,
+			manage_folds = true,
+			layout = {
+				min_width = 30,
+				default_direction = "prefer_right",
+			},
+		},
+		-- Optional dependencies
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
+
+	{
 		"rebelot/heirline.nvim",
 		event = "UiEnter",
 		dependencies = {
@@ -51,7 +79,7 @@ return {
 			"linrongbin16/lsp-progress.nvim",
 		},
 		config = function()
-			require("config.heirline.heirline")
+			require("config.heirline")
 		end,
 	},
 

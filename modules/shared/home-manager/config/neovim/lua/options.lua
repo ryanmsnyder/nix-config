@@ -2,7 +2,7 @@
 local g = vim.g -- global variables
 local opt = vim.opt -- editor options
 
-local icons = require "icons.icons"
+local icons = require("icons.icons")
 
 -- set leader key to Space
 g.mapleader = " "
@@ -42,7 +42,7 @@ opt.expandtab = true
 opt.shiftwidth = 2
 
 -- disable intro
-opt.shortmess:append "sI"
+opt.shortmess:append("sI")
 
 -- enable terminal colors
 opt.termguicolors = true
@@ -52,7 +52,7 @@ opt.showmode = false
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
-opt.whichwrap:append "<>[]hl"
+opt.whichwrap:append("<>[]hl")
 
 -- preserve undo history for a file across editing sessions
 opt.undofile = true
@@ -95,28 +95,28 @@ opt.laststatus = 3
 
 -- disable built-in plugins
 local disabled_built_ins = {
-  "2html_plugin",
-  "getscript",
-  "getscriptPlugin",
-  "gzip",
-  "logipat",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
-  "matchit",
-  "tar",
-  "tarPlugin",
-  "rrhelper",
-  "spellfile_plugin",
-  "vimball",
-  "vimballPlugin",
-  "zip",
-  "zipPlugin",
+	"2html_plugin",
+	"getscript",
+	"getscriptPlugin",
+	"gzip",
+	"logipat",
+	"netrw",
+	"netrwPlugin",
+	"netrwSettings",
+	"netrwFileHandlers",
+	"matchit",
+	"tar",
+	"tarPlugin",
+	"rrhelper",
+	"spellfile_plugin",
+	"vimball",
+	"vimballPlugin",
+	"zip",
+	"zipPlugin",
 }
 
 for _, plugin in pairs(disabled_built_ins) do
-  g["loaded_" .. plugin] = 1
+	g["loaded_" .. plugin] = 1
 end
 
 g.do_filetype_lua = 1
@@ -136,9 +136,9 @@ g.do_filetype_lua = 1
 -- }
 
 -- set diagnostic floating window to round border
-vim.diagnostic.config {
-  float = { border = "rounded" },
-}
+vim.diagnostic.config({
+	float = { border = "rounded" },
+})
 
 -- set signs for diagnostics
 local sign = vim.fn.sign_define
@@ -151,29 +151,30 @@ sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition"
 sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
 
 opt.fillchars = {
-  -- vert = "▏", -- fixes vertical window split between neo-tree and buffer
-  -- vert = "▕", -- fixes vertical window split between neo-tree and buffer
-  -- horiz = "▁", -- fixes horizontal window split between trouble and buffer
-  -- horiz = "━",
-  -- horizup = "┻",
-  -- horizup = "▁",
-  -- horizdown = "┳",
-  -- vert = "┃",
-  -- vertleft = "┫",
-  -- vertright = "┣",
-  -- vertright = "▏",
-  -- verthoriz = "╋",
+	-- vert = "▏", -- fixes vertical window split between neo-tree and buffer
+	-- vert = "▕", -- fixes vertical window split between neo-tree and buffer
+	-- horiz = "▁", -- fixes horizontal window split between trouble and buffer
+	-- horiz = "━",
+	-- horizup = "┻",
+	-- horizup = "▁",
+	-- horizdown = "┳",
+	-- vert = "┃",
+	-- vertleft = "┫",
+	-- vertright = "┣",
+	-- vertright = "▏",
+	-- verthoriz = "╋",
 
-  eob = " ",
-  fold = " ",
-  foldopen = "",
-  foldclose = "",
-  diff = "/",
+	eob = " ",
+	fold = " ",
+	foldopen = "",
+	foldclose = "",
+	diff = "/",
 }
 
 -- refresh buffer when file changes on disk
 opt.autoread = true
 vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
-  command = "if mode() != 'c' | checktime | endif",
-  pattern = { "*" },
+	command = "if mode() != 'c' | checktime | endif",
+	pattern = { "*" },
 })
+

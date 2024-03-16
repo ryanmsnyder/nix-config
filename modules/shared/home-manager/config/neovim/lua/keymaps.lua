@@ -3,7 +3,6 @@ local utils = require("utils")
 local map = utils.map
 local feedkeys, feedkeys_count = utils.feedkeys, utils.feedkeys_count
 local bo, o, wo, v, fn = vim.bo, vim.o, vim.wo, vim.v, vim.fn
--- local map = vim.keymap.set
 
 vim.o.timeoutlen = 300
 
@@ -47,20 +46,27 @@ map("n", "<S-TAB>", "<CMD>bprevious<CR>")
 map("n", "<TAB>", "<CMD>bnext<CR>")
 
 -- Clear search with <esc>
-map('n', '<Esc>', function()
+map("n", "<Esc>", function()
 	if vim.v.hlsearch == 1 then
-	  vim.cmd.nohlsearch()
+		vim.cmd.nohlsearch()
 	elseif bo.modifiable then
-	  utils.clear_lsp_references()
+		utils.clear_lsp_references()
 	elseif #vim.api.nvim_list_wins() > 1 then
-	  return feedkeys('<C-w>c')
+		return feedkeys("<C-w>c")
 	end
-  
-	utils.close_floating_windows()
-end, 'Close window if not modifiable, otherwise clear LSP references')
 
-map("n", "gw", "*N")
-map("x", "gw", "*N")
+	utils.close_floating_windows()
+end, "Close window if not modifiable, otherwise clear LSP references")
+
+-- in normal and visual modes quits all opened windows with
+map({ "n", "v" }, "<C-q>", ":qa<CR>")
+
+-- search word under cursor
+map("n", "gw", "*N", { desc = "Search word under cursor" })
+map("x", "gw", "*N", { desc = "Search word under cursor" })
+
+-- search for selected text in visual mode
+map("x", "//", 'omsy/<C-R>"<CR>`s')
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map("n", "n", "'Nn'[v:searchforward]", { expr = true })
@@ -81,6 +87,12 @@ map("v", ">", ">gv")
 
 -- copy whole file
 map("n", "<C-c>", "<cmd> %y+ <CR>")
+
+-- move line up or down
+map("n", "<A-j>", ":m .+1<CR>==") -- move line up(n)
+map("n", "<A-k>", ":m .-2<CR>==") -- move line down(n)
+map("v", "<A-j>", ":m '>+1<CR>gv=gv") -- move line up(v)
+map("v", "<A-k>", ":m '<-2<CR>gv=gv") -- move line down(v)
 
 -- save current TelescopeResultsTitle highlights to global variable before changing its color
 -- for Telescope command_history (to display keybindings)
@@ -105,8 +117,12 @@ local leader = {
 	},
 	l = {
 		name = "+lsp",
-		i = { "<CMD>Mason<CR>", "manage servers" },
-		l = { "<CMD>MasonLog<CR>", "see logs" },
+		t = {
+			function()
+				require("aerial").toggle()
+			end,
+			"toggle code outline",
+		},
 	},
 	w = {
 		name = "+window",
@@ -260,4 +276,3 @@ local leader = {
 
 wk.register(leader, { prefix = "<leader>" })
 wk.register({ g = { name = "+goto" } })
-
