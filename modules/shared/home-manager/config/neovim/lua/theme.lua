@@ -1,6 +1,6 @@
 -- Themery block
 -- This block will be replaced by Themery.
-require "config.themes.catppuccin.catppuccin".before("mocha")
+require "config.themes.catppuccin".before("mocha")
 
 
 vim.cmd("colorscheme catppuccin")

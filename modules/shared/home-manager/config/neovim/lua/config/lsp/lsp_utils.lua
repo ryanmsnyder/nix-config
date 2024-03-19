@@ -1,6 +1,7 @@
 local wk = require("which-key")
 local utils = require("utils")
 local icons = require("icons.icons")
+local lsp = require("lspconfig")
 
 local M = {}
 
@@ -9,7 +10,6 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 -- autoformats on save by running any formatters that are attached to the buffer
 local function autoformat_on_save(client, bufnr)
-
 	if client.supports_method("textDocument/formatting") then
 		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -39,19 +39,25 @@ end
 ---@return lsp.ClientCapabilities
 function M.lsp_default_capabilities()
 	-- Use default vim.lsp capabilities and apply some tweaks on capabilities.completion for nvim-cmp
-	local capabilities = vim.tbl_deep_extend("force",
-	  vim.lsp.protocol.make_client_capabilities(),
-	  require('cmp_nvim_lsp').default_capabilities()
-	)  --[[@as lsp.ClientCapabilities]]
-  
+	local capabilities = vim.tbl_deep_extend(
+		"force",
+		vim.lsp.protocol.make_client_capabilities(),
+		require("cmp_nvim_lsp").default_capabilities()
+	) --[[@as lsp.ClientCapabilities]]
+
 	-- [Additional capabilities customization]
 	-- Large workspace scanning may freeze the UI; see https://github.com/neovim/neovim/issues/23291
-	if vim.fn.has('nvim-0.9') > 0 then
-	  -- enable neovim LSP file watching so LSP servers can respond to file watching events
-	  -- this is needed when installing new packages to projects, otherwise NeoVim or the LSP would need to be restarted
-	  -- to detect the added packages
-	  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+	if vim.fn.has("nvim-0.9") > 0 then
+		-- enable neovim LSP file watching so LSP servers can respond to file watching events
+		-- this is needed when installing new packages to projects, otherwise NeoVim or the LSP would need to be restarted
+		-- to detect the added packages
+		capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 	end
+	capabilities.textDocument.foldingRange = {
+		dynamicRegistration = false,
+		lineFoldingOnly = true,
+	}
+	-- print(vim.inspect(capabilities))
 	return capabilities
 end
 
@@ -110,6 +116,7 @@ function M.set_keys(client, buffer)
 	wk.register(keymap)
 end
 
+-- TODO: it doesn't look like this is getting accessed anywhere
 M.handlers = {
 	["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 		virtual_text = false,
@@ -135,7 +142,11 @@ M.handlers = {
 	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 		border = "rounded",
 	}),
-}
 
+	-- ["textDocument/foldingRange"] = vim.lsp.with(vim.lsp.handlers.foldingRange({
+	-- 	dynamicRegistration = false,
+	-- 	lineFoldingOnly = true,
+	-- })),
+}
 
 return M
