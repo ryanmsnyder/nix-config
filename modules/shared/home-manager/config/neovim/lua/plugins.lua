@@ -180,7 +180,7 @@ return {
 			"folke/neodev.nvim",
 		},
 		config = function()
-			require("config.lsp.lsp")
+			require("config.lsp")
 		end,
 	},
 
@@ -268,6 +268,28 @@ return {
 					local builtin = require("statuscol.builtin")
 					require("statuscol").setup({
 						relculright = true,
+						bt_ignore = {
+							"nofile",
+							"prompt",
+							"terminal",
+							"lazy",
+						},
+						ft_ignore = {
+							"dapui_watches",
+							"dap-repl",
+							"dapui_console",
+							"dapui_stacks",
+							"dapui_breakpoints",
+							"dapui_scopes",
+							"help",
+							"vim",
+							"alpha",
+							"dashboard",
+							"neo-tree",
+							"Trouble",
+							"lazy",
+							"toggleterm",
+						},
 						segments = {
 							{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
 							{ text = { "%s" }, click = "v:lua.ScSa" },
@@ -278,6 +300,37 @@ return {
 			},
 		},
 		event = "BufReadPost",
+		init = function()
+			-- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+			vim.o.foldcolumn = "1" -- '0' is not bad
+			vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+			vim.o.foldlevelstart = 99
+			vim.o.foldenable = true
+
+			-- -- autocommand to detach ufo from neo-tree so it doesn't fold
+			-- vim.api.nvim_create_autocmd("FileType", {
+			-- 	pattern = { "neo-tree" },
+			-- 	callback = function()
+			-- 		require("ufo").detach()
+			-- 		-- remove fold column for current window (neo-tree)
+			-- 		vim.wo.foldcolumn = "0"
+			-- 		vim.opt_local.foldenable = false
+			-- 	end,
+			-- })
+			-- vim.api.nvim_create_autocmd("FileType", {
+			-- 	pattern = "*",
+			-- 	callback = function(args)
+			-- 		-- Check if the file type is not 'neo-tree'
+			-- 		if vim.bo.filetype ~= "neo-tree" then
+			-- 			-- Your code goes here
+			-- 			print("This is not a neo-tree file type.")
+			-- 			vim.wo.foldcolumn = "1"
+			-- 			require("ufo").attach()
+			-- 			vim.opt_local.foldenable = true
+			-- 		end
+			-- 	end,
+			-- })
+		end,
 		config = function()
 			require("config.nvim-ufo")
 		end,

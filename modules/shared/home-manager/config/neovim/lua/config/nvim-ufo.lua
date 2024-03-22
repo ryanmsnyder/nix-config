@@ -1,8 +1,3 @@
-vim.o.foldcolumn = "1" -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
-
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
 vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
@@ -55,13 +50,21 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
 	return newVirtText
 end
 
+local ftMap = {
+	vim = "indent",
+	python = { "treesitter" },
+	git = "",
+}
+
 require("ufo").setup({
 	provider_selector = function(bufnr, filetype, buftype)
 		-- return { "treesitter", "indent" } -- TODO: figure out why treesitter works better than lsp (lsp is creating weird behavior)
-		return { "lsp", "indent" } -- TODO: figure out why treesitter works better than lsp (lsp is creating weird behavior)
+		return ftMap[filetype]
 	end,
 	fold_virt_text_handler = handler,
 	open_fold_hl_timeout = 0, -- disable highlighting when opening fold
+	enable_get_fold_virt_text = false,
+	close_fold_kinds_for_ft = { default = { "imports", "comment" } },
 	preview = {
 		win_config = {
 			border = { "", "─", "", "", "", "─", "", "" },
@@ -75,17 +78,4 @@ require("ufo").setup({
 			jumpBot = "]",
 		},
 	},
-	-- preview = {
-	-- 	win_config = {
-	-- 		border = { "", "─", "", "", "", "─", "", "" },
-	-- 		winhighlight = "Normal:Folded",
-	-- 		winblend = 0,
-	-- 	},
-	-- 	mappings = {
-	-- 		scrollU = "<C-k>",
-	-- 		scrollD = "<C-j>",
-	-- 		jumpTop = "[",
-	-- 		jumpBot = "]",
-	-- 	},
-	-- },
 })
