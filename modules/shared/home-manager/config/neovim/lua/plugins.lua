@@ -301,61 +301,15 @@ return {
 		},
 		event = "BufReadPost",
 		init = function()
-			-- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-			vim.o.foldcolumn = "1" -- '0' is not bad
+			vim.o.foldcolumn = "1"
 			vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 			vim.o.foldlevelstart = 99
 			vim.o.foldenable = true
-
-			-- -- autocommand to detach ufo from neo-tree so it doesn't fold
-			-- vim.api.nvim_create_autocmd("FileType", {
-			-- 	pattern = { "neo-tree" },
-			-- 	callback = function()
-			-- 		require("ufo").detach()
-			-- 		-- remove fold column for current window (neo-tree)
-			-- 		vim.wo.foldcolumn = "0"
-			-- 		vim.opt_local.foldenable = false
-			-- 	end,
-			-- })
-			-- vim.api.nvim_create_autocmd("FileType", {
-			-- 	pattern = "*",
-			-- 	callback = function(args)
-			-- 		-- Check if the file type is not 'neo-tree'
-			-- 		if vim.bo.filetype ~= "neo-tree" then
-			-- 			-- Your code goes here
-			-- 			print("This is not a neo-tree file type.")
-			-- 			vim.wo.foldcolumn = "1"
-			-- 			require("ufo").attach()
-			-- 			vim.opt_local.foldenable = true
-			-- 		end
-			-- 	end,
-			-- })
 		end,
 		config = function()
 			require("config.nvim-ufo")
 		end,
-		-- init = function()
-		-- 	vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-		-- 	vim.o.foldcolumn = "1" -- '0' is not bad
-		-- 	vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-		-- 	vim.o.foldlevelstart = 99
-		-- 	vim.o.foldenable = true
-		-- end,
 	},
-	-- Folding preview, by default h and l keys are used.
-	-- On first press of h key, when cursor is on a closed fold, the preview will be shown.
-	-- On second press the preview will be closed and fold will be opened.
-	-- When preview is opened, the l key will close it and open fold. In all other cases these keys will work as usual.
-	-- { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
-
-	-- {
-	-- 	"kevinhwang91/nvim-ufo",
-	-- 	event = "BufReadPost",
-	-- 	dependencies = { "kevinhwang91/promise-async", "neovim/nvim-lspconfig" },
-	-- 	config = function()
-	-- 		require("config.nvim-ufo")
-	-- 	end,
-	-- },
 
 	{
 		"stevearc/aerial.nvim",
@@ -364,6 +318,8 @@ return {
 			close_on_select = true,
 			highlight_on_hover = true,
 			manage_folds = true,
+			-- link_folds_to_tree = true,
+			-- link_tree_to_folds = true,
 			layout = {
 				min_width = 30,
 				default_direction = "prefer_right",

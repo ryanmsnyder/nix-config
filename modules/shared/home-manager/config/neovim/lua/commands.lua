@@ -1,5 +1,78 @@
 local utils = require("utils")
 
+-- Global variable to store the previous cursor setting
+_G.guicursor_prev = nil
+
+-- List of filetypes to apply the cursor settings
+local targetFiletypes = {
+	"aerial",
+	"neo-tree",
+	"Trouble",
+	-- You can add more filetypes here as needed.
+}
+
+-- Function to log messages to a file
+local function log_to_file(message)
+	local log_file_path = "/Users/ryan/Desktop/debug.log" -- Change this to the actual log file path
+	local file = io.open(log_file_path, "a") -- Open the file in append mode
+	if not file then
+		return -- If the file cannot be opened, return to avoid an error
+	end
+	file:write(os.date("%Y-%m-%d %H:%M:%S") .. " - " .. message .. "\n") -- Write the current timestamp and the debug message
+	file:close() -- Close the file
+end
+
+-- auto command group
+local augroup = vim.api.nvim_create_augroup("HideCursor", { clear = true })
+
+-- function to check if the current buffer is of a target filetype
+local function isTargetBuffer(filetype)
+	for _, targetFiletype in ipairs(targetFiletypes) do
+		if filetype == targetFiletype then
+			return true
+		end
+	end
+	return false
+end
+
+-- hide cursor when entering a target window
+vim.api.nvim_create_autocmd("WinEnter", {
+	pattern = "*",
+	callback = function()
+		if isTargetBuffer(vim.bo.filetype) then
+			-- Store the current cursor setting
+			_G.guicursor_prev = vim.o.guicursor
+			-- Apply custom cursor settings
+			vim.api.nvim_set_hl(0, "HIDDEN", { blend = 100, nocombine = true })
+			vim.o.guicursor = "a:HIDDEN"
+		end
+
+		-- if window is a popup set it back to the previous/normal cursor
+		-- this allows the cursor to appear in neo-tree popup windows
+		local win_id = vim.api.nvim_get_current_win()
+		local win_config = vim.api.nvim_win_get_config(win_id)
+		if win_config["relative"] == "win" then
+			vim.o.guicursor = _G.guicursor_prev
+		end
+	end,
+	group = augroup,
+})
+
+-- restore cursor when leaving a target window
+vim.api.nvim_create_autocmd("WinLeave", {
+	pattern = "*",
+	callback = function()
+		if isTargetBuffer(vim.bo.filetype) then
+			-- Restore the previous cursor setting
+			if _G.guicursor_prev then
+				vim.o.guicursor = _G.guicursor_prev
+			end
+		end
+	end,
+	group = augroup,
+})
+-- neo_tree_popup_buffer_leave
+
 -- vim.api.nvim_create_autocmd("OptionSet", {
 --   pattern = "background",
 --   callback = function()
