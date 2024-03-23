@@ -11,17 +11,6 @@ local targetFiletypes = {
 	-- You can add more filetypes here as needed.
 }
 
--- Function to log messages to a file
-local function log_to_file(message)
-	local log_file_path = "/Users/ryan/Desktop/debug.log" -- Change this to the actual log file path
-	local file = io.open(log_file_path, "a") -- Open the file in append mode
-	if not file then
-		return -- If the file cannot be opened, return to avoid an error
-	end
-	file:write(os.date("%Y-%m-%d %H:%M:%S") .. " - " .. message .. "\n") -- Write the current timestamp and the debug message
-	file:close() -- Close the file
-end
-
 -- auto command group
 local augroup = vim.api.nvim_create_augroup("HideCursor", { clear = true })
 
@@ -47,11 +36,11 @@ vim.api.nvim_create_autocmd("WinEnter", {
 			vim.o.guicursor = "a:HIDDEN"
 		end
 
-		-- if window is a popup set it back to the previous/normal cursor
+		-- if window is a popup (`relative` property of window is not an empty string) set it back to the previous/normal cursor
 		-- this allows the cursor to appear in neo-tree popup windows
 		local win_id = vim.api.nvim_get_current_win()
 		local win_config = vim.api.nvim_win_get_config(win_id)
-		if win_config["relative"] == "win" then
+		if win_config["relative"] ~= "" then
 			vim.o.guicursor = _G.guicursor_prev
 		end
 	end,
@@ -71,7 +60,6 @@ vim.api.nvim_create_autocmd("WinLeave", {
 	end,
 	group = augroup,
 })
--- neo_tree_popup_buffer_leave
 
 -- vim.api.nvim_create_autocmd("OptionSet", {
 --   pattern = "background",

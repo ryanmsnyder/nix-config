@@ -305,6 +305,16 @@ return {
 			vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 			vim.o.foldlevelstart = 99
 			vim.o.foldenable = true
+
+			-- remove fold column in toggleterm
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = { "toggleterm" },
+				callback = function()
+					-- require("ufo").detach()
+					-- vim.opt_local.foldenable = false
+					vim.wo.foldcolumn = "0"
+				end,
+			})
 		end,
 		config = function()
 			require("config.nvim-ufo")
