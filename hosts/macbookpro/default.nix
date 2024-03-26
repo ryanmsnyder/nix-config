@@ -4,8 +4,12 @@ let
   # set name of home folder
   user = "ryan"; 
 
+  # Import custom Darwin
+  customDarwinPackagesPath = ../../custom-packages/macos;
+  plexDarwin = pkgs.callPackage (customDarwinPackagesPath + "/plex.nix") {};
+
   # packages that should only be installed on specific host/machine
-  hostSpecificPackages = with pkgs; [ qbittorrent ];
+  hostSpecificPackages = with pkgs; [ qbittorrent plexDarwin ];
 in
 
 {

@@ -4,7 +4,6 @@ let
   # Import custom Darwin
   customDarwinPackagesPath = ../../../custom-packages/macos;
   brunoDarwin = pkgs.callPackage (customDarwinPackagesPath + "/bruno.nix") {};
-  plexDarwin = pkgs.callPackage (customDarwinPackagesPath + "/plex.nix") {};
 in
 
 {
@@ -69,7 +68,7 @@ in
     raycast
     dockutil
     brunoDarwin # from custom-packages
-    plexDarwin # from custom-packages
+    # plexDarwin # from custom-packages
     monitorcontrol
     karabiner-elements
   ];
