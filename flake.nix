@@ -78,7 +78,8 @@
           specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
           modules = [
             home-manager.darwinModules.home-manager
-            ./hosts/macos/work-macbookpro.nix
+            nix-homebrew.darwinModules.nix-homebrew  # for installing Mac App Store apps
+            ./hosts/work-macbookpro
           ];
         };
       };
