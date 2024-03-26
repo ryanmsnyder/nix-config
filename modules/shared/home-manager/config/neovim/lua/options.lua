@@ -178,3 +178,18 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
 	command = "if mode() != 'c' | checktime | endif",
 	pattern = { "*" },
 })
+
+--------------------------------------------------------------------------------------
+-- config/statuscol.lua
+-- Based on LazyVim: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/ui.lua
+
+local M = {}
+
+vim.opt.signcolumn = "yes:1"
+
+-- &statuscolumn is supported in neovim 0.9.0+
+if vim.fn.exists("&statuscolumn") == 0 then
+	return false
+end
+
+vim.opt.statuscolumn = [[%!v:lua.require'config.statuscolumn'.statuscolumn()]]

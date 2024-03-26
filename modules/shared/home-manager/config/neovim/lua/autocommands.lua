@@ -41,7 +41,9 @@ vim.api.nvim_create_autocmd("WinEnter", {
 		local win_id = vim.api.nvim_get_current_win()
 		local win_config = vim.api.nvim_win_get_config(win_id)
 		if win_config["relative"] ~= "" then
-			vim.o.guicursor = _G.guicursor_prev
+			if _G.guicursor_prev then
+				vim.o.guicursor = _G.guicursor_prev
+			end
 		end
 	end,
 	group = augroup,

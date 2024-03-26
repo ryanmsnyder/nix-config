@@ -140,6 +140,28 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
+			-- for picking a window to a open a file in from neo-tree
+			{
+				"s1n7ax/nvim-window-picker",
+				name = "window-picker",
+				event = "VeryLazy",
+				version = "2.*",
+				opts = {
+					hint = "floating-big-letter",
+					show_prompt = false,
+					filter_rules = {
+						include_current_win = false,
+						autoselect_one = false,
+						-- filter using buffer options
+						bo = {
+							-- if the file type is one of following, the window will be ignored
+							filetype = { "neo-tree", "neo-tree-popup", "notify", "aerial" },
+							-- if the buffer type is one of following, the window will be ignored
+							buftype = { "terminal", "quickfix" },
+						},
+					},
+				},
+			},
 		},
 		config = function()
 			require("config.neo-tree")
@@ -261,43 +283,43 @@ return {
 		"kevinhwang91/nvim-ufo",
 		dependencies = {
 			"kevinhwang91/promise-async",
-			{
-				-- Removes repeating line numbers in the status column. Otherwise you need to change NeoVim source code and build from source.
-				"luukvbaal/statuscol.nvim",
-				config = function()
-					local builtin = require("statuscol.builtin")
-					require("statuscol").setup({
-						relculright = true,
-						bt_ignore = {
-							"nofile",
-							"prompt",
-							"terminal",
-							"lazy",
-						},
-						ft_ignore = {
-							"dapui_watches",
-							"dap-repl",
-							"dapui_console",
-							"dapui_stacks",
-							"dapui_breakpoints",
-							"dapui_scopes",
-							"help",
-							"vim",
-							"alpha",
-							"dashboard",
-							"neo-tree",
-							"Trouble",
-							"lazy",
-							"toggleterm",
-						},
-						segments = {
-							{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-							{ text = { "%s" }, click = "v:lua.ScSa" },
-							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-						},
-					})
-				end,
-			},
+			-- {
+			-- 	-- Removes repeating line numbers in the status column. Otherwise you need to change NeoVim source code and build from source.
+			-- 	"luukvbaal/statuscol.nvim",
+			-- 	config = function()
+			-- 		local builtin = require("statuscol.builtin")
+			-- 		require("statuscol").setup({
+			-- 			relculright = true,
+			-- 			bt_ignore = {
+			-- 				"nofile",
+			-- 				"prompt",
+			-- 				"terminal",
+			-- 				"lazy",
+			-- 			},
+			-- 			ft_ignore = {
+			-- 				"dapui_watches",
+			-- 				"dap-repl",
+			-- 				"dapui_console",
+			-- 				"dapui_stacks",
+			-- 				"dapui_breakpoints",
+			-- 				"dapui_scopes",
+			-- 				"help",
+			-- 				"vim",
+			-- 				"alpha",
+			-- 				"dashboard",
+			-- 				"neo-tree",
+			-- 				"Trouble",
+			-- 				"lazy",
+			-- 				"toggleterm",
+			-- 			},
+			-- 			segments = {
+			-- 				{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+			-- 				{ text = { "%s" }, click = "v:lua.ScSa" },
+			-- 				{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+			-- 			},
+			-- 		})
+			-- 	end,
+			-- },
 		},
 		event = "BufReadPost",
 		init = function()

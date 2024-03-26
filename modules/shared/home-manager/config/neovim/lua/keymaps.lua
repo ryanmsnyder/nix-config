@@ -121,7 +121,13 @@ local leader = {
 			function()
 				require("aerial").toggle()
 			end,
-			"toggle code outline",
+			"toggle symbols outline",
+		},
+		s = {
+			function()
+				require("telescope").extensions.aerial.aerial()
+			end,
+			"search document symbols",
 		},
 	},
 	w = {

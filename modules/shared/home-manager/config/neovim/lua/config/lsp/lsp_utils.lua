@@ -75,7 +75,7 @@ function M.set_keys(client, buffer)
 		["<leader>"] = {
 			l = {
 				name = "+lsp",
-				s = { vim.lsp.buf.signature_help, "LSP signature help", mode = { "n" } },
+				-- s = { vim.lsp.buf.signature_help, "LSP signature help", mode = { "n" } },
 			},
 			j = {
 				name = "+goto",
