@@ -1,8 +1,12 @@
 { config, pkgs, ... }:
 
-let user = "ryan"; in
+let user = "ryan.snyder"; in
 
 {
+    # set custom config option that's defined in modules/shared/default.nix so username can be accessed
+  # in other modules
+  users.myUser = user;
+
 
   imports = [
     ../../modules/darwin/home-manager

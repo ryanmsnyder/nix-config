@@ -10,6 +10,10 @@ in
 
 {
 
+  # set custom config option that's defined in modules/shared/default.nix so username can be accessed
+  # in other modules
+  users.myUser = user;
+
   imports = [
     ../../modules/darwin/home-manager
     ../../modules/shared
@@ -17,10 +21,6 @@ in
     ../../modules/darwin/system-config.nix
     ../../modules/darwin/home-manager/dockutil.nix
   ];
-
-  # set custom config option that's defined in modules/shared/default.nix so username can be accessed
-  # in other modules
-  users.myUser = user;
 
   # install packages via home-manager that are specific to this host/machine
   # these will be installed in addition to other packages defined in modules/darwin/home-manager/default.nix

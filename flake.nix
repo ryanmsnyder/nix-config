@@ -62,7 +62,7 @@
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
       templates = import ./templates;
 
-      darwinConfigurations = let user = "ryan"; in {
+      darwinConfigurations = {
         macbookpro = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
