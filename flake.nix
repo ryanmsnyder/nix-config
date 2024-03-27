@@ -10,15 +10,22 @@
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
     };
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, darwin, nix-homebrew, home-manager, nixpkgs, disko } @inputs:
-  # outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko } @inputs:
+  # outputs = { self, darwin, nix-homebrew, home-manager, nixpkgs, disko } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, home-manager, nixpkgs, disko } @inputs:
     let
-      user = "ryan";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
@@ -63,22 +70,49 @@
       templates = import ./templates;
 
       darwinConfigurations = {
-        macbookpro = darwin.lib.darwinSystem {
+        macbookpro = let user = "ryan"; in darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs user;}; # this allows inputs to be passed explicitly to other modules
+
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew  # for installing Mac App Store apps
+            {
+              nix-homebrew = {
+                inherit user;
+                enable = true;
+                taps = {
+                  "homebrew/homebrew-core" = homebrew-core;
+                  # "homebrew/homebrew-cask" = homebrew-cask;
+                  "homebrew/homebrew-bundle" = homebrew-bundle;
+                };
+                mutableTaps = false;
+                autoMigrate = true;
+              };
+            }
             ./hosts/macbookpro
           ];
         };
 
-        work-macbookpro = darwin.lib.darwinSystem {
+        work-macbookpro = let user = "ryan.snyder"; in darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = { inherit inputs;}; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs user;}; # this allows inputs to be passed explicitly to other modules
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew  # for installing Mac App Store apps
+            {
+              nix-homebrew = {
+                inherit user;
+                enable = true;
+                taps = {
+                  "homebrew/homebrew-core" = homebrew-core;
+                  # "homebrew/homebrew-cask" = homebrew-cask;
+                  "homebrew/homebrew-bundle" = homebrew-bundle;
+                };
+                mutableTaps = false;
+                autoMigrate = true;
+              };
+            }
             ./hosts/work-macbookpro
           ];
         };
@@ -103,15 +137,15 @@
       nixosConfigurations = {
         hetzner-vps = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs user; }; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs; }; # this allows inputs to be passed explicitly to other modules
           modules = [
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager {
               home-manager = {
-                extraSpecialArgs = { inherit user; };
+                # extraSpecialArgs = { inherit user; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.${user} = import ./modules/nixos/home-manager.nix;
+                # users.${user} = import ./modules/nixos/home-manager.nix; -- TODO: fix so that it gets the user variable from myUser
               };
             }
             ./hosts/hetzner-vps

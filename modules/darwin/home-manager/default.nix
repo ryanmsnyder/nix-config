@@ -1,7 +1,7 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, user, ... }:
 
 let
-  user = config.users.myUser;
+  # user = config.users.myUser;
   # Define the content of your file as a derivation
 #   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
 #   additionalFiles = import ./files.nix { inherit user config pkgs; };

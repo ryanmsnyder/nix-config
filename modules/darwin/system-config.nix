@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: 
+{ config, pkgs, user, ... }: 
 
 {
   # Auto upgrade nix package and the daemon service.
@@ -10,7 +10,7 @@
   # Setup user, packages, programs
   nix = {
     package = pkgs.nixUnstable;
-    settings.trusted-users = [ "@admin" config.users.myUser ];
+    settings.trusted-users = [ "@admin" user ];
 
     gc = {
       user = "root";

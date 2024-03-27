@@ -68,7 +68,6 @@ in
     raycast
     dockutil
     brunoDarwin # from custom-packages
-    # plexDarwin # from custom-packages
     monitorcontrol
     karabiner-elements
   ];
