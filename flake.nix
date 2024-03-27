@@ -83,7 +83,6 @@
                 enable = true;
                 taps = {
                   "homebrew/homebrew-core" = homebrew-core;
-                  # "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
                 };
                 mutableTaps = false;
@@ -106,7 +105,6 @@
                 enable = true;
                 taps = {
                   "homebrew/homebrew-core" = homebrew-core;
-                  # "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
                 };
                 mutableTaps = false;
@@ -135,7 +133,7 @@
     #  });
 
       nixosConfigurations = {
-        hetzner-vps = nixpkgs.lib.nixosSystem {
+        hetzner-vps = let user = "ryan"; in nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; }; # this allows inputs to be passed explicitly to other modules
           modules = [
@@ -145,7 +143,7 @@
                 # extraSpecialArgs = { inherit user; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                # users.${user} = import ./modules/nixos/home-manager.nix; -- TODO: fix so that it gets the user variable from myUser
+                users.${user} = import ./modules/nixos/home-manager.nix;
               };
             }
             ./hosts/hetzner-vps

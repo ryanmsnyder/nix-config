@@ -1,9 +1,6 @@
 { config, pkgs, user, ... }:
 
 let 
-  # set name of home folder
-  # user = "ryan"; 
-
   # Import custom Darwin
   customDarwinPackagesPath = ../../custom-packages/macos;
   plexDarwin = pkgs.callPackage (customDarwinPackagesPath + "/plex.nix") {};
@@ -13,10 +10,6 @@ let
 in
 
 {
-
-  # set custom config option that's defined in modules/shared/default.nix so username can be accessed
-  # in other modules
-  # users.myUser = user;
 
   imports = [
     ../../modules/darwin/home-manager

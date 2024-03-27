@@ -69,7 +69,6 @@ in
     dockutil
     brunoDarwin # from custom-packages
     monitorcontrol
-    karabiner-elements
   ];
 
 }

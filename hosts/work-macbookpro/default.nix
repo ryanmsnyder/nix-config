@@ -1,18 +1,11 @@
 { config, pkgs, user, ... }:
 
 let 
-  # set name of home folder
-  # user = "ryan.snyder"; 
-
   # packages that should only be installed on specific host/machine
   hostSpecificPackages = with pkgs; [ ];
 in
 
 {
-  # set custom config option that's defined in modules/shared/default.nix so username can be accessed
-  # in other modules
-  # users.myUser = user;
-
 
   imports = [
     ../../modules/darwin/home-manager

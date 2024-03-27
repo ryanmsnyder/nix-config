@@ -1,13 +1,6 @@
 { lib, ... }:
 
 {
-  # options = {
-  #   users.myUser = lib.mkOption {
-  #     type = lib.types.str;
-  #     default = "ryan";
-  #     description = "Username for the user configuration.";
-  #   };
-  # };
 
   config = {
     nixpkgs.config = {
