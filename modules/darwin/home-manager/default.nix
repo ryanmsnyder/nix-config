@@ -45,6 +45,7 @@ in
         #   additionalFiles
         # ];
         file.".config/karabiner/karabiner.json".source = ../../shared/home-manager/config/karabiner/karabiner.json;
+
         stateVersion = "23.11";
       };
 
@@ -95,8 +96,9 @@ in
       TrackpadThreeFingerDrag = true;
     };
 
-    # Raycast settings. Launch Raycast with CMD-SPC
+    # manages Apple plist settings in ~/Library/Preferences
     CustomUserPreferences = {
+    # Raycast settings. Launch Raycast with CMD-SPC
       "com.raycast.macos" = {
         NSNavLastRootDirectory = "~/src/scripts/raycast";
         "NSStatusItem Visible raycastIcon" = 0;
@@ -134,6 +136,12 @@ in
         showGettingStartedLink = 0;
         "store_termsAccepted" = 1;
         suggestedPreferredGoogleBrowser = 1;
+      };
+
+     "com.apple.screensaver" = {
+        # Don't require password until 10 minutes after sleep or screen saver begins
+        askForPassword = 0;
+        askForPasswordDelay = 600;
       };
     };
   };

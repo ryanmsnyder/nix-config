@@ -1,15 +1,38 @@
 #!/bin/sh -e
 
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+MAPPING_FILE="${SCRIPT_DIR}/../hostname-to-flake-map.txt"
+
+# Get the current hostname
+CURRENT_HOSTNAME=$(hostname)
+
+# Initialize FLAKE variable
+FLAKE=""
+
+# Read each line in MAPPING_FILE
+while IFS='=' read -r line_hostname line_flake; do
+    if [ "$line_hostname" == "$CURRENT_HOSTNAME" ]; then
+        FLAKE="$line_flake"
+        break
+    fi
+done < "$MAPPING_FILE"
+
+# Check if the FLAKE variable is set; if not, exit with an error
+if [ -z "$FLAKE" ]; then
+    echo "Error: No flake configuration found for hostname '$CURRENT_HOSTNAME'"
+    exit 1
+fi
+
+SYSTEM="darwinConfigurations.$FLAKE.system"
+
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 RED='\033[1;31m'
 NC='\033[0m'
 
-FLAKE="macbookpro"
-SYSTEM="darwinConfigurations.$FLAKE.system"
-
 export NIXPKGS_ALLOW_UNFREE=1
 
+echo "${YELLOW}Detected flake for hostname ${CURRENT_HOSTNAME}: ${FLAKE}${NC}"
 echo "${YELLOW}Starting build...${NC}"
 nix --experimental-features 'nix-command flakes' build .#$SYSTEM $@
 

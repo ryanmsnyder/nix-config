@@ -84,7 +84,7 @@ opt.updatetime = 250
 
 -- keep column to the left of line numbers visible to prevent screen movement when
 -- diagnostic signs appear in the column
-opt.signcolumn = "yes"
+-- opt.signcolumn = "yes"
 
 -- make status line global (span the entire bottom)
 opt.laststatus = 3
@@ -179,12 +179,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
 	pattern = { "*" },
 })
 
---------------------------------------------------------------------------------------
 -- config/statuscol.lua
 -- Based on LazyVim: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/ui.lua
-
-local M = {}
-
 vim.opt.signcolumn = "yes:1"
 
 -- &statuscolumn is supported in neovim 0.9.0+
