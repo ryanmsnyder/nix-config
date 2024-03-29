@@ -15,15 +15,15 @@ in
     ../../modules/darwin/home-manager/dockutil.nix
   ];
 
-  # install packages via home-manager that are specific to this host/machine
-  # these will be installed in addition to other packages defined in modules/darwin/home-manager/default.nix
-  home-manager.users.${user}.home.packages = hostSpecificPackages;
-
-  # host specific config
-  home-manager.users.${user}.home.file = {
-    # create folder in ~/.config where raycast scripts will be
-    ".config/raycast/".source = ./config/raycast;
-  }
+  home-manager.users.${user}.home = {
+    # install packages via home-manager that are specific to this host/machine
+    # these will be installed in addition to other packages defined in modules/darwin/home-manager/default.nix
+    packages = hostSpecificPackages;
+    file = {
+      # create folder in ~/.config where raycast scripts will be
+      ".config/raycast/".source = ./config/raycast;
+    };
+  };
 
   # Configure applications that should appear in Dock
   local = {
