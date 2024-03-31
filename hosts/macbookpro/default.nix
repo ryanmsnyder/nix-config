@@ -1,16 +1,21 @@
 { config, pkgs, user, ... }:
 
 let 
-  # Import custom Darwin
-  customDarwinPackagesPath = ../../custom-packages/macos;
-  plexDarwin = pkgs.callPackage (customDarwinPackagesPath + "/plex.nix") {};
+  # Import the scripts
+  scripts = import ./home-manager/scripts { inherit pkgs; };
 
-  # packages that should only be installed on specific host/machine
-  hostSpecificPackages = with pkgs; [ qbittorrent plexDarwin ];
+  # Define scripts as a separate variable
+  hostSpecificScripts = builtins.attrValues scripts;
+
+  # Define other host-specific packages (if any)
+  hostSpecificPackages = with pkgs; [ 
+    # Example: pkgs.git
+  ];
+
+  # Combine scripts with other host-specific packages
+  combinedPackages = hostSpecificPackages ++ hostSpecificScripts;
 in
-
 {
-
   imports = [
     ../../modules/darwin/home-manager
     ../../modules/shared
@@ -20,13 +25,11 @@ in
   ];
 
   home-manager.users.${user}.home = {
-    # install packages via home-manager that are specific to this host/machine
-    # these will be installed in addition to other packages defined in modules/darwin/home-manager/default.nix
-    packages = hostSpecificPackages;
-    # file = {
-    #   # create folder in ~/.config where raycast scripts will be
-    #   ".config/raycast/".source = ./config/raycast;
-    # };
+    # Install combined packages and scripts specific to this host/machine
+    packages = combinedPackages;
+    file = {
+      # Configuration for files and directories, if needed
+    };
   };
 
   # Configure applications that should appear in Dock

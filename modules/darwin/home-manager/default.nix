@@ -1,12 +1,20 @@
 { config, pkgs, lib, home-manager, user, ... }:
 
 let
-  # Define the content of your file as a derivation
 #   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
 #   additionalFiles = import ./files.nix { inherit user config pkgs; };
+
+  # create script that converts timestamp to date
+  # automatically installs node because of the shebang {pkgs.nodejs}
+  tsScript = pkgs.writeScriptBin "ts" ''
+              #!${pkgs.nodejs}/bin/node
+              const ts = +process.argv[2]
+              console.log(new Date(ts > 1000000000000 ? ts : ts * 1000))
+            '';
+
 in
+
 {
-  # It me
   users.users.${user} = {
     name = "${user}";
     home = "/Users/${user}";
@@ -39,7 +47,10 @@ in
       home = {
         enableNixpkgsReleaseCheck = false;
         # Packages/apps that will only be exposed to the user via ~/.nix-profile
-        packages = pkgs.callPackage ./packages.nix {};
+        # packages = pkgs.callPackage ./packages.nix {};
+        packages = pkgs.callPackage ./packages.nix {} ++ [
+          tsScript
+        ];
         # file = lib.mkMerge [
         #   sharedFiles
         #   additionalFiles

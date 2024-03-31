@@ -1,8 +1,11 @@
 { config, pkgs, user, ... }:
 
 let 
-  # packages that should only be installed on specific host/machine
-  hostSpecificPackages = with pkgs; [ ];
+  # packages that should only be installed on this machine 
+  hostSpecificPackages = with pkgs; [ qbittorrent plexDarwin ];
+
+  # scripts that should only be installed on this machine 
+  hostSpecificScripts = import ./home-manager/scripts { inherit pkgs; }; 
 in
 
 {
@@ -18,10 +21,10 @@ in
   home-manager.users.${user}.home = {
     # install packages via home-manager that are specific to this host/machine
     # these will be installed in addition to other packages defined in modules/darwin/home-manager/default.nix
-    packages = hostSpecificPackages;
+    packages = hostSpecificPackages ++ hostSpecificScripts;
     file = {
       # create folder in ~/.config where raycast scripts will be
-      ".config/raycast/".source = ./config/raycast;
+      # ".config/raycast/".source = ./config/raycast;
     };
   };
 
