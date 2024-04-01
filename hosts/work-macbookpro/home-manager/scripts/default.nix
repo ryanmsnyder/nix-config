@@ -1,7 +1,7 @@
 { pkgs }:
 
 let
-  vpnConnectScript = ./vpn-connect.sh;
+  vpnConnectScript = ./vpn-connect;
 in
 {
   myScript = pkgs.writeScriptBin "myScript" ''
