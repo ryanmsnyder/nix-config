@@ -4,13 +4,12 @@ let
 #   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
 #   additionalFiles = import ./files.nix { inherit user config pkgs; };
 
-  # create script that converts timestamp to date
-  # automatically installs node because of the shebang {pkgs.nodejs}
-  tsScript = pkgs.writeScriptBin "ts" ''
-              #!${pkgs.nodejs}/bin/node
-              const ts = +process.argv[2]
-              console.log(new Date(ts > 1000000000000 ? ts : ts * 1000))
-            '';
+  # Import the scripts
+  scripts = import ./scripts { inherit pkgs; };
+
+  # Define scripts as a separate variable
+  darwinScripts = builtins.attrValues scripts;
+
 
 in
 
@@ -48,9 +47,7 @@ in
         enableNixpkgsReleaseCheck = false;
         # Packages/apps that will only be exposed to the user via ~/.nix-profile
         # packages = pkgs.callPackage ./packages.nix {};
-        packages = pkgs.callPackage ./packages.nix {} ++ [
-          tsScript
-        ];
+        packages = pkgs.callPackage ./packages.nix {} ++ darwinScripts;
         # file = lib.mkMerge [
         #   sharedFiles
         #   additionalFiles

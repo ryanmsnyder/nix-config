@@ -1,11 +1,14 @@
 { config, pkgs, user, ... }:
 
 let 
-  # packages that should only be installed on this machine 
-  hostSpecificPackages = with pkgs; [ qbittorrent plexDarwin ];
+  # Import the scripts
+  scripts = import ./home-manager/scripts { inherit pkgs; };
 
-  # scripts that should only be installed on this machine 
-  hostSpecificScripts = import ./home-manager/scripts { inherit pkgs; }; 
+  # Define scripts as a separate variable
+  hostSpecificScripts = builtins.attrValues scripts;
+
+  # Define other host-specific packages (if any)
+  hostSpecificPackages = with pkgs; [ 
 in
 
 {

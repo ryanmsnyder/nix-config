@@ -1,5 +1,7 @@
 local M = {}
 
+-- status column pulled from here: https://github.com/wookayin/dotfiles/blob/9fe85278869d3fde63e140598e2b0896bfb4fdd1/nvim/lua/config/statuscolumn.lua
+
 --- The &statuscolumn function.
 --- Shows gitsigns or fold, and mark or diagnostics.
 function M.statuscolumn()

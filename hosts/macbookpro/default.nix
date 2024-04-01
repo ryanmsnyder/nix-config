@@ -9,11 +9,9 @@ let
 
   # Define other host-specific packages (if any)
   hostSpecificPackages = with pkgs; [ 
-    # Example: pkgs.git
+    
   ];
 
-  # Combine scripts with other host-specific packages
-  combinedPackages = hostSpecificPackages ++ hostSpecificScripts;
 in
 {
   imports = [
@@ -26,7 +24,7 @@ in
 
   home-manager.users.${user}.home = {
     # Install combined packages and scripts specific to this host/machine
-    packages = combinedPackages;
+    packages = hostSpecificPackages ++ hostSpecificScripts;
     file = {
       # Configuration for files and directories, if needed
     };
