@@ -11,7 +11,6 @@ let
   hostSpecificPackages = with pkgs; [ 
     
   ];
-
 in
 
 {
@@ -42,7 +41,6 @@ in
       { path = "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"; }
       { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
       { path = "${pkgs.obsidian}/Applications/Obsidian.app/"; }
-      { path = "${pkgs.spotify}/Applications/Spotify.app/"; }
       { path = "${pkgs.spotify}/Applications/Slack.app/"; }
       # { path = "/Applications/TablePlus.app/"; }
       {

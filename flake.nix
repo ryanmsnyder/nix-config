@@ -1,7 +1,16 @@
 {
   description = "Configuration for MacOS and NixOS";
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    secrets = {
+      url = "git+ssh://git@github.com/ryanmsnyder/nix-secrets.git";
+      flake = false;
+    };
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -23,8 +32,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  # outputs = { self, darwin, nix-homebrew, home-manager, nixpkgs, disko } @inputs:
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, home-manager, nixpkgs, disko } @inputs:
+
+  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, home-manager, nixpkgs, disko } @inputs:
     let
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
@@ -72,9 +81,10 @@
       darwinConfigurations = {
         macbookpro = let user = "ryan"; in darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = { inherit inputs user;}; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs user; }; # this allows inputs to be passed explicitly to other modules
 
           modules = [
+            # agenix.homeManagerModules.age
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew  # for installing Mac App Store apps
             {
