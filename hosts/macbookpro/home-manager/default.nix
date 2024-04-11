@@ -1,4 +1,4 @@
-{ config, pkgs, user, inputs, ... }:
+{ pkgs, user, inputs, ... }:
 
 let 
   # Import the scripts
@@ -11,33 +11,22 @@ let
   hostSpecificPackages = with pkgs; [ 
     
   ];
+
+  # Import secrets
+  secretConfig = import ./secrets { inherit pkgs user inputs; };
 in
 
 {
   home-manager.users.${user} = {
-    imports = [ inputs.agenix.homeManagerModules.default ];
+    imports = [ inputs.agenix.homeManagerModules.default secretConfig ];
 
     home = {
       # Install combined packages and scripts specific to this host/machine
       packages = hostSpecificPackages ++ hostSpecificScripts;
       file = {
-        # Configuration for files and directories, if needed
-      };
-    };
 
-    age = { 
-      identityPaths = [ 
-        "/Users/${user}/.ssh/agenix-id_ed25519"
-      ];
-      secrets = { 
-        github-ssh-key = {
-          symlink = true;
-          path = "/Users/${user}/.ssh/github-id_ed25519";
-          file = "${inputs.secrets}/github-ssh-key.age";
-          mode = "600";
-          # owner = "${user}";
-          # group = "staff";
-        };
+        # Symlink GitHub public key to .ssh directory
+        ".ssh/github-id_ed25519.pub".source = ./secrets/github-id_ed25519.pub;
       };
     };
   };
