@@ -308,11 +308,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1712296455,
-        "narHash": "sha256-3nB2WBCOq8xAHyuHtx9iw3yoq5oTIMcrIGA6cxqsgrQ=",
+        "lastModified": 1712879752,
+        "narHash": "sha256-1kg75GSO/uNX9HRn9G6dE4F6XcWy5MLfjZCMVgTMezA=",
         "ref": "refs/heads/main",
-        "rev": "cc1d4515bba23a581be9a173c50f6ecc7499a393",
-        "revCount": 2,
+        "rev": "1a33aae6e2070fd696c9141a522b6b0c6cb07730",
+        "revCount": 3,
         "type": "git",
         "url": "ssh://git@github.com/ryanmsnyder/nix-secrets.git"
       },

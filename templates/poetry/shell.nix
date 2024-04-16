@@ -8,6 +8,7 @@ pkgs.mkShell {
   buildInputs = [
     pythonPackages.python
     pythonPackages.venvShellHook
+    pythonPackages.debugpy
   ];
   packages = [ pkgs.poetry ];
   venvDir = "./.venv";

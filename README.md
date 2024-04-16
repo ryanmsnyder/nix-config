@@ -140,7 +140,7 @@ xcode-select --install
 
 ### 2. Install Nix
 
-Thank you for the installer, [Determinate Systems](https://determinate.systems/)!
+Install `nix` with the [Determinate Systems](https://determinate.systems/) installer:
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
@@ -148,21 +148,13 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 ### 3. Clone this repo into home directory
 
-_Choose one of two options_
+```sh
+cd ~
+```
 
-**Simplified version without secrets management**
-
--   Great for beginners, enables you to get started quickly and test out Nix.
-
--   Forgoring secrets means you must configure apps that depend on keys, passwords, etc., yourself.
-
--   You can always add secrets later.
-
-**Full version with secrets management**
-
--   Choose this to add more moving parts for a 100% declarative configuration.
-
--   This template offers you a place to keep passwords, private keys, etc. _as part of your configuration_.
+```sh
+git clone https://github.com/ryanmsnyder/nix-config.git
+```
 
 ### 4. Make apps executable
 
@@ -175,60 +167,89 @@ find apps/aarch64-darwin -type f \( -name apply -o -name build -o -name build-sw
 >
 > You must run `git add .` first.
 
-### 8. Optional: Setup secrets
+### 5. Create GitHub SSH keys or copy an existing GitHub private key
 
-If you are using the starter with secrets, there are a few additional steps.
+SSH keys will be necessary to pull encrypted secrets from the private `nix-secrets` repo that will be created. Without it, `nix` won't be able to pull the encrypted age files and therefore, `agenix` won't be able to decrypt and mount them on your machine.
 
-#### 8a. Create a private Github repo to hold your secrets
-
-In Github, create a private [`nix-secrets`](https://github.com/dustinlyons/nix-secrets-example) repository. You'll enter this name during installation.
-
-#### 8b. Install keys
-
-Before generating your first build, these keys must exist in your `~/.ssh` directory. Don't worry, I provide a few commands to help you.
-
-| Key Name | Platform | Description |
-
-|---------------------|------------------|---------------------------------------|
-
-| id_ed25519 | MacOS / NixOS | Used to download secrets from Github. |
-
-| id_ed25519_agenix | MacOS / NixOS | Used to encrypt and decrypt secrets. |
-
-You must run one of these commands:
-
-##### Copy keys from USB drive
-
-This command auto-detects a USB drive connected to the current system.
-
-> Keys must be named `id_ed25519` and `id_ed25519_agenix`.
+Create GitHub SSH keys:
 
 ```sh
-nix run .#copy-keys
+ssh-keygen -t ed25519 -C "ryansnyder4@gmail.com"
 ```
 
-##### Create new keys
+When prompted, save the key as `/Users/{user}/.ssh/github-id_ed25519`.
+
+Copy the public key that was just created:
 
 ```sh
-nix run .#create-keys
+pbcopy < ~/.ssh/github-id_ed25519.pub
 ```
 
-> [!NOTE]
-> If you choose this option, make sure to [save the value](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) of `id_ed25519.pub` to Github.
+[Create a new SSH key in GitHub](https://github.com/settings/keys) and paste the contents.
+
+Or, if you already have GitHub SSH keys setup from another machine and you want to resuse it (and the public key has already been added to your GitHub settings), copy the private key to this machine in `~/.ssh`.
+
+### 6. Create SSH keys for `agenix`
+
+[`agenix`](https://github.com/ryantm/agenix) is a CLI and nix library to manage and deploy secrets using SSH key pairs. It's based on [`age`](https://github.com/FiloSottile/age).
+
+We'll create an SSH key pair where:
+
+-   the public key will be used to encrypt secrets
+-   the private key will be used to decrypt secrets
+
+Create the keys:
 
 ```sh
-cat /Users/$USER/.ssh/id_ed25519.pub | pbcopy # Add to clipboard
+ssh-keygen -t ed25519 -C "ryansnyder4@gmail.com"
 ```
 
-##### Check existing keys
+When prompted, save it to `/Users/{user}/.ssh/agenix-id_ed25519`. Don't set a passphrase.
 
-If you're rolling your own, just check they are installed correctly.
+### 7. Create a private GitHub repo to store your secrets
+
+Create a local secrets repo in your home directory. This is where we'll encrypt the secrets using the `agenix` CLI.
 
 ```sh
-nix run .#check-keys
+cd ~ && mkdir nix-secrets
 ```
 
-### 9. Install configuration
+Create a `secrets.nix` file, which will declare the public key(s) that will be used to encrypt the secrets. The `agenix` CLI will look for this file when we encrypt secrets later.
+
+```sh
+touch secrets.nix
+```
+
+Copy the `agenix-id_ed25519.pub` key that was just created:
+
+```sh
+pbcopy < ~/.ssh/agenix-id_ed25519.pub
+```
+
+Paste it into `secrets.nix`. This is a minimal example of what `secrets.nix` should look like:
+
+```nix
+let
+  ryan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINb5X5JOy4BspEQfsYcxu78cebIzQ7A+39wAKjYcdzWh ryan@mariahs-mbp.lan";
+  users = [ ryan ];
+
+in
+{
+  "secret1.age".publicKeys = users;
+}
+```
+
+Each key specified in `secrets.nix` takes a list of public keys that will be used to encrypt the secret. If a target machine contains the corresponding private key to the public key we just pasted, when building the `nix-config` it will be able to decrypt the age files in the `nix-secrets` repo and mount them on the target machine (in a location that's set in the `agenix` config in this repo). Therefore, the private key `agenix-id_ed25519` will need to be copied to any machine that wants to decrypt secrets in the `nix-secrets` repo.
+
+Create the `age` file and encrypt it using `agenix` CLI:
+
+```sh
+nix run github:ryantm/agenix -- -e secret1.age
+```
+
+This will run the `agenix` CLI without installing it as a package. It will open a temporary file in the app configured in your $EDITOR environment variable. Paste the contents of the secret in the file. When you save that file its content will be encrypted with the public key(s) mentioned in the `secrets.nix` file (in this case just the `agenix-id_ed25519.pub` that was copied to it). The file will be named what was passed to the `-e` flag. Once saved, the file will be encrypted with the public key specified in `secrets.nix`.
+
+### 8. Install configuration
 
 First-time installations require you to move the current `/etc/nix/nix.conf` out of the way.
 

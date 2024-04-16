@@ -1,5 +1,5 @@
--- find the python executable that was installed and exposed by Nix, which also has debugpy installed as a package
 if vim.fn.executable("python") then
+	-- This is intended to be used alongside a devShell that installs debugpy. Installing debugpy in neovim extraPackages doesn't allow for dynamically passing the path to a python install that has debugpy. Since I want to use a devShell and manage dependecies with poetry or pip, vim.fn.exepath("python") will return the path of the local .venv since it will be activated when entering the shell. Therefore, it's best to just install debugpy as part of the devShell. The python devShells can be found in templates/.
 	require("dap-python").setup(vim.fn.exepath("python"))
 
 	-- Define a list of debug configurations
