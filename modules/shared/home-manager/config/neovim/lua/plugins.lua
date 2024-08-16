@@ -227,6 +227,7 @@ return {
 		event = "VeryLazy",
 		config = function()
 			require("config.dap.nvim-dap")
+			require("dap.ext.vscode").load_launchjs()
 		end,
 	},
 

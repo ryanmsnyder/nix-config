@@ -9,11 +9,9 @@ let
 
   # Import custom Darwin
   customDarwinPackagesPath = ../../../custom-packages/macos;
-  plexDarwin = pkgs.callPackage (customDarwinPackagesPath + "/plex.nix") {};
 
   # Define other host-specific packages (if any)
   hostSpecificPackages = with pkgs; [ 
-    plexDarwin
   ];
 
   # Import secrets
@@ -29,8 +27,6 @@ in
       packages = hostSpecificPackages ++ hostSpecificScripts;
       file = {
 
-        # Symlink GitHub public key to .ssh directory
-        ".ssh/github-id_ed25519.pub".source = ./secrets/github-id_ed25519.pub;
       };
     };
   };

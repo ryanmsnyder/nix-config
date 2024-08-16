@@ -10,7 +10,7 @@ if vim.fn.executable("python") then
 			name = "Python: Launch main.py (all code)",
 			program = "main.py", -- This configuration will launch the current file if used.
 			justMyCode = false,
-			pythonPath = "venv/bin/python",
+			pythonPath = ".venv/bin/python",
 			console = "integratedTerminal", -- output to dapui console instead of repl
 		},
 
@@ -20,7 +20,7 @@ if vim.fn.executable("python") then
 			name = "Python: Launch main.py (my code only)",
 			program = "main.py", -- This configuration will launch the current file if used.
 			justMyCode = true,
-			pythonPath = "venv/bin/python",
+			pythonPath = ".venv/bin/python",
 			console = "integratedTerminal", -- output to dapui console instead of repl
 		},
 
@@ -30,7 +30,7 @@ if vim.fn.executable("python") then
 			name = "Python: Launch current file (all code)",
 			program = "${file}", -- This configuration will launch the current file if used.
 			justMyCode = false,
-			pythonPath = "venv/bin/python",
+			pythonPath = ".venv/bin/python",
 			console = "integratedTerminal", -- output to dapui console instead of repl
 		},
 
@@ -40,10 +40,10 @@ if vim.fn.executable("python") then
 			name = "Python: Launch current file (my code only)",
 			program = "${file}", -- This configuration will launch the current file if used.
 			justMyCode = true,
-			pythonPath = "venv/bin/python",
+			pythonPath = ".venv/bin/python",
 			console = "integratedTerminal", -- output to dapui console instead of repl
 		},
 	}
 
-	-- require("dap").configurations.python = configurations
+	require("dap").configurations.python = configurations
 end
