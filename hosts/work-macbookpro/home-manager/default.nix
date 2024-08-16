@@ -15,12 +15,12 @@ let
   ];
 
   # Import secrets
-  secretConfig = import ./secrets { inherit pkgs user inputs; };
+  # secretConfig = import ./secrets { inherit pkgs user inputs; };
 in
 
 {
   home-manager.users.${user} = {
-    imports = [ inputs.agenix.homeManagerModules.default secretConfig ./programs/git.nix ];
+    imports = [ inputs.agenix.homeManagerModules.default ./programs/git.nix ];
 
     home = {
       # Install combined packages and scripts specific to this host/machine
