@@ -138,7 +138,11 @@ I've tested these instructions on a fresh Macbook Pro as of January 2024.
 xcode-select --install
 ```
 
-### 2. Install Nix
+### 2. Grant Full Disk Access to shell
+
+In System Settings > Privacy & Security > Full Disk Access, add Terminal (or whatever shell you're using).
+
+### 3. Install Nix
 
 Install `nix` with the [Determinate Systems](https://determinate.systems/) installer:
 
@@ -146,7 +150,7 @@ Install `nix` with the [Determinate Systems](https://determinate.systems/) insta
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
-### 3. Clone this repo into home directory
+### 4. Clone this repo into home directory
 
 ```sh
 cd ~
@@ -156,7 +160,7 @@ cd ~
 git clone https://github.com/ryanmsnyder/nix-config.git
 ```
 
-### 4. Make apps executable
+### 5. Make apps executable
 
 ```sh
 find apps/aarch64-darwin -type f \( -name apply -o -name build -o -name build-switch -o -name create-keys -o -name copy-keys -o -name check-keys \) -exec chmod +x {} \;
@@ -167,7 +171,7 @@ find apps/aarch64-darwin -type f \( -name apply -o -name build -o -name build-sw
 >
 > You must run `git add .` first.
 
-### 5. Create GitHub SSH keys or copy an existing GitHub private key
+### 6. Create GitHub SSH keys or copy an existing GitHub private key
 
 SSH keys will be necessary to pull encrypted secrets from the private `nix-secrets` repo that will be created. Without it, `nix` won't be able to pull the encrypted age files and therefore, `agenix` won't be able to decrypt and mount them on your machine.
 
@@ -189,7 +193,7 @@ pbcopy < ~/.ssh/github-id_ed25519.pub
 
 Or, if you already have GitHub SSH keys setup from another machine and you want to resuse it (and the public key has already been added to your GitHub settings), copy the private key to this machine in `~/.ssh`.
 
-### 6. Create SSH keys for `agenix`
+### 7. Create SSH keys for `agenix`
 
 [`agenix`](https://github.com/ryantm/agenix) is a CLI and nix library to manage and deploy secrets using SSH key pairs. It's based on [`age`](https://github.com/FiloSottile/age).
 
@@ -206,7 +210,7 @@ ssh-keygen -t ed25519 -C "ryansnyder4@gmail.com"
 
 When prompted, save it to `/Users/{user}/.ssh/agenix-id_ed25519`. Don't set a passphrase.
 
-### 7. Create a private GitHub repo to store your secrets
+### 8. Create a private GitHub repo to store your secrets
 
 Create a local secrets repo in your home directory. This is where we'll encrypt the secrets using the `agenix` CLI.
 
@@ -249,7 +253,7 @@ nix run github:ryantm/agenix -- -e secret1.age
 
 This will run the `agenix` CLI without installing it as a package. It will open a temporary file in the app configured in your $EDITOR environment variable. Paste the contents of the secret in the file. When you save that file its content will be encrypted with the public key(s) mentioned in the `secrets.nix` file (in this case just the `agenix-id_ed25519.pub` that was copied to it). The file will be named what was passed to the `-e` flag. Once saved, the file will be encrypted with the public key specified in `secrets.nix`.
 
-### 8. Install configuration
+### 9. Install configuration
 
 First-time installations require you to move the current `/etc/nix/nix.conf` out of the way.
 
