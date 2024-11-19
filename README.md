@@ -281,15 +281,23 @@ First-time installations require you to move the current `/etc/nix/nix.conf` out
 Then, if you want to ensure the build works before deploying the configuration, run:
 
 ```sh
-nix run .#build
+nix run --extra-experimental-features nix-command --extra-experimental-features flakes .#build
 ```
+
+The arguments `--extra-experimental-features nix-command --extra-experimental-features flakes` are only needed when building initially because we had to rename our `/etc/nix/nix.conf` file, which sets those arguments for us. After we run the `.#build-switch` script in the next step, we can overwrite the system generated `nix.conf` file with our own and we won't need to specify those arguments anymore.
 
 ### 10. Make changes
 
 Finally, alter your system with this command:
 
 ```sh
-nix run .#build-switch
+nix run --extra-experimental-features nix-command --extra-experimental-features flakes .#build-switch
+```
+
+Overwrite `nix.conf` with our own:
+
+```sh
+sudo mv /etc/nix/nix.conf.before-nix-darwin /etc/nix/nix.conf
 ```
 
 ### 11. Enable/Allow Karabiner-Elements items
