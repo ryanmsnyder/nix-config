@@ -187,6 +187,12 @@ ssh-keygen -t ed25519 -C "ryansnyder4@gmail.com"
 
 When prompted, save the key as `/Users/{user}/.ssh/github-id_ed25519`.
 
+Add the private SSH key to the SSH authentication agent:
+
+```sh
+ssh-add ~/.ssh/github-id_ed25519
+```
+
 Copy the public key that was just created:
 
 ```sh
