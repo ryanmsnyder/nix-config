@@ -134,9 +134,13 @@ I've tested these instructions on a fresh Macbook Pro as of January 2024.
 
 ### 1. Install dependencies
 
+Install the xcode command line tools:
+
 ```sh
 xcode-select --install
 ```
+
+Install the [Xcode app](https://apps.apple.com/us/app/xcode/id497799835?mt=12) from the App Store. `mas`, a command-line interface for the Mac App Store that allows us to install App Store apps, requires the full installation of the Xcode app (the xcode command line tools are not sufficient).
 
 ### 2. Grant Full Disk Access to shell
 
