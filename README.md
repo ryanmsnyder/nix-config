@@ -142,6 +142,12 @@ xcode-select --install
 
 Install the [Xcode app](https://apps.apple.com/us/app/xcode/id497799835?mt=12) from the App Store. `mas`, a command-line interface for the Mac App Store that allows us to install App Store apps, requires the full installation of the Xcode app (the xcode command line tools are not sufficient).
 
+Agree to the Xcode license by running:
+
+```sh
+sudo xcodebuild -license accept
+```
+
 ### 2. Grant Full Disk Access to shell
 
 In System Settings > Privacy & Security > Full Disk Access, add Terminal (or whatever shell you're using).
