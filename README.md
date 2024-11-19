@@ -150,6 +150,8 @@ Install `nix` with the [Determinate Systems](https://determinate.systems/) insta
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
+Restart your shell so `nix` will be in your path when running commands later.
+
 ### 4. Clone this repo into home directory
 
 ```sh
