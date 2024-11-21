@@ -318,6 +318,8 @@ A couple of system messages relating to Karabiner-Elements will appear:
 
 2. Enable karabiner_grabber and karabiner_observer in Settings > Privacy & Security > Input Monitoring.
 
+On macOS Sequoia, I also needed to enable Karabiner's Driver Extension: Settings > General > Login Items & Extensions > Click on "i" icon (on the right) and then enable the .Karabiner-VirtualHIDDevice-Manager.
+
 ### 12. Restart Mac
 
 Restart your Mac so the Karabiner-Elements config will take effect.
