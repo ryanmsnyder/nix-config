@@ -1,2 +1,3 @@
+mac-mini.local=macbookpro
 Mariahs-MacBook-Pro.local=macbookpro
 US-VGJW6RDC60=work-macbookpro

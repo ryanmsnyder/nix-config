@@ -39,7 +39,7 @@ let user = "ryansnyder";
   nix = {
     nixPath = [ "nix-config=/home/${user}/.local/share/src/nix-config:/etc/nixos" ];
     settings.allowed-users = [ "${user}" ];
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.latest;
     extraOptions = ''
       experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env
     '';

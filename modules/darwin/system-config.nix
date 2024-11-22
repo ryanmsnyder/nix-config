@@ -9,7 +9,7 @@
 
   # Setup user, packages, programs
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.latest;
     settings.trusted-users = [ "@admin" user ];
 
     gc = {
@@ -29,7 +29,7 @@
   system.checks.verifyNixPath = false;
 
   # Enable fonts dir
-  fonts.fontDir.enable = true;
+  # fonts.fontDir.enable = true;
 
   system.stateVersion = 4;
 

@@ -70,7 +70,13 @@ in
   };
 
   system.defaults = {
+    # Mouse tracking speed
+    ".GlobalPreferences"."com.apple.mouse.scaling" = 9.0;
+
     NSGlobalDomain = {
+      # Enable Dark mode
+      AppleInterfaceStyle = "Dark";
+
       AppleShowAllExtensions = true;
       ApplePressAndHoldEnabled = false;
 
@@ -82,6 +88,10 @@ in
       "com.apple.mouse.tapBehavior" = 1;
       "com.apple.sound.beep.volume" = 0.0;
       "com.apple.sound.beep.feedback" = 0;
+
+      # Disable automatic capitalization and spelling correction
+      NSAutomaticCapitalizationEnabled = false;
+      NSAutomaticSpellingCorrectionEnabled = false;
     };
 
     dock = {
@@ -93,15 +103,41 @@ in
       orientation = "bottom";
       tilesize = 48;
       wvous-bl-corner = 4; # hot corner that shows desktop when hovering mouse over bottom left corner
+      mouse-over-hilite-stack = true; # highlight effect that follows the mouse in a Dock stack
+      persistent-apps = [
+        "${pkgs.wezterm}/Applications/WezTerm.app"
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"
+        "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"
+        "${pkgs.obsidian}/Applications/Obsidian.app"
+        "${pkgs.spotify}/Applications/Spotify.app"
+        "/System/Applications/Reminders.app"
+        "/System/Applications/Calendar.app"
+      ];
+      # persistent-others = [ "/Users/${user}/Downloads" ];
     };
 
     finder = {
-      _FXShowPosixPathInTitle = false;
+      _FXShowPosixPathInTitle = true;
+      FXEnableExtensionChangeWarning = false;
+      FXPreferredViewStyle = "Nlsv";
+      AppleShowAllExtensions = true;
+      AppleShowAllFiles = true;
+      CreateDesktop = false;
+      QuitMenuItem = true;
+      ShowPathbar = true;
+      ShowStatusBar = true;
     };
 
     trackpad = {
-      Clicking = true;
+      Clicking = true; # enable trackpad tap to click
+      TrackpadRightClick = true; # enable trackpad right click
       TrackpadThreeFingerDrag = true;
+    };
+
+    magicmouse = {
+      # Enable secondary click on magic mouse when clicking the right side
+      MouseButtonMode = "TwoButton";
     };
 
     # manages Apple plist settings in ~/Library/Preferences
@@ -119,6 +155,7 @@ in
         "emojiPicker_skinTone" = "mediumLight";
         initialSpotlightHotkey = "Command-49";  
         navigationCommandStyleIdentifierKey = "legacy";
+        onboardingCompleted = true;
         "onboarding_canShowActionPanelHint" = 0;
         "onboarding_canShowBackNavigationHint" = 0;
         "onboarding_completedTaskIdentifiers" = [
@@ -144,35 +181,78 @@ in
         showGettingStartedLink = 0;
         "store_termsAccepted" = 1;
         suggestedPreferredGoogleBrowser = 1;
+        "permissions.folders.read:/Users/${user}/Desktop" = 1;
+        "permissions.folders.read:/Users/${user}/Documents" = 1;
+        "permissions.folders.read:/Users/${user}/Downloads" = 1;
+        "permissions.folders.read:cloudStorage" = 1;
       };
 
-     "com.apple.screensaver" = {
+      "com.apple.finder" = {
+        _FXSortFoldersFirst = true;
+        FXDefaultSearchScope = "SCcf"; # Search current folder by default
+        ShowExternalHardDrivesOnDesktop = false;
+        ShowHardDrivesOnDesktop = false;
+        ShowMountedServersOnDesktop = false;
+        ShowRemovableMediaOnDesktop = false;
+      };
+
+      # "com.apple.Safari" = {
+      #   # Privacy: don’t send search queries to Apple
+      #   UniversalSearchEnabled = false;
+      #   SuppressSearchSuggestions = true;
+      #   # Press Tab to highlight each item on a web page
+      #   WebKitTabToLinksPreferenceKey = true;
+      #   ShowFullURLInSmartSearchField = true;
+      #   # Prevent Safari from opening ‘safe’ files automatically after downloading
+      #   AutoOpenSafeDownloads = false;
+      #   ShowFavoritesBar = true;
+      #   IncludeInternalDebugMenu = false;
+      #   IncludeDevelopMenu = true;
+      #   WebKitDeveloperExtrasEnabledPreferenceKey = true;
+      #   WebContinuousSpellCheckingEnabled = true;
+      #   WebAutomaticSpellingCorrectionEnabled = false;
+      #   AutoFillFromAddressBook = true;
+      #   AutoFillCreditCardData = true;
+      #   AutoFillMiscellaneousForms = true;
+      #   WarnAboutFraudulentWebsites = true;
+      #   WebKitJavaEnabled = false;
+      #   WebKitJavaScriptCanOpenWindowsAutomatically = false;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
+      # };
+
+      "com.apple.mail" = {
+        # Disable inline attachments (just show the icons)
+        DisableInlineAttachmentViewing = true;
+      };
+
+      "com.apple.screensaver" = {
         # Don't require password until 10 minutes after sleep or screen saver begins
         askForPassword = 0;
         askForPasswordDelay = 600;
       };
+
+      "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
+
+      "com.apple.AdLib" = { allowApplePersonalizedAdvertising = false; };
+
     };
   };
 
-  # remap Spotlight to CTRL-SPC so Raycast can use CMD-SPC (no restart needed for this to work)
-  # only applies to current user
-  system.activationScripts.postActivation.text = ''
-    defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 64 "
-    <dict>
-      <key>enabled</key><true/>
-      <key>value</key><dict>
-        <key>type</key><string>standard</string>
-        <key>parameters</key>
-        <array>
-          <integer>32</integer>
-          <integer>49</integer>
-          <integer>262144</integer>
-        </array>
-      </dict>
-    </dict>
-    "
+  launchd.user.agents.raycast.serviceConfig = {
+    Disabled = false;
+    ProgramArguments = [ "/Applications/Raycast.app/Contents/Library/LoginItems/RaycastLauncher.app/Contents/MacOS/RaycastLauncher" ];
+    RunAtLoad = true;
+  };
 
-    defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 60 "
+  # disable Spotlight's CMD-SPC hotkey so Raycast can use it (no restart needed for this to work)
+  # only applies to current user
+  system.activationScripts.preUserActivation.text = ''
+    defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 64 "
     <dict>
       <key>enabled</key><false/>
       <key>value</key><dict>
@@ -181,29 +261,42 @@ in
         <array>
           <integer>32</integer>
           <integer>49</integer>
-          <integer>262144</integer>
+          <integer>1048576</integer>
         </array>
       </dict>
     </dict>
     "
 
-    defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 61 "
+    defaults write com.apple.dock persistent-others -array "
     <dict>
-      <key>enabled</key><true/>
-      <key>value</key><dict>
-        <key>type</key><string>standard</string>
-        <key>parameters</key>
-        <array>
-          <integer>32</integer>
-          <integer>49</integer>
-          <integer>1572864</integer>
-        </array>
+      <key>tile-data</key>
+      <dict>
+        <key>arrangement</key>
+        <integer>1</integer>
+        <key>displayas</key>
+        <integer>1</integer>
+        <key>file-data</key>
+        <dict>
+          <key>_CFURLString</key>
+          <string>file:///Users/${user}/Downloads</string>
+          <key>_CFURLStringType</key>
+          <integer>15</integer>
+        </dict>
+        <key>file-type</key>
+        <integer>2</integer>
+        <key>showas</key>
+        <integer>2</integer>
       </dict>
+      <key>tile-type</key>
+      <string>directory-tile</string>
     </dict>
     "
-
-    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    
   '';
 
+  system.activationScripts.postActivation.text = ''
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    killall Dock
+  '';
 
 }

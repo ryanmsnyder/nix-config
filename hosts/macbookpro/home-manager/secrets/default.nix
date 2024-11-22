@@ -6,10 +6,10 @@
       "/Users/${user}/.ssh/agenix-id_ed25519"
     ];
     secrets = {
-      github-ssh-key = {
+      test-secret = {
         symlink = true;
-        path = "/Users/${user}/.ssh/github-id_ed25519";
-        file = "${inputs.secrets}/github-ssh-key.age";
+        path = "/Users/${user}/.ssh/test_secret_ed25519";
+        file = "${inputs.secrets}/test-secret.age";
         mode = "600";
       };
     };

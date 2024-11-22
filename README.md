@@ -134,8 +134,18 @@ I've tested these instructions on a fresh Macbook Pro as of January 2024.
 
 ### 1. Install dependencies
 
+Install the xcode command line tools:
+
 ```sh
 xcode-select --install
+```
+
+Install the [Xcode app](https://apps.apple.com/us/app/xcode/id497799835?mt=12) from the App Store. `mas`, a command-line interface for the Mac App Store that allows us to install App Store apps, requires the full installation of the Xcode app (the xcode command line tools are not sufficient).
+
+Agree to the Xcode license by running:
+
+```sh
+sudo xcodebuild -license accept
 ```
 
 ### 2. Grant Full Disk Access to shell
@@ -150,6 +160,8 @@ Install `nix` with the [Determinate Systems](https://determinate.systems/) insta
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
+Restart your shell so `nix` will be in your path when running commands later.
+
 ### 4. Clone this repo into home directory
 
 ```sh
@@ -161,6 +173,10 @@ git clone https://github.com/ryanmsnyder/nix-config.git
 ```
 
 ### 5. Make apps executable
+
+```sh
+cd nix-config
+```
 
 ```sh
 find apps/aarch64-darwin -type f \( -name apply -o -name build -o -name build-switch -o -name create-keys -o -name copy-keys -o -name check-keys \) -exec chmod +x {} \;
@@ -182,6 +198,12 @@ ssh-keygen -t ed25519 -C "ryansnyder4@gmail.com"
 ```
 
 When prompted, save the key as `/Users/{user}/.ssh/github-id_ed25519`.
+
+Add the private SSH key to the SSH authentication agent:
+
+```sh
+ssh-add ~/.ssh/github-id_ed25519
+```
 
 Copy the public key that was just created:
 
@@ -269,15 +291,23 @@ First-time installations require you to move the current `/etc/nix/nix.conf` out
 Then, if you want to ensure the build works before deploying the configuration, run:
 
 ```sh
-nix run .#build
+nix run --extra-experimental-features nix-command --extra-experimental-features flakes .#build
 ```
+
+The arguments `--extra-experimental-features nix-command --extra-experimental-features flakes` are only needed when building initially because we had to rename our `/etc/nix/nix.conf` file, which sets those arguments for us. After we run the `.#build-switch` script in the next step, we can overwrite the system generated `nix.conf` file with our own and we won't need to specify those arguments anymore.
 
 ### 10. Make changes
 
 Finally, alter your system with this command:
 
 ```sh
-nix run .#build-switch
+nix run --extra-experimental-features nix-command --extra-experimental-features flakes .#build-switch
+```
+
+Overwrite `nix.conf` with our own:
+
+```sh
+sudo mv /etc/nix/nix.conf.before-nix-darwin /etc/nix/nix.conf
 ```
 
 ### 11. Enable/Allow Karabiner-Elements items
@@ -287,6 +317,8 @@ A couple of system messages relating to Karabiner-Elements will appear:
 1. Click allow in Settings > Privacy & Security for the Karabiner-related item that appears in the Security section.
 
 2. Enable karabiner_grabber and karabiner_observer in Settings > Privacy & Security > Input Monitoring.
+
+On macOS Sequoia, I also needed to enable Karabiner's Driver Extension: Settings > General > Login Items & Extensions > Click on "i" icon (on the right) and then enable the .Karabiner-VirtualHIDDevice-Manager.
 
 ### 12. Restart Mac
 
