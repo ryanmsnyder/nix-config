@@ -250,7 +250,8 @@ in
   };
 
   # disable Spotlight's CMD-SPC hotkey so Raycast can use it (no restart needed for this to work)
-  # only applies to current user
+  # add Downloads stack to Dock with grid view (there's a native system.defaults.dock.persistent-others option that allows
+  # for setting paths but it doesn't seem to allow for setting the "displayas" parameter)
   system.activationScripts.preUserActivation.text = ''
     defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 64 "
     <dict>

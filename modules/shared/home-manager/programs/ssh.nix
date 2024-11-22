@@ -22,7 +22,7 @@ in
 
       (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
         ''
-          IdentityFile /Users/${user}/.ssh/_ed25519
+          IdentityFile /Users/${user}/.ssh/github-id_ed25519
         '')
 
       ''

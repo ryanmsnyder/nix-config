@@ -66,7 +66,6 @@ in
   # Packages shared between MacOS machines
   shared-macos-pkgs = with pkgs; [
     raycast
-    dockutil
     brunoDarwin # from custom-packages
     monitorcontrol
   ];

@@ -7,7 +7,6 @@
     ../../modules/shared
     ../../modules/shared/cachix
     ../../modules/darwin/system-config.nix
-    # ../../modules/darwin/home-manager/dockutil.nix
   ];
 
   # # Configure applications that should appear in Dock
