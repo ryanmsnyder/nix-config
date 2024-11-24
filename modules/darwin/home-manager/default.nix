@@ -104,11 +104,12 @@ in
       tilesize = 48;
       wvous-bl-corner = 4; # hot corner that shows desktop when hovering mouse over bottom left corner
       mouse-over-hilite-stack = true; # highlight effect that follows the mouse in a Dock stack
-      persistent-apps = [
+      persistent-apps = [ # configure Dock apps
         "${pkgs.wezterm}/Applications/WezTerm.app"
         "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
         "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"
-        "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"
+        # "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"
+        "${pkgs.bruno}/Applications/Bruno.app/"
         "${pkgs.obsidian}/Applications/Obsidian.app"
         "${pkgs.spotify}/Applications/Spotify.app"
         "/System/Applications/Reminders.app"
@@ -224,11 +225,6 @@ in
       #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
       #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
       # };
-
-      "com.apple.mail" = {
-        # Disable inline attachments (just show the icons)
-        DisableInlineAttachmentViewing = true;
-      };
 
       "com.apple.screensaver" = {
         # Don't require password until 10 minutes after sleep or screen saver begins

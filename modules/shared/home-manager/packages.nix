@@ -1,10 +1,5 @@
 { pkgs }:
 
-let
-  # Import custom Darwin
-  customDarwinPackagesPath = ../../../custom-packages/macos;
-  brunoDarwin = pkgs.callPackage (customDarwinPackagesPath + "/bruno.nix") {};
-in
 
 {
   # Packages shared between NixOS server and desktop, and MacOS
@@ -55,6 +50,7 @@ in
     vscode
     obsidian
     spotify
+    bruno
     # google-chrome  # not packaged for MacOs
   ];
 
@@ -66,7 +62,6 @@ in
   # Packages shared between MacOS machines
   shared-macos-pkgs = with pkgs; [
     raycast
-    brunoDarwin # from custom-packages
     monitorcontrol
   ];
 
