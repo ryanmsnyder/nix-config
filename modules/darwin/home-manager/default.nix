@@ -80,9 +80,12 @@ in
       AppleShowAllExtensions = true;
       ApplePressAndHoldEnabled = false;
 
-      # Key repeat settings
-      KeyRepeat = 2;
-      InitialKeyRepeat = 15;
+      # If you press and hold certain keyboard keys when in a text area, the key’s character begins to repeat.
+      # This is very useful for vim users, they use `hjkl` to move cursor.
+      # sets how long it takes before it starts repeating.
+      InitialKeyRepeat = 10; # normal minimum is 15 (225 ms), maximum is 120 (1800 ms)
+      # sets how fast it repeats once it starts.
+      KeyRepeat = 1; # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
 
       # Mouse and sound settings
       "com.apple.mouse.tapBehavior" = 1;
@@ -108,7 +111,6 @@ in
         "${pkgs.wezterm}/Applications/WezTerm.app"
         "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
         "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"
-        # "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"
         "${pkgs.bruno}/Applications/Bruno.app/"
         "${pkgs.obsidian}/Applications/Obsidian.app"
         "${pkgs.spotify}/Applications/Spotify.app"
@@ -197,34 +199,35 @@ in
         ShowRemovableMediaOnDesktop = false;
       };
 
-      # "com.apple.Safari" = {
-      #   # Privacy: don’t send search queries to Apple
-      #   UniversalSearchEnabled = false;
-      #   SuppressSearchSuggestions = true;
-      #   # Press Tab to highlight each item on a web page
-      #   WebKitTabToLinksPreferenceKey = true;
-      #   ShowFullURLInSmartSearchField = true;
-      #   # Prevent Safari from opening ‘safe’ files automatically after downloading
-      #   AutoOpenSafeDownloads = false;
-      #   ShowFavoritesBar = true;
-      #   IncludeInternalDebugMenu = false;
-      #   IncludeDevelopMenu = true;
-      #   WebKitDeveloperExtrasEnabledPreferenceKey = true;
-      #   WebContinuousSpellCheckingEnabled = true;
-      #   WebAutomaticSpellingCorrectionEnabled = false;
-      #   AutoFillFromAddressBook = true;
-      #   AutoFillCreditCardData = true;
-      #   AutoFillMiscellaneousForms = true;
-      #   WarnAboutFraudulentWebsites = true;
-      #   WebKitJavaEnabled = false;
-      #   WebKitJavaScriptCanOpenWindowsAutomatically = false;
-      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
-      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
-      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
-      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
-      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
-      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
-      # };
+      "com.apple.Safari" = {
+        # Privacy: don’t send search queries to Apple
+        UniversalSearchEnabled = false;
+        SuppressSearchSuggestions = true;
+        # Press Tab to highlight each item on a web page
+        WebKitTabToLinksPreferenceKey = true;
+        ShowFullURLInSmartSearchField = true;
+        # Prevent Safari from opening ‘safe’ files automatically after downloading
+        AutoOpenSafeDownloads = false;
+        ShowFavoritesBar = true;
+        ShowFavoritesBar-v2 = true;
+        IncludeInternalDebugMenu = false;
+        IncludeDevelopMenu = true;
+        WebKitDeveloperExtrasEnabledPreferenceKey = true;
+        WebContinuousSpellCheckingEnabled = true;
+        WebAutomaticSpellingCorrectionEnabled = false;
+        AutoFillFromAddressBook = true;
+        AutoFillCreditCardData = true;
+        AutoFillMiscellaneousForms = true;
+        WarnAboutFraudulentWebsites = true;
+        WebKitJavaEnabled = false;
+        WebKitJavaScriptCanOpenWindowsAutomatically = false;
+        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
+        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
+        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
+        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
+        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
+      };
 
       "com.apple.screensaver" = {
         # Don't require password until 10 minutes after sleep or screen saver begins

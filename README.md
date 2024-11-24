@@ -128,7 +128,7 @@ Run `nix copy` to make the path valid.
 nix copy --from https://cache.nixos.org /nix/store/52k8rqihijagzc2lkv17f4lw9kmh4ki6-gnugrep-3.11-info
 ```
 
-## MacOS (Jan 2024)
+## MacOS
 
 I've tested these instructions on a fresh Macbook Pro as of January 2024.
 
@@ -326,6 +326,12 @@ Restart your Mac so the Karabiner-Elements config will take effect.
 
 > [!WARNING]
 > On MacOS, your `.zshrc` file will be replaced with the [`zsh` configuration](https://github.com/dustinlyons/nixos-config/blob/main/templates/starter/modules/shared/home-manager.nix#L8) from this repository. So make some changes here first if you'd like.
+
+### 13. Continue tweaking config and rebuilding
+
+Since future nix rebuilds will most likely be executed from a different terminal application besides the default Mac Terminal app, be sure to also grant full disk access to the terminal(s) of your choice (in this case, WezTerm):
+
+System Settings > Privacy & Security > Full Disk Access > enable wezterm-gui.
 
 ## NixOS desktop
 
