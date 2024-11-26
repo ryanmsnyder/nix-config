@@ -13,6 +13,7 @@
     wget
     zip
     direnv
+    difftastic # syntax-aware diffing
 
     # Terminal Enhancements and Utilities
     zoxide    # better cd

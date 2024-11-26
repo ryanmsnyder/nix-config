@@ -17,7 +17,6 @@
   #     { path = "/System/Applications/Calendar.app"; }
   #     { path = "${pkgs.wezterm}/Applications/WezTerm.app/"; }
   #     { path = "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"; }
-  #     { path = "${config.users.users.${user}.home}/.nix-profile/Applications/Bruno.app"; }
   #     { path = "${pkgs.obsidian}/Applications/Obsidian.app/"; }
   #     { path = "${pkgs.spotify}/Applications/Spotify.app/"; }
   #     { path = "/System/Applications/Reminders.app/"; }

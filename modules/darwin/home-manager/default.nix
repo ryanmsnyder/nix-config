@@ -83,9 +83,9 @@ in
       # If you press and hold certain keyboard keys when in a text area, the key’s character begins to repeat.
       # This is very useful for vim users, they use `hjkl` to move cursor.
       # sets how long it takes before it starts repeating.
-      InitialKeyRepeat = 10; # normal minimum is 15 (225 ms), maximum is 120 (1800 ms)
+      InitialKeyRepeat = 13; # normal minimum is 15 (225 ms), maximum is 120 (1800 ms)
       # sets how fast it repeats once it starts.
-      KeyRepeat = 1; # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
+      KeyRepeat = 2; # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
 
       # Mouse and sound settings
       "com.apple.mouse.tapBehavior" = 1;
@@ -95,6 +95,8 @@ in
       # Disable automatic capitalization and spelling correction
       NSAutomaticCapitalizationEnabled = false;
       NSAutomaticSpellingCorrectionEnabled = false;
+
+      
     };
 
     dock = {
@@ -192,6 +194,9 @@ in
 
       "com.apple.finder" = {
         _FXSortFoldersFirst = true;
+        FXICloudDriveEnabled = true;
+        FXICloudDriveDesktop = true;
+        FXICloudDriveDocuments = true;
         FXDefaultSearchScope = "SCcf"; # Search current folder by default
         ShowExternalHardDrivesOnDesktop = false;
         ShowHardDrivesOnDesktop = false;
@@ -209,7 +214,7 @@ in
         # Prevent Safari from opening ‘safe’ files automatically after downloading
         AutoOpenSafeDownloads = false;
         ShowFavoritesBar = true;
-        ShowFavoritesBar-v2 = true;
+        ShowFavoritesBar-v2 = true; 
         IncludeInternalDebugMenu = false;
         IncludeDevelopMenu = true;
         WebKitDeveloperExtrasEnabledPreferenceKey = true;
@@ -221,6 +226,7 @@ in
         WarnAboutFraudulentWebsites = true;
         WebKitJavaEnabled = false;
         WebKitJavaScriptCanOpenWindowsAutomatically = false;
+        "PreferencesModulesMinimumWidths.MinimumWidths.DeveloperMenuVisibility" = true;
         "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
         "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
         "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
