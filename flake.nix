@@ -11,7 +11,10 @@
       url = "git+ssh://git@github.com/ryanmsnyder/nix-secrets.git";
       flake = false;
     };
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";

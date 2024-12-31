@@ -2,11 +2,11 @@
 
 pkgs.stdenv.mkDerivation rec {
   pname = "plex";
-  version = "1.40.0.7998-c29d4c0c8"; 
+  version = "1.41.3.9292-bc7397402"; 
 
   src = pkgs.fetchurl {
     url = "https://downloads.plex.tv/plex-media-server-new/${version}/macos/PlexMediaServer-${version}-universal.zip";  # URL for the arm64 architecture
-    sha256 = "Plk+JiHg3vn75zRq1EKFL/DE5nVd6ZLg5PVKAQDYcEo=";
+    sha256 = "0ca45fisa8l98g99nkzrhjgqi3g0iz4zjjp6mc7439jdgawr1s8z";
   };
 
   nativeBuildInputs = [ pkgs.unzip ];

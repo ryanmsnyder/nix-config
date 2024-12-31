@@ -216,7 +216,7 @@ in
       "com.apple.Safari" = {
         # Privacy: don’t send search queries to Apple
         UniversalSearchEnabled = false;
-        SuppressSearchSuggestions = true;
+        SuppressSearchSuggestions = false;
         # Press Tab to highlight each item on a web page
         WebKitTabToLinksPreferenceKey = true;
         ShowFullURLInSmartSearchField = true;

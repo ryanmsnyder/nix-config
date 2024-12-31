@@ -64,6 +64,7 @@
   shared-macos-pkgs = with pkgs; [
     raycast
     monitorcontrol
+    iina
   ];
 
 }

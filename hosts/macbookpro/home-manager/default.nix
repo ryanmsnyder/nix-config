@@ -13,7 +13,7 @@ let
 
   # Define other host-specific packages (if any)
   hostSpecificPackages = with pkgs; [ 
-    plexDarwin
+    # plexDarwin # doesn't seem to be creating all the necessary database files on Mac Sequioa
     qbittorrent
   ];
 
@@ -35,6 +35,5 @@ in
       };
     };
   };
-
   
 }
