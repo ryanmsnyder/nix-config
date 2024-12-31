@@ -124,6 +124,7 @@ in
       wvous-bl-corner = 4; # hot corner that shows desktop when hovering mouse over bottom left corner
       mouse-over-hilite-stack = true; # highlight effect that follows the mouse in a Dock stack
       persistent-apps = [ # configure Dock apps
+        "${pkgs.forklift}/Applications/ForkLift.app"
         "${pkgs.wezterm}/Applications/WezTerm.app"
         "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
         "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"

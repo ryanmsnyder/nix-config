@@ -7,9 +7,6 @@ let
   # Define scripts as a separate variable
   hostSpecificScripts = builtins.attrValues scripts;
 
-  # Import custom Darwin
-  customDarwinPackagesPath = ../../../custom-packages/macos;
-
   # Define other host-specific packages (if any)
   hostSpecificPackages = with pkgs; [ 
   ];

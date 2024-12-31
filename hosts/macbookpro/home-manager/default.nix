@@ -7,13 +7,8 @@ let
   # Define scripts as a separate variable
   hostSpecificScripts = builtins.attrValues scripts;
 
-  # Import custom Darwin
-  customDarwinPackagesPath = ../../../custom-packages/macos;
-  plexDarwin = pkgs.callPackage (customDarwinPackagesPath + "/plex.nix") {};
-
   # Define other host-specific packages (if any)
   hostSpecificPackages = with pkgs; [ 
-    # plexDarwin # doesn't seem to be creating all the necessary database files on Mac Sequioa
     qbittorrent
   ];
 
