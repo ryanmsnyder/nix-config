@@ -32,6 +32,11 @@ in
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
     ];
 
+    casks = [
+      "chatgpt"
+      "calibre"
+    ];
+
     # These app IDs are from using the mas CLI app
     # mas = mac app store
     # https://github.com/mas-cli/mas
