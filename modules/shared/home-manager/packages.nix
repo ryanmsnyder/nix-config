@@ -65,6 +65,7 @@
     raycast
     monitorcontrol
     iina
+    forklift
   ];
 
 }
