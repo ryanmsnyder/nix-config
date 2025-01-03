@@ -66,6 +66,7 @@
     monitorcontrol
     iina
     forklift
+    homerow
   ];
 
 }

@@ -35,6 +35,7 @@ in
     casks = [
       "chatgpt"
       "calibre"
+      "discord"
     ];
 
     # These app IDs are from using the mas CLI app
