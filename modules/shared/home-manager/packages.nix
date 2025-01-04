@@ -63,6 +63,7 @@
   # Packages shared between MacOS machines
   shared-macos-pkgs = with pkgs; [
     raycast
+    bartender
     monitorcontrol
     iina
     forklift
