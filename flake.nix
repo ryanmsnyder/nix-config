@@ -2,7 +2,7 @@
   description = "Configuration for MacOS and NixOS";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/2b4e18f3d4a7b80af21b640c0970f83b34efceff";
+    nixpkgs.url = "github:nixos/nixpkgs/24.11-beta";
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";

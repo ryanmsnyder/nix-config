@@ -68,6 +68,8 @@
     iina
     forklift
     homerow
+    aerospace
+    macwhisper
   ];
 
 }
