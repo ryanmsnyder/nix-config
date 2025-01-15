@@ -2,7 +2,11 @@
   description = "Configuration for MacOS and NixOS";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/24.11-beta";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/24.11-beta";
+    # nixpkgs-unstable = {
+    #   url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -30,6 +30,7 @@ in
 
     brews = [
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
+      "ddcctl"
     ];
 
     casks = [
