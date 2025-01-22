@@ -74,7 +74,6 @@ local config = {
   },
   enable_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
-  show_update_window = true,
   window_decorations = "RESIZE",
 
   -- set undercurl (this is necessary for NeoVim)

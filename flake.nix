@@ -37,7 +37,7 @@
     homebrew-cask = {
       url = "github:homebrew/homebrew-cask";
       flake = false;
-    }; 
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -97,7 +97,7 @@
           modules = [
             # agenix.homeManagerModules.age
             home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew  # for installing Mac App Store apps
+            nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
                 inherit user;
@@ -108,7 +108,6 @@
                   "homebrew/homebrew-cask" = homebrew-cask;
                 };
                 mutableTaps = false;
-                autoMigrate = true;
               };
             }
             ./hosts/macbookpro
@@ -128,9 +127,9 @@
                 taps = {
                   "homebrew/homebrew-core" = homebrew-core;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
+                  "homebrew/homebrew-cask" = homebrew-cask;
                 };
                 mutableTaps = false;
-                autoMigrate = true;
               };
             }
             ./hosts/work-macbookpro

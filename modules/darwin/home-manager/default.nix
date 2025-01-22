@@ -24,19 +24,34 @@ in
   homebrew = {
     enable = true;
 
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap"; # Uninstall not listed packages/casks
+      upgrade = true;
+    };
+
+
     global = {
       brewfile = true;
     };
 
+    taps = [
+      # "haimgel/display_switch"
+      # "waydabber/betterdisplay"
+    ];
+
     brews = [
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
-      "ddcctl"
+      # "display_switch"
+      # "waydabber/betterdisplay/betterdisplaycli"
+      # "betterdisplaycli"
     ];
 
     casks = [
       "chatgpt"
       "calibre"
       "discord"
+      "betterdisplay"
     ];
 
     # These app IDs are from using the mas CLI app
