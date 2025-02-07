@@ -56,6 +56,11 @@
             . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
             fi
 
+            # add brew to path (nix-homebrew doesn't seem to be doing this automatically)
+            if [[ $(uname -m) == 'arm64' ]]; then
+                eval "$(/opt/homebrew/bin/brew shellenv)"
+            fi
+
             # Define variables for directories
             export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
             export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH

@@ -26,13 +26,15 @@ in
 
     onActivation = {
       autoUpdate = true;
-      # cleanup = "zap"; # Uninstall not listed packages/casks
+      cleanup = "zap"; # Uninstall packages/casks not in Brewfile
       upgrade = true;
     };
 
 
     global = {
       brewfile = true;
+      lockfiles = true;
+      autoUpdate = false;
     };
 
     # taps = [
@@ -51,6 +53,7 @@ in
       "calibre"
       "discord"
       "betterdisplay"
+      "microsoft-excel"
     ];
 
     # These app IDs are from using the mas CLI app
@@ -65,7 +68,6 @@ in
       "magnet" = 441258766;
       "bitwarden" = 1352778147;  # currently not in nixpkgs for darwin so install via mas
       "amphetamine" = 937984704;
-      "numbers" = 409203825;
     };
   };
 
