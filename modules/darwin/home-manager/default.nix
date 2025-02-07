@@ -26,7 +26,7 @@ in
 
     onActivation = {
       autoUpdate = true;
-      cleanup = "zap"; # Uninstall not listed packages/casks
+      # cleanup = "zap"; # Uninstall not listed packages/casks
       upgrade = true;
     };
 
@@ -35,16 +35,15 @@ in
       brewfile = true;
     };
 
-    taps = [
-      # "haimgel/display_switch"
-      # "waydabber/betterdisplay"
-    ];
+    # taps = [
+    #   "haimgel/display_switch"
+    #   "waydabber/betterdisplay"
+    # ];
 
     brews = [
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
       # "display_switch"
       # "waydabber/betterdisplay/betterdisplaycli"
-      # "betterdisplaycli"
     ];
 
     casks = [
