@@ -4,8 +4,8 @@ final: prev: {
     version = "1"; 
 
     src = final.fetchurl {
-      url = "https://builds.homerow.app/latest/Homerow.zip";
-      sha256 = "McF1ApTnw/n5A2/qUsm53VlIkTKah6dXeURYV53UczI=";
+      url = "https://builds.homerow.app/v1.3.3/Homerow.zip";
+      sha256 = "mQAcRc9N0CbTg6NC6P4SbIcxp4b8lQocdRinGdnFl8o=";
     };
 
     nativeBuildInputs = [ final.unzip ];

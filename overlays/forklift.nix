@@ -4,8 +4,8 @@ final: prev: {
     version = "4"; 
 
     src = final.fetchurl {
-      url = "https://download.binarynights.com/ForkLift/ForkLift4.zip";
-      sha256 = "7aj+8xEydqFH1tchNniqbDzh5BBxjTKJ4816D30KMhk=";
+      url = "https://download.binarynights.com/ForkLift/ForkLift4.2.1.zip";
+      sha256 = "H49qS+0C8+oGuws6G5UzSp+0MURR8A8vFGrADgl9vUU=";
     };
 
     nativeBuildInputs = [ final.unzip ];

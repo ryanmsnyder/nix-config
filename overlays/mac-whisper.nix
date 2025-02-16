@@ -4,8 +4,10 @@ final: prev: {
     version = "1"; 
 
     src = final.fetchurl {
-      url = "https://stickytimers.app/macwhisper/MacWhisper.zip";
-      sha256 = "DCUnGp4t3joeOgDzl41nhDkrURSFTfLxrVEA3M4ZdRs=";
+      # to find the newest version, check the homebrew cask JSON here:
+      # https://formulae.brew.sh/api/cask/macwhisper.json
+      url = "https://stickytimers.app/macwhisper/MacWhisper-1164.zip";
+      sha256 = "jERSoeu1pnSDTHeQkom31q00HLQkzYRThX+VF2hHZ/g=";
     };
 
     nativeBuildInputs = [ final.unzip ];

@@ -126,7 +126,7 @@ in
       "com.apple.sound.beep.feedback" = 0;
 
       # Trackpad speed
-      "com.apple.trackpad.scaling" = 3.0; # currently have to log out and back in for change to take effect
+      "com.apple.trackpad.scaling" = 2.5; # currently have to log out and back in for change to take effect
 
       # Disable automatic capitalization and spelling correction
       NSAutomaticCapitalizationEnabled = false;
