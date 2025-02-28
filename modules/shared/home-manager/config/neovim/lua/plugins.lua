@@ -243,7 +243,7 @@ return {
 		"rcarriga/nvim-dap-ui",
 		event = "VeryLazy",
 		lazy = false,
-		dependencies = { "mfussenegger/nvim-dap", "mfussenegger/nvim-dap-python" },
+		dependencies = { "nvim-neotest/nvim-nio", "mfussenegger/nvim-dap", "mfussenegger/nvim-dap-python" },
 		config = function()
 			require("config.dap.nvim-dap-ui")
 		end,

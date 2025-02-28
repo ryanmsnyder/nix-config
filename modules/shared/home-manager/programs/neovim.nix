@@ -26,7 +26,7 @@
             nodePackages.typescript-language-server
             # prisma-ls
             pyright
-            ruff-lsp
+            ruff
             nodePackages.vscode-langservers-extracted
             # typst-lsp
 
