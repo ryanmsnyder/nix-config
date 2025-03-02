@@ -4,5 +4,6 @@
   imports = [
     ./colima.nix
     ./open-webui.nix
+    ./ollama.nix
   ];
 }
