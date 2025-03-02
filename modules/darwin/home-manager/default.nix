@@ -76,6 +76,9 @@ in
   home-manager = {
     useGlobalPkgs = true;
     users.${user} = { pkgs, config, lib, ... }: {
+      # imports = [
+      # ];
+
       home = {
         enableNixpkgsReleaseCheck = false;
         # Packages/apps that will only be exposed to the user via ~/.nix-profile
@@ -93,6 +96,7 @@ in
         # Import home-manager programs shared between MacOS and nixOS
         imports = [
           ../../shared/home-manager
+        ./launchd-agents
         ];
 
 

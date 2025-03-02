@@ -7,6 +7,9 @@
   # Install karabiner-elements. The config file is symlinked as part of home-manager
   services.karabiner-elements.enable = true;
 
+  # Web UI for open source LLMs (formerly ollama-webui)
+  # services.open-webui.enable = true;
+
   # Setup user, packages, programs
   nix = {
     package = pkgs.nixVersions.latest;

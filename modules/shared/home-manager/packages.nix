@@ -4,6 +4,10 @@
 {
   # Packages shared between NixOS server and desktop, and MacOS
   shared-non-gui-pkgs = with pkgs; [
+    # AI
+    ollama
+
+
     # Development Tools
     kitty # command line tool for lf image viewing
     btop
@@ -21,9 +25,12 @@
     starship  # zsh prompt
     fzf       # fuzzy finder
 
-    # Cloud-Related Tools and SDKs
+    # Virtualization    
     docker
     docker-compose
+    colima # alternative to docker desktop
+
+    # Cloud-Related Tools and SDKs
     flyctl
 
     # Text and Terminal Utilities
