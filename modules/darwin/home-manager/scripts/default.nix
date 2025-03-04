@@ -13,24 +13,35 @@
   notifyServiceScript = pkgs.writeScriptBin "notify-service" ''
     #!${pkgs.bash}/bin/bash
 
-    service_name="$1"  # First argument is the service name (notification title)
+    export DISPLAY=:0
+    export PATH=/usr/bin:/bin:/usr/sbin:/sbin
+    
+    notifyServiceLog="/tmp/notify-service.log"
+    echo "$(date) - Called notify-service with args: $@" >> "$notifyServiceLog"
+    
+    service_name="$1"
     shift
-
+    
     if [ "$#" -eq 1 ]; then
-      # If only one argument is passed, it's a pure message → display notification
       osascript -e "display notification \"$1\" with title \"$service_name\""
+      echo "$(date) - Sent notification: $1" >> "$notifyServiceLog"
       exit 0
     fi
-
+    
     command="$@"
-    output="$($command 2>&1)"
+    output="$(eval "$command" 2>&1)"
     err="$?"
-
+    
+    echo "$(date) - Output: $output" >> "$notifyServiceLog"
+    echo "$(date) - Exit Code: $err" >> "$notifyServiceLog"
+    
     if [ "$err" -ne 0 ]; then
       osascript -e "display notification \"Failed: $output\" with title \"$service_name\""
+      echo "$(date) - Notification sent for failure" >> "$notifyServiceLog"
       exit "$err"
     else
       osascript -e "display notification \"Started successfully\" with title \"$service_name\""
+      echo "$(date) - Notification sent for success" >> "$notifyServiceLog"
     fi
   '';
 }
