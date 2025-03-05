@@ -17,6 +17,7 @@ in
         "start"
         "--foreground"
       ];
+      RunAtLoad = true;
       KeepAlive = {
         Crashed = true;
         SuccessfulExit = false;
