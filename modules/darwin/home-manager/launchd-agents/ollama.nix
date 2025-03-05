@@ -26,9 +26,9 @@ in
 
           # Check if Ollama is running
           if pgrep -f "${ollamaBinary} serve" > /dev/null; then
-            ${notifyService} "Ollama" "Ollama is running successfully."
+            ${notifyService} "Ollama" "Running successfully."
           else
-            ${notifyService} "Ollama" "Error: Ollama failed to start."
+            ${notifyService} "Ollama" "Error: failed to start."
           fi
 
           # Keep the process running so launchd does not terminate it
