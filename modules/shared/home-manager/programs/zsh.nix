@@ -45,9 +45,11 @@
             grestore = "git reset --hard HEAD"; # reset staging area and working directory back to HEAD
 
             # lf (file manager)
-            # lf = "lfcd";
+            lf = "lfcd";
 
             nd = "nix develop --command zsh";
+
+            diff = "difft";
         };
 
         initExtraFirst = ''
@@ -75,10 +77,20 @@
             }
 
             # Use difftastic, syntax-aware diffing
-            alias diff=difft
+            #alias diff=difft
 
             # Always color ls and group directories
             alias ls='ls --color=auto'
+            
+            # Workaround for lf's limitation of changing the working directory. This changes the working
+            # directory to the current directory in lf when lf is quit
+            lfcd() {
+              cd "$(command lf -print-last-dir "$@")"
+            }
+
+            # Bind Ctrl+O to lfcd
+            bindkey -s '^o' 'lfcd\n'
+
         '';
     };
 }
