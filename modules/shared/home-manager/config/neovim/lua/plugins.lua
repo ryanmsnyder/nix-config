@@ -28,6 +28,7 @@ return {
 
 	{
 		"zaldih/themery.nvim",
+		lazy = false,
 		keys = {
 			{ "<leader>ht", "<cmd>Themery<cr>", desc = "Open Theme Switcher" },
 		},

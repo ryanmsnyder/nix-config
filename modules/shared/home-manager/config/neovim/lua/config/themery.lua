@@ -82,7 +82,6 @@ themery.setup({
             ]],
 		},
 	},
-	themeConfigFile = "~/.config/nvim/lua/theme.lua", -- for persistence
+	-- themeConfigFile = "~/.config/nvim/lua/theme.lua", -- for persistence
 	livePreview = true, -- apply theme while browsing
 })
-
