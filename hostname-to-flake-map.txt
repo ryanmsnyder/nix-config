@@ -1,3 +1,3 @@
-Ryans-Mac-Mini.local=macbookpro
-Mariahs-MacBook-Pro.local=macbookpro
+Ryans-Mac-Mini.local=personal-mac
+Mariahs-MacBook-Pro.local=personal-mac
 US-VGJW6RDC60=work-macbookpro

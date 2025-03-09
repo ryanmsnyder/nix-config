@@ -21,6 +21,7 @@
     };
   };
 
+  # set catppuccin home-manager flavor (this flavor will be used in all programs that enable catppuccin theme)
   config = {
     catppuccin.flavor = config.flavor;
   };

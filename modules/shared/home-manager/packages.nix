@@ -7,16 +7,12 @@
     # AI
     ollama
 
-
     # Development Tools
-    kitty # command line tool for lf image viewing
-    btop
     coreutils
-    pandoc
     sqlite
+    iftop
     wget
     zip
-    direnv
     difftastic # syntax-aware diffing
 
     # Virtualization    
@@ -29,14 +25,8 @@
 
     # Text and Terminal Utilities
     ffmpeg
-    fd
     font-awesome
-    htop
-    iftop
-    jq
-    ripgrep
     tree
-    tmux
     unrar
     unzip
 

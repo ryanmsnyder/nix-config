@@ -4,7 +4,6 @@
   # Import config for home-manager programs
   imports = [
     ./theme.nix
-    # inputs.catppuccin.homeManagerModules.catppuccin
     ./programs/wezterm.nix
     ./programs/bat.nix
     ./programs/git.nix
@@ -16,19 +15,25 @@
     ./programs/zsh.nix
     ./programs/neovim.nix
     ./programs/fzf.nix
+    ./programs/btop.nix
+    ./programs/direnv.nix
+    ./programs/fd.nix
+    ./programs/kitty.nix
+    ./programs/ripgrep.nix
+    ./programs/jq.nix
   ];
 
-  # Set shared environment variables
-  home.sessionVariables = {
-    # Set the EDITOR environment variable
-    LESS="-R";
-    PAGER="bat";
+
+  # Set theme globally
+  config = {
+    theme = "catppuccin";  # Main theme
+    flavor = "frappe";      # Change theme flavor (latte, frappe, macchiato, mocha)
+
+    # Environment variables
+    home.sessionVariables = {
+      LESS = "-R";
+      PAGER = "bat";
+    };
   };
-
-  # TODO: find a better home for this. Since Wezterm is a package and not a home-manager program, 
-  # I've linked the wezterm config to the ~/.config folder here. With programs such as lf, etc,
-  # I linked their config inside of their dedicated file in the programs directory
-  home.file.".config/wezterm".source = ./config/wezterm;
-
   
 }

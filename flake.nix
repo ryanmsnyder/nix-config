@@ -102,7 +102,7 @@
       templates = import ./templates;
 
       darwinConfigurations = {
-        macbookpro = let fullName = variables.fullName; user = variables.personal.user; email = variables.personal.email; in darwin.lib.darwinSystem {
+        personal-mac = let fullName = variables.fullName; user = variables.personal.user; email = variables.personal.email; in darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = { inherit inputs fullName user email; }; # this allows inputs to be passed explicitly to other modules
 
@@ -110,7 +110,7 @@
             # agenix.homeManagerModules.age
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
-            ./hosts/macbookpro
+            ./hosts/personal-mac
             {
               nix-homebrew = {
                 inherit user;
