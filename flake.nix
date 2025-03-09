@@ -42,10 +42,22 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko } @inputs:
+  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, catppuccin } @inputs:
     let
+      variables = {
+        fullName = "Ryan Snyder";
+        personal = {
+          user = "ryan";
+          email = "ryansnyder4@gmail.com";
+        };
+        work = {
+          user = "ryan.snyder";
+          email = "ryan.snyder@rakuten.com";
+        };
+      };
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
@@ -58,14 +70,14 @@
         };
       };
 
-      mkApp = scriptName: system: {
+      mkApp = scriptfullName: system: {
         type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
+        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptfullName ''
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
-        '')}/bin/${scriptName}";
+          echo "Running ${scriptfullName} for ${system}"
+          exec ${self}/apps/${system}/${scriptfullName}
+        '')}/bin/${scriptfullName}";
       };
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
@@ -90,14 +102,15 @@
       templates = import ./templates;
 
       darwinConfigurations = {
-        macbookpro = let user = "ryan"; in darwin.lib.darwinSystem {
+        macbookpro = let fullName = variables.fullName; user = variables.personal.user; email = variables.personal.email; in darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = { inherit inputs user; }; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs fullName user email; }; # this allows inputs to be passed explicitly to other modules
 
           modules = [
             # agenix.homeManagerModules.age
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
+            ./hosts/macbookpro
             {
               nix-homebrew = {
                 inherit user;
@@ -110,16 +123,16 @@
                 mutableTaps = false;
               };
             }
-            ./hosts/macbookpro
           ];
         };
 
-        work-macbookpro = let user = "ryan.snyder"; in darwin.lib.darwinSystem {
+        work-macbookpro = let fullName = variables.fullName; user = variables.work.user; email = variables.work.email; in darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = { inherit inputs user;}; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs fullName user email;}; # this allows inputs to be passed explicitly to other modules
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew  # for installing Mac App Store apps
+            ./hosts/work-macbookpro
             {
               nix-homebrew = {
                 inherit user;
@@ -132,7 +145,6 @@
                 mutableTaps = false;
               };
             }
-            ./hosts/work-macbookpro
           ];
         };
       };
@@ -154,11 +166,12 @@
     #  });
 
       nixosConfigurations = {
-        hetzner-vps = let user = "ryan"; in nixpkgs.lib.nixosSystem {
+        hetzner-vps = let fullName = variables.fullName; user = variables.personal.user; email = variables.personal.email; in nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; }; # this allows inputs to be passed explicitly to other modules
+          specialArgs = { inherit inputs fullName user email; }; # this allows inputs to be passed explicitly to other modules
           modules = [
             disko.nixosModules.disko
+            ./hosts/hetzner-vps
             home-manager.nixosModules.home-manager {
               home-manager = {
                 # extraSpecialArgs = { inherit user; };
@@ -167,7 +180,6 @@
                 users.${user} = import ./modules/nixos/home-manager.nix;
               };
             }
-            ./hosts/hetzner-vps
           ];
         };
       };

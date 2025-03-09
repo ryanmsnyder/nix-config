@@ -1,8 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, user, ... }:
 
 with lib;
 let
-  username = config.home.username;
   homeDir = config.home.homeDirectory;
   notifyService = "${homeDir}/.nix-profile/bin/notify-service";
 in
@@ -11,7 +10,7 @@ in
     enable = true;
     config = {
       EnvironmentVariables = {
-        PATH = "${homeDir}/.nix-profile/bin:/etc/profiles/per-user/${username}/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+        PATH = "${homeDir}/.nix-profile/bin:/etc/profiles/per-user/${user}/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/bin:/bin:/usr/sbin:/sbin";
       };
       ProgramArguments = [
         "${pkgs.bash}/bin/bash"

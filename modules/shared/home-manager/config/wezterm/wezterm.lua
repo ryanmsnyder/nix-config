@@ -19,6 +19,31 @@ local direction_keys = {
 	l = "Right",
 }
 
+local function themeCycler(window, _)
+	wezterm.log_info("theme cycler")
+	local currentScheme = window:effective_config().color_scheme
+	wezterm.log_info(currentScheme)
+	local schemes = { "Catppuccin Mocha", "Catppuccin Macchiato" }
+
+	for i = 1, #schemes, 1 do
+		print("loop")
+		if schemes[i] == currentScheme then
+			local overrides = window:get_config_overrides() or {}
+			local next = i % #schemes + 1
+			overrides.color_scheme = schemes[next]
+			window:set_config_overrides(overrides)
+
+			-- save the theme to a file so that it can be read by neovim
+			-- wezterm.run_child_process({
+			-- 	"sh",
+			-- 	"-c",
+			-- 	'echo "' .. schemes[next] .. '" > /tmp/wez-theme',
+			-- })
+			return
+		end
+	end
+end
+
 local function pane_nav_and_resize(resize_or_move, key)
 	return {
 		key = key,
@@ -70,6 +95,8 @@ local config = {
 	color_scheme = "Catppuccin Macchiato",
 	--   window_background_opacity = 0.95,
 
+	automatically_reload_config = true,
+
 	inactive_pane_hsb = {
 		saturation = 0.9,
 		brightness = 0.7,
@@ -86,15 +113,7 @@ local config = {
 
 	-- font
 	font = wezterm.font_with_fallback({
-		-- "Berkeley Mono Variable",
-		-- { family = 'JetBrainsMono Nerd Font', weight = 'Medium' },
 		"Berkeley Mono",
-		-- "BerkeleyMono Nerd Font",
-		-- "Berkeley Mono Trial"
-		-- "SF Mono",
-		-- "JetBrainsMono Nerd Font",
-		-- "Noto Color Emoji"
-		-- "Apple Color Emoji",
 	}),
 	font_size = 13,
 	freetype_load_flags = "NO_HINTING",
@@ -147,6 +166,12 @@ local config = {
 			action = act.RotatePanes("CounterClockwise"),
 		},
 
+		{
+			key = "t",
+			mods = "ALT",
+			action = wezterm.action_callback(themeCycler),
+		},
+
 		-- move between split panes
 		pane_nav_and_resize("move", "h"),
 		pane_nav_and_resize("move", "j"),
@@ -181,10 +206,19 @@ local config = {
 	},
 }
 
+-- -- Automatically update the window appearance when the config reloads
+-- wezterm.on("window-config-reloaded", function(window, pane)
+-- 	local overrides = window:get_config_overrides() or {}
+-- 	print(overrides)
+-- 	if overrides.color_scheme ~= config.color_scheme then
+-- 		overrides.color_scheme = config.color_scheme
+-- 		window:set_config_overrides(overrides)
+-- 	end
+-- end)
+
 -- wezterm.on('gui-startup', function()
 --   local tab, pane, window = mux.spawn_window({})
 --   window:gui_window():maximize()
 --  end)
 
 return config
-

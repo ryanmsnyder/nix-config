@@ -1,21 +1,21 @@
-{ config, pkgs, lib, ... }:
-
-let
-    name = "Ryan Snyder";
-    email = "ryansnyder4@gmail.com";
-in
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # Import config for home-manager programs
   imports = [
+    ./theme.nix
+    # inputs.catppuccin.homeManagerModules.catppuccin
+    ./programs/wezterm.nix
     ./programs/bat.nix
-    # ./programs/git.nix
+    ./programs/git.nix
     ./programs/lf.nix
+    ./programs/lsd.nix
     ./programs/ssh.nix
     ./programs/starship.nix
     ./programs/zoxide.nix
     ./programs/zsh.nix
     ./programs/neovim.nix
+    ./programs/fzf.nix
   ];
 
   # Set shared environment variables

@@ -19,12 +19,6 @@
     direnv
     difftastic # syntax-aware diffing
 
-    # Terminal Enhancements and Utilities
-    zoxide    # better cd
-    lsd       # better ls
-    starship  # zsh prompt
-    fzf       # fuzzy finder
-
     # Virtualization    
     docker
     docker-compose

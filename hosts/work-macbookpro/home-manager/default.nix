@@ -17,7 +17,7 @@ in
 
 {
   home-manager.users.${user} = {
-    imports = [ inputs.agenix.homeManagerModules.default ./programs/git.nix ];
+    imports = [ inputs.agenix.homeManagerModules.default ];
 
     home = {
       # Install combined packages and scripts specific to this host/machine

@@ -23,13 +23,6 @@
         };
 
         shellAliases = {
-            # lsd
-            ls = "lsd";
-            l = "ls -l";
-            la = "ls -a";
-            lla = "ls -la";
-            lt = "ls --tree";
-
             # bat
             cat = "bat";
 
@@ -91,6 +84,35 @@
             # Bind Ctrl+O to lfcd
             bindkey -s '^o' 'lfcd\n'
 
+            # # Set up fzf key bindings and fuzzy completion
+            # source <(fzf --zsh)
+            #
+            # export FZF_DEFAULT_OPTS="
+            #   --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796
+            #   --color=fg:#cad3f5,header:#f5a97f,info:#c6a0f6,pointer:#f4dbd6
+            #   --color=marker:#a6da95,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796
+            #   --pointer='➜' --marker='✓' --prompt='❯ '
+            #   --border
+            #   --multi
+            #   --reverse
+            #   --bind 'ctrl-e:become(nvim {+})'
+            #   --bind 'alt-a:select-all'
+            #   --bind '?:toggle-preview'
+            #   --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (lsd -F --tree --depth 2 --all --color=always --icon=always {} | less)) || echo {} 2> /dev/null | head -200'"
+            #
+            # # CTRL-Y to copy the command into clipboard using pbcopy
+            # export FZF_CTRL_R_OPTS="
+            #   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+            #   --color header:italic
+            #   --layout reverse
+            #   --header 'Press CTRL-Y to copy command into clipboard'"
+            #
+            # # Preview file content using bat (https://github.com/sharkdp/bat)
+            # export FZF_CTRL_T_OPTS="
+            #   --walker-skip .git,node_modules,target
+            #   --preview 'bat -n --color=always {}'
+            #   --bind 'ctrl-w:change-preview-window(down|hidden|)'
+            #   --header 'Press CTRL-W to toggle the preview window between different states'"
         '';
     };
 }

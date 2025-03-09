@@ -1,14 +1,10 @@
-{ config, pkgs, lib, name, email, ... }:
-
-let name = "Ryan Snyder";
-    email = "ryansnyder4@gmail.com";
-in
+{ config, pkgs, lib, fullName, email, ... }:
 
 {
     programs.git = {
         enable = true;
         ignores = [ "*.swp" ];
-        userName = name;
+        userName = fullName;
         userEmail = email;
 
         lfs = {
