@@ -7,17 +7,16 @@
   inherit (lib.modules) mkIf;
   inherit (pkgs.stdenv) isLinux;
 
-  # Function to capitalize the first letter of a string
-  capitalize = str: (lib.strings.toUpper (builtins.substring 0 1 str)) + (builtins.substring 1 (builtins.stringLength str) str);
+  capitalize = str:
+    let
+      first = lib.strings.toUpper (builtins.substring 0 1 str);
+      rest = builtins.substring 1 (builtins.stringLength str - 1) str;
+    in
+      first + rest;
 
-  # Capitalize theme and flavor
-  formattedTheme = capitalize config.theme;
-  formattedFlavor = capitalize config.flavor;
-
-  # Final WezTerm theme name
-  weztermTheme =
-    if config.theme == "catppuccin" then "Catppuccin ${formattedFlavor}"
-    else formattedTheme;
+  theme = capitalize config.theme;
+  flavor = capitalize config.flavor;
+  colorScheme = "${theme} ${flavor}";
 
   luaScript = ''
     local wezterm = require("wezterm")
@@ -29,21 +28,24 @@
     end
 
     local direction_keys = {
-      Left = "h",
-      Down = "j",
-      Up = "k",
-      Right = "l",
-      h = "Left",
-      j = "Down",
-      k = "Up",
-      l = "Right",
+      n = "Left",
+      i = "Right",
+      u = "Up",
+      e = "Down",
     }
 
-    local function pane_nav_and_resize(resize_or_move, key)
+    local function pane_nav_and_resize(resize_or_move, key, mods)
       return {
         key = key,
-        mods = resize_or_move == "resize" and "LEADER" or "CTRL",
+        mods = mods or (resize_or_move == "resize" and "LEADER" or "CTRL"),
         action = wezterm.action_callback(function(win, pane)
+          local direction_keys = {
+            n = "Left",
+            i = "Right",
+            u = "Up",
+            e = "Down",
+          }
+
           if is_vim(pane) then
             if resize_or_move == "resize" then
               win:perform_action({SendKey = {key = "a", mods = "CTRL"}}, pane)
@@ -63,7 +65,7 @@
     end
 
     local config = {
-      color_scheme = "${weztermTheme}",
+      color_scheme = "${colorScheme}",
       automatically_reload_config = true,
       inactive_pane_hsb = {
         saturation = 0.9,
@@ -93,10 +95,11 @@
         {key = "z", mods = "LEADER", action = act.TogglePaneZoomState},
         {key = "8", mods = "CTRL", action = act.PaneSelect},
         {key = "b", mods = "CTRL", action = act.RotatePanes("CounterClockwise")},
-        pane_nav_and_resize("move", "h"),
-        pane_nav_and_resize("move", "j"),
-        pane_nav_and_resize("move", "k"),
-        pane_nav_and_resize("move", "l"),
+
+        pane_nav_and_resize("move", "n", "ALT"),
+        pane_nav_and_resize("move", "i", "ALT"),
+        pane_nav_and_resize("move", "u", "ALT"),
+        pane_nav_and_resize("move", "e", "ALT"),
         pane_nav_and_resize("resize", "r"),
       },
       key_tables = {

@@ -27,7 +27,7 @@
   # Set theme globally
   config = {
     theme = "catppuccin";  # Main theme
-    flavor = "frappe";      # Change theme flavor (latte, frappe, macchiato, mocha)
+    flavor = "mocha";      # Change theme flavor (latte, frappe, macchiato, mocha)
 
     # Environment variables
     home.sessionVariables = {
