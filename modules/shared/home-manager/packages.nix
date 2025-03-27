@@ -37,6 +37,7 @@
 
   # Shared GUI packages used by NixOS desktop and MacOS environments
   shared-gui-pkgs = with pkgs; [
+    bitwarden-desktop
     wezterm
     slack
     vscode

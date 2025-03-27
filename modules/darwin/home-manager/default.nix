@@ -82,6 +82,7 @@ in
     # ];
 
     brews = [
+      "blueutil"
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
       # "display_switch"
       # "waydabber/betterdisplay/betterdisplaycli"
@@ -104,8 +105,6 @@ in
     #
     # These apps won't be automatically uninstalled if removed
     masApps = {
-      "magnet" = 441258766;
-      "bitwarden" = 1352778147;  # currently not in nixpkgs for darwin so install via mas
       "amphetamine" = 937984704;
       "adguard-for-safari" = 1440147259;
     };
