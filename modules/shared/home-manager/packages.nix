@@ -37,7 +37,7 @@
 
   # Shared GUI packages used by NixOS desktop and MacOS environments
   shared-gui-pkgs = with pkgs; [
-    bitwarden-desktop
+    # bitwarden-desktop  # doesn't package the safari extension with it
     wezterm
     slack
     vscode

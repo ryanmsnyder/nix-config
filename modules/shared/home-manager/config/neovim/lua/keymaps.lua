@@ -10,10 +10,10 @@ wk.add({})
 wk.add({
 	{ ";", ":", desc = "Enter command mode", silent = false },
 
-	{ "<C-n>", "<cmd>SmartCursorMoveLeft<CR>", desc = "Move cursor left" },
-	{ "<C-i>", "<cmd>SmartCursorMoveRight<CR>", desc = "Move cursor right" },
-	{ "<C-u>", "<cmd>SmartCursorMoveUp<CR>", desc = "Move cursor up" },
-	{ "<C-e>", "<cmd>SmartCursorMoveDown<CR>", desc = "Move cursor down" },
+	{ "<A-n>", "<cmd>SmartCursorMoveLeft<CR>", desc = "Move cursor left" },
+	{ "<A-i>", "<cmd>SmartCursorMoveRight<CR>", desc = "Move cursor right" },
+	{ "<A-u>", "<cmd>SmartCursorMoveUp<CR>", desc = "Move cursor up" },
+	{ "<A-e>", "<cmd>SmartCursorMoveDown<CR>", desc = "Move cursor down" },
 	{ "<C-a>r", "<cmd>SmartResizeMode<CR>", desc = "Resize split" },
 
 	{ "H", "^", desc = "Go to first non-empty char of current line" },

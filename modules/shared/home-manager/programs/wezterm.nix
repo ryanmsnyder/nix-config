@@ -51,7 +51,7 @@
               win:perform_action({SendKey = {key = "a", mods = "CTRL"}}, pane)
               win:perform_action({SendKey = {key = "r"}}, pane)
             else
-              win:perform_action({SendKey = {key = key, mods = "CTRL"}}, pane)
+              win:perform_action({SendKey = {key = key, mods = "ALT"}}, pane)
             end
           else
             if resize_or_move == "resize" then

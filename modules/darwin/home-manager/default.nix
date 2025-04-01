@@ -105,6 +105,7 @@ in
     #
     # These apps won't be automatically uninstalled if removed
     masApps = {
+      "bitwarden" = 1352778147;  # now its in nixpkgs but it doesn't have the safari extension packaged with it
       "amphetamine" = 937984704;
       "adguard-for-safari" = 1440147259;
     };
