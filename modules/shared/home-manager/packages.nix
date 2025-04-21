@@ -15,6 +15,10 @@
     zip
     difftastic # syntax-aware diffing
 
+    # Cloud
+    google-cloud-sdk
+    terraform
+
     # Virtualization    
     docker
     docker-compose

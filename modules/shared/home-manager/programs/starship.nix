@@ -43,6 +43,10 @@
                 format = "$all_status$ahead_behind";
             };
 
+            gcloud = {
+              disabled = true;
+            };
+
             cmd_duration = {
                 min_time = 10000; # Show command duration over 10,000 milliseconds (=10 sec)
                 format = " took [$duration]($style)";
