@@ -39,7 +39,7 @@ local FileName = {
 	},
 	-- {
 	-- 	provider = function()
-	-- 		return vim.fn.expand("%:t")
+	-- 		return vim.fn.expand("%:tg)
 	-- 	end,
 	-- 	hl = function()
 	-- 		if vim.o.background == "light" then
@@ -145,4 +145,3 @@ return {
 	Symbols,
 	{ provider = "%=" },
 }
-
