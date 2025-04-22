@@ -49,7 +49,7 @@ local FileName = {
 	-- 		end
 	-- 	end,
 	-- },
-	hl = "HeirlineWinbar",
+	-- hl = "HeirlineWinbar",
 	on_click = {
 		callback = function(self)
 			require("aerial").toggle()
@@ -144,4 +144,5 @@ return {
 	FileName,
 	Symbols,
 	{ provider = "%=" },
+	hl = { bg = "base_bg" },
 }

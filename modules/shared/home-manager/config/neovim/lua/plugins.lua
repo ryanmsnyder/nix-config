@@ -81,7 +81,7 @@ return {
 		event = "BufReadPost",
 		main = "ibl",
 		config = function()
-			require("config.blankline")
+			require("config.indent-blankline")
 		end,
 	},
 

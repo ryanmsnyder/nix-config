@@ -59,10 +59,10 @@ M.before = function(flavor)
 			telescope = true,
 			neotree = true,
 			which_key = true,
-			indent_blankline = {
-				enabled = true,
-				-- colored_indent_levels = true,
-			},
+			-- indent_blankline = {
+			-- 	enabled = true,
+			-- 	-- colored_indent_levels = true,
+			-- },
 			bufferline = true,
 			mason = true,
 			dap = {

@@ -43,4 +43,3 @@ heirline.setup({
 		end,
 	},
 })
-

@@ -6,7 +6,7 @@ _G.guicursor_prev = nil
 -- List of filetypes to apply the cursor settings
 local targetFiletypes = {
 	"aerial",
-	"neo-tree",
+	-- "neo-tree",
 	"Trouble",
 	-- You can add more filetypes here as needed.
 }

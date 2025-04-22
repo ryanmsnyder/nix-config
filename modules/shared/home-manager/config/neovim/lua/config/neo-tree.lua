@@ -7,11 +7,31 @@ neotree.setup({
 	close_if_last_window = true,
 	event_handlers = {
 		{
+			event = "neo_tree_buffer_enter",
+			handler = function()
+				-- This effectively hides the cursor
+				vim.api.nvim_set_hl(0, "HIDDEN", { blend = 100, nocombine = true })
+				vim.o.guicursor = "a:HIDDEN"
+			end,
+		},
+		{
+			event = "neo_tree_popup_buffer_enter",
+			handler = function()
+				vim.o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
+			end,
+		},
+		{
+			event = "neo_tree_buffer_leave",
+			handler = function()
+				vim.o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
+			end,
+		},
+		{
 			event = "neo_tree_popup_input_ready",
 			---@param args { bufnr: integer, winid: integer }
 			handler = function(args)
-				vim.cmd("stopinsert")
 				vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
+				-- vim.cmd("highlight! Cursor guibg=#5f87af blend=0")
 			end,
 		},
 	},
@@ -25,7 +45,7 @@ neotree.setup({
 			},
 		},
 
-		follow_current_file = { enabled = false },
+		follow_current_file = { enabled = true },
 		hijack_netrw_behavior = "open_current",
 	},
 	default_component_configs = {
