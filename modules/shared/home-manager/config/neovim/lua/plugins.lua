@@ -465,6 +465,20 @@ return {
 	},
 
 	{
+		"leath-dub/snipe.nvim",
+		keys = {
+			{
+				"gs",
+				function()
+					require("snipe").open_buffer_menu()
+				end,
+				desc = "Open Snipe buffer menu",
+			},
+		},
+		opts = {},
+	},
+
+	{
 		"ryanmsnyder/toggleterm.nvim",
 		-- dir = "/Users/ryansnyder/code/neovim-plugins/toggleterm.nvim",
 		-- "akinsho/toggleterm.nvim",
