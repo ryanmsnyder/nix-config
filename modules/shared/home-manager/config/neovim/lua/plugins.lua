@@ -178,20 +178,6 @@ return {
 		end,
 	},
 
-	-- {
-	--   'VonHeikemen/lsp-zero.nvim', branch = 'v3.x',
-	--   lazy = false, -- change this
-	--   dependencies = {
-	--     'neovim/nvim-lspconfig',
-	--     'hrsh7th/cmp-nvim-lsp',
-	--     'hrsh7th/nvim-cmp',
-	--     'L3MON4D3/LuaSnip'
-	--   },
-	--   config = function()
-	--     require "config.lsp.lsp"
-	--   end,
-	-- },
-
 	{
 		"neovim/nvim-lspconfig",
 		cmd = "LspInfo",
@@ -475,7 +461,23 @@ return {
 				desc = "Open Snipe buffer menu",
 			},
 		},
-		opts = {},
+		config = function()
+			local snipe = require("snipe")
+			snipe.setup({
+				ui = {
+					open_win_override = {
+						border = "rounded",
+					},
+					preselect_current = true,
+				},
+				hints = { dictionary = "tnseriaoplfuwyq;dhc,x.z?" },
+				navigate = {
+					cancel_snipe = "<esc>",
+					close_buffer = "d",
+				},
+				sort = "default",
+			})
+		end,
 	},
 
 	{
