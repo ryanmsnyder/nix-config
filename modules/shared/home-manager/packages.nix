@@ -15,6 +15,9 @@
     zip
     difftastic # syntax-aware diffing
 
+    # Database
+    postgresql
+
     # Cloud
     google-cloud-sdk
     terraform

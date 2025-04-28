@@ -28,7 +28,6 @@ sharedNonGuiPackages ++ sharedNixOSPackages ++ [
 
   # Testing and development tools
   rnix-lsp # lsp-mode for nix
-  postgresql
 
   # Text and terminal utilities
   tree
