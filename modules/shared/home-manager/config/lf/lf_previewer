@@ -12,8 +12,6 @@ IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}"
 CACHE_DIR="${XDG_DATA_HOME:-$HOME}/.cache/lf"
 # [ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}/lf" ] && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/lf"
 
-echo -e "1: $1\n2: $2\n3: $3\n4: $4\n5: $5" >> ~/Desktop/debug.txt
-
 preview() {
     kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$1" < /dev/null > /dev/tty
 }
