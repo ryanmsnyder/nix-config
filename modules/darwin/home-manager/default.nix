@@ -84,6 +84,7 @@ in
     brews = [
       "blueutil"
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
+      "aichat"
       # "display_switch"
       # "waydabber/betterdisplay/betterdisplaycli"
     ];
@@ -135,8 +136,11 @@ in
       "com.apple.sound.beep.volume" = 0.0;
       "com.apple.sound.beep.feedback" = 0;
 
-      # Trackpad speed
-      "com.apple.trackpad.scaling" = 2.5; # currently have to log out and back in for change to take effect
+      # Trackpad 
+      "com.apple.trackpad.scaling" = 3.0; # trackpad speed - currently have to log out and back in for change to take effect
+      "com.apple.trackpad.enableSecondaryClick" = true;
+      "com.apple.trackpad.trackpadCornerClickBehavior" = 1; # configures the trackpad corner click behavior
+
 
       # Disable automatic capitalization and spelling correction
       NSAutomaticCapitalizationEnabled = false;
@@ -175,7 +179,7 @@ in
       FXPreferredViewStyle = "Nlsv";
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
-      CreateDesktop = false;
+      CreateDesktop = true;
       QuitMenuItem = true;
       ShowPathbar = true;
       ShowStatusBar = true;
@@ -185,12 +189,16 @@ in
       Clicking = true; # enable trackpad tap to click
       TrackpadRightClick = true; # enable trackpad right click
       TrackpadThreeFingerDrag = true;
+      ActuationStrength = 0; # silent click
     };
 
     magicmouse = {
       # Enable secondary click on magic mouse when clicking the right side
       MouseButtonMode = "TwoButton";
     };
+
+    # Disable animation when switching screens or opening apps
+    universalaccess.reduceMotion = true;
 
     # manages Apple plist settings in ~/Library/Preferences
     CustomUserPreferences = {
