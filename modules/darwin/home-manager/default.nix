@@ -91,6 +91,7 @@ in
 
     casks = [
       "chatgpt"
+      "claude"
       "calibre"
       "discord"
       "betterdisplay"
@@ -138,15 +139,25 @@ in
 
       # Trackpad 
       "com.apple.trackpad.scaling" = 3.0; # trackpad speed - currently have to log out and back in for change to take effect
-      "com.apple.trackpad.enableSecondaryClick" = true;
-      "com.apple.trackpad.trackpadCornerClickBehavior" = 1; # configures the trackpad corner click behavior
-
+      # "com.apple.trackpad.enableSecondaryClick" = true;
 
       # Disable automatic capitalization and spelling correction
       NSAutomaticCapitalizationEnabled = false;
       NSAutomaticSpellingCorrectionEnabled = false;
 
       
+    };
+
+    trackpad = {
+      # Clicking = true; # enable trackpad tap to click
+      TrackpadRightClick = true; # enable trackpad right click
+      TrackpadThreeFingerDrag = true;
+      ActuationStrength = 0; # silent click
+    };
+
+    magicmouse = {
+      # Enable secondary click on magic mouse when clicking the right side
+      MouseButtonMode = "TwoButton";
     };
 
     dock = {
@@ -185,17 +196,7 @@ in
       ShowStatusBar = true;
     };
 
-    trackpad = {
-      Clicking = true; # enable trackpad tap to click
-      TrackpadRightClick = true; # enable trackpad right click
-      TrackpadThreeFingerDrag = true;
-      ActuationStrength = 0; # silent click
-    };
 
-    magicmouse = {
-      # Enable secondary click on magic mouse when clicking the right side
-      MouseButtonMode = "TwoButton";
-    };
 
     # Disable animation when switching screens or opening apps
     universalaccess.reduceMotion = true;

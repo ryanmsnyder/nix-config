@@ -8,6 +8,7 @@
     ollama
 
     # Development Tools
+    nodejs_23
     coreutils
     sqlite
     iftop
@@ -27,10 +28,8 @@
     docker-compose
     colima # alternative to docker desktop
 
-    # Cloud-Related Tools and SDKs
-    flyctl
-
     # Text and Terminal Utilities
+    yt-dlp
     ffmpeg
     font-awesome
     tree
@@ -39,6 +38,9 @@
 
     # Fonts
     berkeley-mono-font # from overlays. installs to $HOME/Library/Fonts/HomeManager on MacOS
+
+    # Firmware
+    qmk
 
   ];
 
@@ -51,7 +53,7 @@
     obsidian
     spotify
     bruno
-    # google-chrome  # not packaged for MacOs
+    google-chrome  # not packaged for MacOs
   ];
 
   # Packages shared between NixOS desktop and NixOS server environments
@@ -63,7 +65,6 @@
   shared-macos-pkgs = with pkgs; [
     raycast
     bartender
-    monitorcontrol
     iina
     forklift
     homerow
