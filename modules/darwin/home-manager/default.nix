@@ -85,8 +85,7 @@ in
       "blueutil"
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
       "aichat"
-      # "display_switch"
-      # "waydabber/betterdisplay/betterdisplaycli"
+      "yek" # Rust based tool to serialize text-based files in a repository or directory for LLM consumption 
     ];
 
     casks = [
