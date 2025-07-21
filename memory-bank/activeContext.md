@@ -1,19 +1,48 @@
 # Active Context: Current Work Focus
 
 ## Current Work Focus
-**Memory Bank Initialization**: Setting up comprehensive documentation system for the Nix configuration repository to enable effective context preservation across sessions.
+**✅ RESOLVED: Agenix Secrets Mounting Issue** - Successfully fixed agenix secrets mounting. SSH keys are now properly decrypted and available at `~/.ssh/home-assistant-id_ed25519`.
 
 ## Recent Changes
-- **Created projectbrief.md**: Established foundational project overview and scope
-- **Created productContext.md**: Documented the "why" behind the configuration system
-- **Created systemPatterns.md**: Detailed system architecture and design patterns
-- **Created techContext.md**: Comprehensive technical stack and tool documentation
+- **Completed Memory Bank Initialization**: Successfully created all core memory bank files (projectbrief.md, productContext.md, systemPatterns.md, techContext.md, activeContext.md, progress.md)
+- **Analyzed Current Configuration**: Reviewed existing SSH and Zsh configurations in shared modules
+- **✅ Created Host-Specific SSH Configuration**: Added `hosts/personal-mac/home-manager/programs/ssh.nix` with server aliases
+- **✅ Integrated SSH Config**: Updated `hosts/personal-mac/home-manager/default.nix` to import the SSH program
+- **✅ Resolved Configuration Conflicts**: Modified SSH config to extend shared config rather than replace it
+- **✅ Validated Configuration**: Successfully tested build with `nix build .#darwinConfigurations.personal-mac.system --dry-run`
+- **✅ Added GitHub SSH Configuration**: Added GitHub match block with proper identity file and security settings
+- **✅ Updated Home Assistant SSH**: Added identity file reference to use agenix-managed SSH key
+- **✅ Fixed Agenix Module Loading**: Enabled `agenix.darwinModules.default` in flake.nix (was commented out)
+- **✅ RESOLVED: Agenix Secrets Mounting**: Fixed by removing invalid `owner` option and updating secrets flake input to latest version
 
 ## Next Steps
-1. **Create activeContext.md**: Document current work state and recent activities (this file)
-2. **Create progress.md**: Track what's working, what needs building, and current status
-3. **Review and validate**: Ensure all memory bank files are complete and accurate
-4. **Test memory bank**: Verify the documentation provides sufficient context for future work
+1. **✅ COMPLETED: Fix Agenix Secrets Mounting**: Successfully resolved - secrets now properly decrypted and mounted
+2. **Implement WezTerm SSH pane management**: Add functionality to create new panes connected to same SSH session
+3. **Integrate SSH session resurrection**: Connect SSH sessions with WezTerm's resurrect plugin
+4. **Test and validate**: Deploy configuration and test SSH aliases work as expected
+
+## ✅ RESOLVED: Agenix Secrets Mounting Issue
+
+### Root Cause Analysis
+The issue was caused by two main problems:
+1. **Invalid `owner` option**: The home-manager agenix module doesn't support the `owner` option (only available in system-level agenix)
+2. **Outdated secrets repository**: The flake lock was pointing to an old version of the secrets repository that didn't contain the required secret file
+
+### Solution Implemented
+1. **Removed invalid `owner` option** from `hosts/personal-mac/home-manager/secrets/default.nix`
+2. **Updated flake lock** with `nix flake lock --update-input secrets` to fetch latest secrets repository
+3. **Created missing identity file** at `~/.ssh/agenix-id_ed25519`
+
+### Current Status
+- **✅ Secret File**: `~/.ssh/home-assistant-id_ed25519` now exists as symlink to decrypted secret
+- **✅ Permissions**: Proper 600 permissions on decrypted secret file
+- **✅ LaunchAgent**: `org.nix-community.home.activate-agenix` running successfully (exit code 0)
+- **✅ Decryption**: Secret properly decrypted and available for SSH usage
+
+### Key Learnings
+- Home-manager agenix module has different options than system-level agenix module
+- Flake inputs need to be updated when secrets repository changes
+- macOS agenix uses LaunchAgents for secret mounting, not systemd services
 
 ## Active Decisions and Considerations
 
@@ -86,3 +115,8 @@
 - **Testing**: Verify configurations work across all hosts
 - **Optimization**: Improve build times and reduce complexity where possible
 - **Expansion**: Add support for additional development languages and tools
+
+## New Requirements (Added)
+1. **Host-specific Zsh Configuration**: Create a personal-mac specific zsh program with SSH aliases for common servers
+2. **WezTerm SSH Pane Management**: Implement functionality to create new panes that connect to the same SSH session as the current pane
+3. **SSH Session Resurrection**: Integrate SSH session restoration with WezTerm's resurrect plugin and smart_workspace_switcher

@@ -6,6 +6,8 @@
   shared-non-gui-pkgs = with pkgs; [
     # AI
     ollama
+    yek # Rust based tool to serialize text-based files in a repository or directory for LLM consumption 
+
 
     # Development Tools
     nodejs_23

@@ -107,7 +107,7 @@
           specialArgs = { inherit inputs fullName user email; }; # this allows inputs to be passed explicitly to other modules
 
           modules = [
-            # agenix.homeManagerModules.age
+            agenix.darwinModules.default
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             ./hosts/personal-mac

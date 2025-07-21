@@ -256,13 +256,14 @@ Paste it into `secrets.nix`. This is a minimal example of what `secrets.nix` sho
 
 ```nix
 let
-  ryan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINb5X5JOy4BspEQfsYcxu78cebIzQ7A+39wAKjYcdzWh ryan@mariahs-mbp.lan";
-  users = [ ryan ];
+  ryan-mac-mini = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBAzssE+IC/eQY1YOBhdMyL4TMQiTe5T6YYzs52/WqU ryansnyder4@gmail.com";
+  users = [ ryan-mac-mini ];
 
 in
 {
-  "secret1.age".publicKeys = users;
+  "secret-name.age".publicKeys = users;
 }
+
 ```
 
 Each key specified in `secrets.nix` takes a list of public keys that will be used to encrypt the secret. If a target machine contains the corresponding private key to the public key we just pasted, when building the `nix-config` it will be able to decrypt the age files in the `nix-secrets` repo and mount them on the target machine (in a location that's set in the `agenix` config in this repo). Therefore, the private key `agenix-id_ed25519` will need to be copied to any machine that wants to decrypt secrets in the `nix-secrets` repo.
@@ -270,7 +271,7 @@ Each key specified in `secrets.nix` takes a list of public keys that will be use
 Create the `age` file and encrypt it using `agenix` CLI:
 
 ```sh
-nix run github:ryantm/agenix -- -e secret1.age
+nix run github:ryantm/agenix -- -e secret-name.age
 ```
 
 This will run the `agenix` CLI without installing it as a package. It will open a temporary file in the app configured in your $EDITOR environment variable. Paste the contents of the secret in the file. When you save that file its content will be encrypted with the public key(s) mentioned in the `secrets.nix` file (in this case just the `agenix-id_ed25519.pub` that was copied to it). The file will be named what was passed to the `-e` flag. Once saved, the file will be encrypted with the public key specified in `secrets.nix`.
@@ -628,6 +629,17 @@ in
 ```
 
 Finally, I'd commit all changes to the `nix-secrets` repository, go back to my `nix-config` and run `nix flake update` to update the lock file.
+
+> [!IMPORTANT]
+> **Updating Flake Lock for New Secrets**
+> 
+> Whenever you add new encrypted secrets to your `nix-secrets` repository and want to use them in your configuration, you **must** update the flake lock file to fetch the latest version of your secrets repository:
+> 
+> ```sh
+> nix flake lock --update-input secrets
+> ```
+> 
+> This is required because Nix flakes pin specific commits for reproducibility. Without updating the lock file, your configuration will continue to use the old version of your secrets repository that doesn't contain the new secret files.
 
 The secret is now ready to use. Here's an [example](https://github.com/dustinlyons/nixos-config/blob/3b95252bc6facd7f61c6c68ceb1935481cb6b457/nixos/secrets.nix#L28) from my configuration. In the end, this creates a symlink to a decrypted file in the Nix Store that reflects my original file.
 
