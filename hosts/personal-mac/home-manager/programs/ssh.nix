@@ -10,6 +10,8 @@
       hostname = "ddc-switcher.local";
       user = "ryan";
       port = 22;
+      identityFile = "~/.ssh/ddc-switcher-id_ed25519";
+
     };
     
     # Home Assistant
