@@ -30,7 +30,7 @@ in
       file = {
 
         # Symlink GitHub public key to .ssh directory
-        # ".ssh/github-id_ed25519.pub".source = ./secrets/github-id_ed25519.pub;
+        ".ssh/home-assistant-id_ed25519.pub".source = ./public-keys/home-assistant-id_ed25519.pub;
       };
     };
   };
