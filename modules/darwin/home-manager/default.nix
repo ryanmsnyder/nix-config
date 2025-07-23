@@ -148,9 +148,9 @@ in
 
     trackpad = {
       # Clicking = true; # enable trackpad tap to click
-      TrackpadRightClick = true; # enable trackpad right click
-      TrackpadThreeFingerDrag = true;
-      ActuationStrength = 0; # silent click
+      # TrackpadRightClick = true; # enable trackpad right click
+      # TrackpadThreeFingerDrag = true;
+      # ActuationStrength = 0; # silent click
     };
 
     magicmouse = {
@@ -197,7 +197,7 @@ in
 
 
     # Disable animation when switching screens or opening apps
-    universalaccess.reduceMotion = true;
+    # universalaccess.reduceMotion = true;
 
     # manages Apple plist settings in ~/Library/Preferences
     CustomUserPreferences = {
