@@ -10,7 +10,7 @@
 
 
     # Development Tools
-    nodejs_23
+    nodejs_24
     uv
     coreutils
     sqlite

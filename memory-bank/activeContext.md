@@ -1,7 +1,7 @@
 # Active Context: Current Work Focus
 
 ## Current Work Focus
-**✅ RESOLVED: Agenix Secrets Mounting Issue** - Successfully fixed agenix secrets mounting. SSH keys are now properly decrypted and available at `~/.ssh/home-assistant-id_ed25519`.
+**✅ RESOLVED: Nix Build User Group GID Mismatch** - Successfully fixed the nix-darwin activation error by adding `ids.gids.nixbld = 350;` configuration and updating deprecated zsh options.
 
 ## Recent Changes
 - **Completed Memory Bank Initialization**: Successfully created all core memory bank files (projectbrief.md, productContext.md, systemPatterns.md, techContext.md, activeContext.md, progress.md)
@@ -14,35 +14,87 @@
 - **✅ Updated Home Assistant SSH**: Added identity file reference to use agenix-managed SSH key
 - **✅ Fixed Agenix Module Loading**: Enabled `agenix.darwinModules.default` in flake.nix (was commented out)
 - **✅ RESOLVED: Agenix Secrets Mounting**: Fixed by removing invalid `owner` option and updating secrets flake input to latest version
+- **✅ Updated Homebrew Flakes**: Updated homebrew-bundle, homebrew-cask, homebrew-core, and nix-homebrew to latest versions
+- **✅ Fixed nix-darwin Compatibility**: Resolved version mismatch by updating nixpkgs and nix-darwin, added system.primaryUser configuration
+- **✅ Resolved Home Manager Compatibility**: Updated Home Manager to fix `substituteAll` deprecation error with newer nixpkgs
 
 ## Next Steps
-1. **✅ COMPLETED: Fix Agenix Secrets Mounting**: Successfully resolved - secrets now properly decrypted and mounted
-2. **Implement WezTerm SSH pane management**: Add functionality to create new panes connected to same SSH session
-3. **Integrate SSH session resurrection**: Connect SSH sessions with WezTerm's resurrect plugin
-4. **Test and validate**: Deploy configuration and test SSH aliases work as expected
+1. **✅ COMPLETED: Update Homebrew Flakes**: Successfully updated all Homebrew-related flakes to latest versions
+2. **✅ COMPLETED: Resolve nix-darwin Compatibility**: Fixed version mismatch between nix-darwin and nixpkgs
+3. **✅ COMPLETED: Fix Home Manager Compatibility**: Updated Home Manager to resolve `substituteAll` deprecation error
+4. **Implement WezTerm SSH pane management**: Add functionality to create new panes connected to same SSH session
+5. **Integrate SSH session resurrection**: Connect SSH sessions with WezTerm's resurrect plugin
+6. **Test and validate**: Deploy configuration and test SSH aliases work as expected
 
-## ✅ RESOLVED: Agenix Secrets Mounting Issue
+## ✅ RESOLVED: Flake Updates and Compatibility Issues
 
-### Root Cause Analysis
-The issue was caused by two main problems:
-1. **Invalid `owner` option**: The home-manager agenix module doesn't support the `owner` option (only available in system-level agenix)
-2. **Outdated secrets repository**: The flake lock was pointing to an old version of the secrets repository that didn't contain the required secret file
+### Issue Summary
+Multiple compatibility issues arose when updating Homebrew-related flakes, requiring coordinated updates across the entire flake ecosystem.
 
-### Solution Implemented
-1. **Removed invalid `owner` option** from `hosts/personal-mac/home-manager/secrets/default.nix`
-2. **Updated flake lock** with `nix flake lock --update-input secrets` to fetch latest secrets repository
-3. **Created missing identity file** at `~/.ssh/agenix-id_ed25519`
+### Problems Encountered
+1. **Homebrew Flakes Outdated**: homebrew-bundle, homebrew-cask, homebrew-core, and nix-homebrew were significantly outdated
+2. **nix-darwin Version Mismatch**: Updated nix-homebrew required newer nix-darwin, but created version incompatibility with nixpkgs
+3. **Home Manager Compatibility**: Updated nixpkgs deprecated `substituteAll` function, breaking older Home Manager versions
+
+### Solutions Implemented
+1. **Updated Homebrew Flakes**: 
+   - homebrew-bundle: 2025-02-06 → 2025-04-22
+   - homebrew-cask: 2025-02-07 → 2025-07-23
+   - homebrew-core: 2025-02-07 → 2025-07-23
+   - nix-homebrew: 2025-01-05 → 2025-07-10
+
+2. **Fixed nix-darwin Compatibility**:
+   - Updated nixpkgs from 2025-03-24 → 2025-07-22
+   - Updated nix-darwin to master branch for compatibility
+   - Added `system.primaryUser = "ryan"` for new activation model
+   - Removed deprecated options (`nix.gc.user`, `services.nix-daemon.enable`)
+
+3. **Resolved Home Manager Issues**:
+   - Updated Home Manager to version compatible with July 2025 nixpkgs
+   - Fixed `substituteAll` → `replaceVars` deprecation error
 
 ### Current Status
-- **✅ Secret File**: `~/.ssh/home-assistant-id_ed25519` now exists as symlink to decrypted secret
-- **✅ Permissions**: Proper 600 permissions on decrypted secret file
-- **✅ LaunchAgent**: `org.nix-community.home.activate-agenix` running successfully (exit code 0)
-- **✅ Decryption**: Secret properly decrypted and available for SSH usage
+- **✅ All Flakes Updated**: Homebrew, nix-darwin, nixpkgs, and Home Manager all on compatible versions
+- **✅ Build Compatibility**: System can now build successfully with updated flake ecosystem
+- **✅ Latest Packages**: Access to latest Homebrew packages and casks from July 2025
 
 ### Key Learnings
-- Home-manager agenix module has different options than system-level agenix module
-- Flake inputs need to be updated when secrets repository changes
-- macOS agenix uses LaunchAgents for secret mounting, not systemd services
+- Flake updates often require coordinated updates across multiple inputs for compatibility
+- nix-darwin's new activation model requires explicit primary user configuration
+- Major nixpkgs updates can break compatibility with older Home Manager versions
+- Always update related flakes together when encountering version mismatch errors
+
+## ✅ RESOLVED: Nix Build User Group GID Mismatch
+
+### Issue Summary
+After successfully updating flakes and resolving compatibility issues, encountered a new error during system activation: "Build user group has mismatching GID, aborting activation".
+
+### Problem Encountered
+- **GID Mismatch**: The default Nix build user group ID was changed from 30000 to 350
+- **System State**: The system had GID 350 but nix-darwin expected 30000
+- **Activation Failure**: System activation failed with error message suggesting to set `ids.gids.nixbld = 350;`
+- **Deprecated Warning**: Also encountered deprecation warning for `programs.zsh.initExtraFirst`
+
+### Solutions Implemented
+1. **Fixed GID Configuration**:
+   - Added `ids.gids.nixbld = 350;` to `modules/darwin/system-config.nix`
+   - This tells nix-darwin to use the actual GID (350) instead of expecting the old default (30000)
+
+2. **Updated Deprecated Zsh Option**:
+   - Replaced `programs.zsh.initExtraFirst` with `programs.zsh.initContent = lib.mkBefore`
+   - Updated in `modules/shared/home-manager/programs/zsh.nix`
+
+### Current Status
+- **✅ System Activation**: Successfully completed `nix run .#build-switch` without errors
+- **✅ GID Configuration**: Nix build user group properly configured with correct GID
+- **✅ Deprecation Warnings**: Resolved zsh deprecation warning
+- **✅ Full Deployment**: System switched to new generation successfully
+
+### Key Learnings
+- GID mismatches can occur when Nix installation defaults change between versions
+- Always check system activation errors for specific configuration suggestions
+- Deprecation warnings should be addressed to maintain compatibility with future updates
+- The `ids.gids.nixbld` option allows overriding the expected build user group ID
 
 ## Active Decisions and Considerations
 

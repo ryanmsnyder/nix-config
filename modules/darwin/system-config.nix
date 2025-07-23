@@ -1,9 +1,6 @@
 { config, pkgs, user, ... }: 
 
 {
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # Install karabiner-elements. The config file is symlinked as part of home-manager
   services.karabiner-elements.enable = true;
 
@@ -16,7 +13,6 @@
     settings.trusted-users = [ "@admin" user ];
 
     gc = {
-      user = "root";
       automatic = true;
       interval = { Weekday = 0; Hour = 2; Minute = 0; };
       options = "--delete-older-than 30d";
@@ -27,6 +23,11 @@
       experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env
     '';
   };
+
+  system.primaryUser = user;
+
+  # Fix for nix build user group GID mismatch
+  ids.gids.nixbld = 350;
 
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
