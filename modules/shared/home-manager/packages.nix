@@ -73,6 +73,7 @@
     homerow
     aerospace
     macwhisper
+    claude-code
   ];
 
 }
