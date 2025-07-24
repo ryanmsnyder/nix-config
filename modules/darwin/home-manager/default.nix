@@ -88,11 +88,7 @@ in
     ];
 
     casks = [
-      "chatgpt"
       "claude"
-      "calibre"
-      "discord"
-      "betterdisplay"
       "microsoft-excel"
     ];
 
@@ -156,30 +152,6 @@ in
     magicmouse = {
       # Enable secondary click on magic mouse when clicking the right side
       MouseButtonMode = "TwoButton";
-    };
-
-    dock = {
-      autohide = true;  # hide dock
-      autohide-delay = 0.00;  # delay before dock shows
-      autohide-time-modifier = 0.50;  # speed of dock animation when showing/hiding
-      show-recents = false;
-      launchanim = true;
-      orientation = "bottom";
-      tilesize = 48;
-      wvous-bl-corner = 4; # hot corner that shows desktop when hovering mouse over bottom left corner
-      mouse-over-hilite-stack = true; # highlight effect that follows the mouse in a Dock stack
-      persistent-apps = [ # configure Dock apps
-        "${pkgs.forklift}/Applications/ForkLift.app"
-        "${pkgs.wezterm}/Applications/WezTerm.app"
-        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
-        "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"
-        "${pkgs.bruno}/Applications/Bruno.app/"
-        "${pkgs.obsidian}/Applications/Obsidian.app"
-        "${pkgs.spotify}/Applications/Spotify.app"
-        "/System/Applications/Reminders.app"
-        "/System/Applications/Calendar.app"
-      ];
-      # persistent-others = [ "/Users/${user}/Downloads" ];
     };
 
     finder = {

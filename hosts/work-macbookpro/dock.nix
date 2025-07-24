@@ -1,0 +1,15 @@
+{ pkgs, ... }:
+
+{
+  # Work MacBook Pro Dock Configuration - persistent apps only
+  system.defaults.dock.persistent-apps = [
+    "${pkgs.forklift}/Applications/ForkLift.app"
+    "${pkgs.wezterm}/Applications/WezTerm.app"
+    "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+    "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"
+    "${pkgs.bruno}/Applications/Bruno.app/"
+    "/System/Applications/Calendar.app"
+    "${pkgs.slack}/Applications/Slack.app/"
+    # Add work-specific apps here (e.g., Teams, etc.)
+  ];
+}

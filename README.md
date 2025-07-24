@@ -297,6 +297,9 @@ nix run --extra-experimental-features nix-command --extra-experimental-features 
 
 The arguments `--extra-experimental-features nix-command --extra-experimental-features flakes` are only needed when building initially because we had to rename our `/etc/nix/nix.conf` file, which sets those arguments for us. After we run the `.#build-switch` script in the next step, we can overwrite the system generated `nix.conf` file with our own and we won't need to specify those arguments anymore.
 
+> [!WARNING] macOS Permissions Issue
+> If you encounter "operation not permitted" errors during nix-darwin activation, you may need to navigate to **System Settings > Privacy & Security > Full Disk Access** and add the `nix` binary to grant it full disk access permissions.
+
 ### 10. Make changes
 
 Finally, alter your system with this command:

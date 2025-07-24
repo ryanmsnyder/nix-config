@@ -1,6 +1,10 @@
 { config, pkgs, user, ... }: 
 
 {
+  imports = [
+    ./dock.nix
+  ];
+
   # Install karabiner-elements. The config file is symlinked as part of home-manager
   services.karabiner-elements.enable = true;
 

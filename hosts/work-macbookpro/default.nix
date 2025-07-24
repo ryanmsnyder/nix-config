@@ -17,13 +17,14 @@ in
 
   imports = [
     ./home-manager
+    ./dock.nix
     ../../modules/darwin/home-manager
     ../../modules/shared
     ../../modules/shared/cachix
     ../../modules/darwin/system-config.nix
   ];
 
-  # Configure applications that should appear in Dock
+  # Dock configuration imported from ./dock.nix
 
 
 }

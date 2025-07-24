@@ -1,7 +1,7 @@
 # Active Context: Current Work Focus
 
 ## Current Work Focus
-**✅ RESOLVED: Nix Build User Group GID Mismatch** - Successfully fixed the nix-darwin activation error by adding `ids.gids.nixbld = 350;` configuration and updating deprecated zsh options.
+**✅ COMPLETED: Dock Configuration Refactoring** - Successfully refactored dock configuration to separate shared settings from host-specific apps, with proper nix-darwin vs Home Manager organization.
 
 ## Recent Changes
 - **Completed Memory Bank Initialization**: Successfully created all core memory bank files (projectbrief.md, productContext.md, systemPatterns.md, techContext.md, activeContext.md, progress.md)
@@ -17,6 +17,7 @@
 - **✅ Updated Homebrew Flakes**: Updated homebrew-bundle, homebrew-cask, homebrew-core, and nix-homebrew to latest versions
 - **✅ Fixed nix-darwin Compatibility**: Resolved version mismatch by updating nixpkgs and nix-darwin, added system.primaryUser configuration
 - **✅ Resolved Home Manager Compatibility**: Updated Home Manager to fix `substituteAll` deprecation error with newer nixpkgs
+- **✅ COMPLETED: Dock Configuration Refactoring**: Separated shared dock settings from host-specific apps, moved system-level config out of home-manager module
 
 ## Next Steps
 1. **✅ COMPLETED: Update Homebrew Flakes**: Successfully updated all Homebrew-related flakes to latest versions
@@ -95,6 +96,69 @@ After successfully updating flakes and resolving compatibility issues, encounter
 - Always check system activation errors for specific configuration suggestions
 - Deprecation warnings should be addressed to maintain compatibility with future updates
 - The `ids.gids.nixbld` option allows overriding the expected build user group ID
+
+### Troubleshooting Notes
+- **macOS Permissions**: If you encounter "operation not permitted" errors during nix-darwin activation, you may need to grant Nix full disk access via System Settings > Privacy & Security > Full Disk Access and add the nix binary
+
+## ✅ COMPLETED: Dock Configuration Refactoring
+
+### Issue Summary
+The dock configuration was initially centralized in the shared Home Manager module, but this was architecturally incorrect since `system.defaults.dock` is nix-darwin system-level configuration, not Home Manager user-level configuration.
+
+### Problems Identified
+1. **Incorrect Module Placement**: Dock configuration was in `modules/darwin/home-manager/default.nix` but should be system-level
+2. **Lack of Host Customization**: All hosts shared the same dock apps, preventing personal vs work customization
+3. **Mixed Concerns**: Shared dock behavior settings were mixed with host-specific app lists
+
+### Solutions Implemented
+1. **Created Shared Dock Module**: 
+   - Created `modules/darwin/dock.nix` with shared dock behavior settings
+   - Moved all `system.defaults.dock` settings except `persistent-apps`
+   - Added import to `modules/darwin/system-config.nix`
+
+2. **Host-Specific Dock Apps**:
+   - Created `hosts/personal-mac/dock.nix` with personal app lineup
+   - Created `hosts/work-macbookpro/dock.nix` with work-focused apps
+   - Each host imports its own dock.nix file
+
+3. **Cleaned Up Home Manager Module**:
+   - Removed dock configuration from `modules/darwin/home-manager/default.nix`
+   - Eliminated empty `dock = {};` placeholder as it was unnecessary
+
+### Final Architecture
+```
+modules/darwin/
+├── dock.nix                    # Shared dock behavior/appearance
+├── system-config.nix           # Imports dock.nix
+└── home-manager/
+    └── default.nix             # No dock config (properly separated)
+
+hosts/personal-mac/
+├── default.nix                 # Imports ./dock.nix
+└── dock.nix                    # Personal dock apps
+
+hosts/work-macbookpro/
+├── default.nix                 # Imports ./dock.nix
+└── dock.nix                    # Work dock apps
+```
+
+### Key Benefits
+1. **Proper Separation**: System-level config in darwin modules, user-level in home-manager
+2. **Host Customization**: Each host can have different dock app lineups
+3. **DRY Principle**: Shared dock behavior settings defined once
+4. **Clear Organization**: Easy to understand and maintain structure
+
+### Configuration Details
+- **Shared Settings**: autohide, delays, animations, hot corners, tile size
+- **Personal Apps**: Includes Obsidian, Spotify, Reminders for personal use
+- **Work Apps**: Includes Slack, focuses on productivity and communication tools
+- **Common Apps**: ForkLift, WezTerm, Safari, VS Code, Bruno shared across hosts
+
+### Current Status
+- **✅ Modular Structure**: Dock configuration properly separated by concern
+- **✅ Host Customization**: Each host has tailored dock app lineup
+- **✅ System Integration**: Shared settings imported via system-config.nix
+- **✅ Clean Architecture**: Proper nix-darwin vs Home Manager separation
 
 ## Active Decisions and Considerations
 
