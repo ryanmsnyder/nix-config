@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  user,
   ...
 }: let
   inherit (lib.modules) mkIf;
@@ -201,7 +202,7 @@
       wezterm.gui.gui_windows()[1]:toast_notification("resurrect", err, nil, 3000)
     end)
 
-    workspace_switcher.zoxide_path = "/etc/profiles/per-user/ryan/bin/zoxide"
+    workspace_switcher.zoxide_path = "/etc/profiles/per-user/${user}/bin/zoxide"
     workspace_switcher.apply_to_config({})
 
     workspace_switcher.workspace_formatter = function(label)
