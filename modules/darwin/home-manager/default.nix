@@ -7,7 +7,6 @@ let
   # Define scripts as a separate variable
   darwinScripts = builtins.attrValues scripts;
 
-
 in
 
 {
@@ -24,12 +23,8 @@ in
       home = {
         enableNixpkgsReleaseCheck = false;
         # Packages/apps that will only be exposed to the user via ~/.nix-profile
-        # packages = pkgs.callPackage ./packages.nix {};
         packages = pkgs.callPackage ./packages.nix {} ++ darwinScripts;
-        # file = lib.mkMerge [
-        #   sharedFiles
-        #   additionalFiles
-        # ];
+
         file.".config/karabiner/karabiner.json".source = ../../shared/home-manager/config/karabiner/karabiner.json;
 
         stateVersion = "23.11";
@@ -39,7 +34,6 @@ in
       imports = [
         ../../shared/home-manager
         ./launchd-agents
-        # inputs.catppuccin.homeManagerModules.catppuccin
       ];
 
 

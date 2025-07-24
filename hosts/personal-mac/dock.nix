@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 
 {
   # Personal Mac Dock Configuration - persistent apps only
@@ -8,6 +8,7 @@
     "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
     "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"
     "${pkgs.chatgpt}/Applications/ChatGPT.app"
+    "/Applications/Claude.app"
     "${pkgs.bruno}/Applications/Bruno.app/"
     "${pkgs.obsidian}/Applications/Obsidian.app"
     "${pkgs.spotify}/Applications/Spotify.app"
