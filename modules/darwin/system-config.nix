@@ -3,6 +3,11 @@
 {
   imports = [
     ./dock.nix
+    ./users.nix
+    ./homebrew.nix
+    ./system-defaults.nix
+    ./launchd-services.nix
+    ./activation-scripts.nix
   ];
 
   # Install karabiner-elements. The config file is symlinked as part of home-manager
