@@ -112,6 +112,14 @@
             nix-homebrew.darwinModules.nix-homebrew
             ./hosts/personal-mac
             {
+              nixpkgs.overlays = [
+                (import ./overlays/berkeley-mono-font.nix)
+                (import ./overlays/claude-code.nix)
+                (import ./overlays/forklift.nix)
+                (import ./overlays/homerow.nix)
+                (import ./overlays/karabiner-elements.nix)
+                (import ./overlays/mac-whisper.nix)
+              ];
               nix-homebrew = {
                 inherit user;
                 enable = true;
