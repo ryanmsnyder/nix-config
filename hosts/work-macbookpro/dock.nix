@@ -9,6 +9,7 @@
     "${pkgs.vscode}/Applications/Visual\ Studio\ Code.app/"
     "/Applications/Claude.app"
     "${pkgs.bruno}/Applications/Bruno.app/"
+    "${pkgs.obsidian}/Applications/Obsidian.app"
     "/System/Applications/Calendar.app"
     "${pkgs.slack}/Applications/Slack.app/"
   ];

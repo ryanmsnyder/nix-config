@@ -6,8 +6,7 @@
   shared-non-gui-pkgs = with pkgs; [
     # AI
     ollama
-    yek # Rust based tool to serialize text-based files in a repository or directory for LLM consumption 
-
+    yek # Rust based tool to serialize text-based files in a repository or directory for LLM consumption
 
     # Development Tools
     nodejs_24
@@ -56,7 +55,8 @@
     obsidian
     spotify
     bruno
-    google-chrome  # not packaged for MacOs
+    google-chrome
+    brave
   ];
 
   # Packages shared between NixOS desktop and NixOS server environments
