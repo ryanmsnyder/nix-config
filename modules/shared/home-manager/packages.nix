@@ -11,6 +11,7 @@
     # Development Tools
     nodejs_24
     uv
+    gh
     coreutils
     sqlite
     iftop
