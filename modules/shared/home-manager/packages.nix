@@ -18,6 +18,7 @@
     wget
     zip
     difftastic # syntax-aware diffing
+    bun
 
     # Database
     postgresql
