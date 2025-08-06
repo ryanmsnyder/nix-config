@@ -76,6 +76,7 @@
     aerospace
     macwhisper
     claude-code
+    duti
   ];
 
 }

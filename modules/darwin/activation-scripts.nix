@@ -52,4 +52,33 @@
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     killall Dock
   '';
+
+  # Configure Launch Services to set VSCode as default for text/code files instead of Xcode
+  system.activationScripts.launchServices.text = ''
+    # Set VSCode as default for various content types
+    /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f /Applications/Visual\ Studio\ Code.app
+    
+    # Use duti to set default applications for content types
+    if command -v duti >/dev/null 2>&1; then
+      duti -s com.microsoft.vscode public.plain-text all
+      duti -s com.microsoft.vscode public.source-code all  
+      duti -s com.microsoft.vscode public.script all
+      duti -s com.microsoft.vscode public.shell-script all
+      duti -s com.microsoft.vscode public.unix-executable all
+      duti -s com.microsoft.vscode .txt all
+      duti -s com.microsoft.vscode .py all
+      duti -s com.microsoft.vscode .js all
+      duti -s com.microsoft.vscode .ts all
+      duti -s com.microsoft.vscode .json all
+      duti -s com.microsoft.vscode .xml all
+      duti -s com.microsoft.vscode .yaml all
+      duti -s com.microsoft.vscode .yml all
+      duti -s com.microsoft.vscode .md all
+      duti -s com.microsoft.vscode .sh all
+      duti -s com.microsoft.vscode .nix all
+    else
+      echo "duti not found - Launch Services configuration skipped"
+      echo "Install duti with: brew install duti"
+    fi
+  '';
 }

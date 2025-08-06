@@ -3,7 +3,7 @@
 {
   # Import config for home-manager programs
   imports = [
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
   ];
 
   # Define theme options that can accessed via config

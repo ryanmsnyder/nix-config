@@ -33,7 +33,7 @@ opt.splitright = true
 -- number stuff
 opt.number = true
 opt.relativenumber = true
-opt.numberwidth = 2
+opt.numberwidth = 4
 
 -- tab stuff
 opt.tabstop = 2
@@ -140,12 +140,20 @@ vim.diagnostic.config({
 	float = { border = "rounded" },
 })
 
--- set signs for diagnostics
+-- set signs for diagnostics (new way)
+vim.diagnostic.config({
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = icons.Error,
+			[vim.diagnostic.severity.WARN] = icons.Warn,
+			[vim.diagnostic.severity.INFO] = icons.Info,
+			[vim.diagnostic.severity.HINT] = icons.Hint,
+		},
+	},
+})
+
+-- DAP signs still use the old method (these are not diagnostic signs)
 local sign = vim.fn.sign_define
-sign("DiagnosticSignError", { text = icons.Error, texthl = "DiagnosticSignError" })
-sign("DiagnosticSignWarn", { text = icons.Warn, texthl = "DiagnosticSignWarn" })
-sign("DiagnosticSignInfo", { text = icons.Info, texthl = "DiagnosticSignInfo" })
-sign("DiagnosticSignHint", { text = icons.Hint, texthl = "DiagnosticSignHint" })
 sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
 sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
@@ -179,13 +187,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
 	pattern = { "*" },
 })
 
--- config/statuscol.lua
--- Based on LazyVim: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/ui.lua
+-- signcolumn configuration
 vim.opt.signcolumn = "yes:1"
 
--- &statuscolumn is supported in neovim 0.9.0+
-if vim.fn.exists("&statuscolumn") == 0 then
-	return false
-end
-
-vim.opt.statuscolumn = [[%!v:lua.require'config.statuscolumn'.statuscolumn()]]
+-- basic fold settings for FFI-based folding
+opt.foldcolumn = "1"
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true

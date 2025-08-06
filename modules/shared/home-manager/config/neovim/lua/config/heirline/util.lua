@@ -155,7 +155,7 @@ end
 -- return space separated string containing attached LSP clients, linters, formatters,
 -- and code action providers
 util.get_attached_lsp_clients = function()
-	local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
+	local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
 
 	-- return early if there are no active lsp clients
 	if next(buf_clients) == nil then

@@ -25,7 +25,6 @@
     brews = [
       "blueutil"
       "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
-      "aichat"
     ];
 
     casks = [

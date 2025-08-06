@@ -7,6 +7,7 @@ end
 
 local statusline = require("config.heirline.statusline")
 local winbar = require("config.heirline.winbar")
+local statuscolumn = require("config.heirline.statuscolumn")
 
 -- local icons = require "icons.icons"
 -- local conditions = require "heirline.conditions"
@@ -32,6 +33,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 heirline.setup({
 	statusline = statusline.StatusLines,
 	winbar = winbar,
+	statuscolumn = statuscolumn.statuscolumn,
 	opts = {
 		-- if the callback returns true, the winbar will be disabled for that window
 		-- the args parameter corresponds to the table argument passed to autocommand callbacks. :h nvim_lua_create_autocmd()

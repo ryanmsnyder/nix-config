@@ -38,13 +38,6 @@ return {
 	},
 
 	{
-		"lewis6991/gitsigns.nvim",
-		event = "BufReadPost",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = true,
-	},
-
-	{
 		"rebelot/heirline.nvim",
 		event = "UiEnter",
 		dependencies = {
@@ -55,6 +48,41 @@ return {
 			require("config.heirline")
 		end,
 	},
+
+	-- {
+	-- 	"coder/claudecode.nvim",
+	-- 	dependencies = { "folke/snacks.nvim" },
+	-- 	config = true,
+	-- 	keys = {
+	-- 		{ "<leader>a", nil, desc = "AI/Claude Code" },
+	-- 		{ "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+	-- 		{ "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+	-- 		{ "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+	-- 		{ "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+	-- 		{ "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+	-- 		{ "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+	-- 		{ "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+	-- 		{
+	-- 			"<leader>as",
+	-- 			"<cmd>ClaudeCodeTreeAdd<cr>",
+	-- 			desc = "Add file",
+	-- 			ft = { "NvimTree", "neo-tree", "oil", "minifiles" },
+	-- 		},
+	-- 		-- Diff management
+	-- 		{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+	-- 		{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+	-- 	},
+	-- },
+
+	-- {
+	-- 	"greggh/claude-code.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim", -- Required for git operations
+	-- 	},
+	-- 	config = function()
+	-- 		require("claude-code").setup()
+	-- 	end,
+	-- },
 
 	{
 		"linrongbin16/lsp-progress.nvim",
@@ -266,62 +294,50 @@ return {
 		end,
 	},
 
-	-- UFO folding
+	{
+		"lewis6991/gitsigns.nvim",
+		event = "BufReadPost",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("gitsigns").setup({
+				signs = {
+					add = { text = "│" }, -- Ultra-thin left block
+					change = { text = "│" }, -- Ultra-thin left block
+					delete = { text = "_" },
+					topdelete = { text = "‾" },
+					changedelete = { text = "~" },
+					untracked = { text = "┆" },
+				},
+				signs_staged = {
+					add = { text = "│" }, -- Ultra-thin left block
+					change = { text = "│" }, -- Ultra-thin left block
+					delete = { text = "_" },
+					topdelete = { text = "‾" },
+					changedelete = { text = "~" },
+					untracked = { text = "┊" },
+				},
+			})
+		end,
+	},
+
+	-- UFO folding (disabled to test FFI-only folding)
 	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = {
-			"kevinhwang91/promise-async",
-			-- {
-			-- 	-- Removes repeating line numbers in the status column. Otherwise you need to change NeoVim source code and build from source.
-			-- 	"luukvbaal/statuscol.nvim",
-			-- 	config = function()
-			-- 		local builtin = require("statuscol.builtin")
-			-- 		require("statuscol").setup({
-			-- 			relculright = true,
-			-- 			bt_ignore = {
-			-- 				"nofile",
-			-- 				"prompt",
-			-- 				"terminal",
-			-- 				"lazy",
-			-- 			},
-			-- 			ft_ignore = {
-			-- 				"dapui_watches",
-			-- 				"dap-repl",
-			-- 				"dapui_console",
-			-- 				"dapui_stacks",
-			-- 				"dapui_breakpoints",
-			-- 				"dapui_scopes",
-			-- 				"help",
-			-- 				"vim",
-			-- 				"alpha",
-			-- 				"dashboard",
-			-- 				"neo-tree",
-			-- 				"Trouble",
-			-- 				"lazy",
-			-- 				"toggleterm",
-			-- 			},
-			-- 			segments = {
-			-- 				{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-			-- 				{ text = { "%s" }, click = "v:lua.ScSa" },
-			-- 				{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-			-- 			},
-			-- 		})
-			-- 	end,
-			-- },
+			{ "kevinhwang91/promise-async" },
 		},
 		event = "BufReadPost",
 		init = function()
+			-- Use minimal foldcolumn to avoid line number display issues
 			vim.o.foldcolumn = "1"
-			vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+			vim.o.foldlevel = 99 -- Using ufo provider need a large value
 			vim.o.foldlevelstart = 99
 			vim.o.foldenable = true
 
-			-- remove fold column in toggleterm
+			-- Ensure fold column is disabled in special buffers
 			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "toggleterm" },
+				pattern = { "toggleterm", "neo-tree", "aerial", "trouble" },
 				callback = function()
-					-- require("ufo").detach()
-					-- vim.opt_local.foldenable = false
 					vim.wo.foldcolumn = "0"
 				end,
 			})
