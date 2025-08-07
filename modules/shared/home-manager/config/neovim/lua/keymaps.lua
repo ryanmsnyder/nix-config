@@ -10,11 +10,65 @@ wk.add({})
 wk.add({
 	{ ";", ":", desc = "Enter command mode", silent = false },
 
-	{ "<A-n>", "<cmd>SmartCursorMoveLeft<CR>", desc = "Move cursor left" },
-	{ "<A-i>", "<cmd>SmartCursorMoveRight<CR>", desc = "Move cursor right" },
-	{ "<A-u>", "<cmd>SmartCursorMoveUp<CR>", desc = "Move cursor up" },
-	{ "<A-e>", "<cmd>SmartCursorMoveDown<CR>", desc = "Move cursor down" },
-	{ "<C-a>r", "<cmd>SmartResizeMode<CR>", desc = "Resize split" },
+	-- Smart-splits cursor movement (keeping your custom layout)
+	{
+		"<A-n>",
+		function()
+			require("smart-splits").move_cursor_left()
+		end,
+		desc = "Move cursor left",
+	},
+	{
+		"<A-i>",
+		function()
+			require("smart-splits").move_cursor_right()
+		end,
+		desc = "Move cursor right",
+	},
+	{
+		"<A-u>",
+		function()
+			require("smart-splits").move_cursor_up()
+		end,
+		desc = "Move cursor up",
+	},
+	{
+		"<A-e>",
+		function()
+			require("smart-splits").move_cursor_down()
+		end,
+		desc = "Move cursor down",
+	},
+
+	-- Smart-splits resizing (using Shift + your movement keys)
+	{
+		"<S-A-n>",
+		function()
+			require("smart-splits").resize_left()
+		end,
+		desc = "Resize split left",
+	},
+	{
+		"<S-A-i>",
+		function()
+			require("smart-splits").resize_right()
+		end,
+		desc = "Resize split right",
+	},
+	{
+		"<S-A-u>",
+		function()
+			require("smart-splits").resize_up()
+		end,
+		desc = "Resize split up",
+	},
+	{
+		"<S-A-e>",
+		function()
+			require("smart-splits").resize_down()
+		end,
+		desc = "Resize split down",
+	},
 
 	{ "H", "^", desc = "Go to first non-empty char of current line" },
 	{ "L", ":normal! g_<CR>", desc = "Go to last non-empty char of current line" },
@@ -47,10 +101,12 @@ wk.add({
 	{ "<", "<gv", desc = "Better indenting", mode = "v" },
 	{ ">", ">gv", desc = "Better indenting", mode = "v" },
 	{ "<C-c>", "<cmd> %y+ <CR>", desc = "Copy whole file", mode = "n" },
-	{ "<A-e>", ":m .+1<CR>==", desc = "Move line down", mode = "n" },
-	{ "<A-u>", ":m .-2<CR>==", desc = "Move line up", mode = "n" },
-	{ "<A-e>", ":m '>+1<CR>gv=gv", desc = "Move line down", mode = "v" },
-	{ "<A-u>", ":m '<-2<CR>gv=gv", desc = "Move line up", mode = "v" },
+
+	-- Line movement with Alt + Arrow keys
+	{ "<A-Up>", ":m .-2<CR>==", desc = "Move line up", mode = "n" },
+	{ "<A-Down>", ":m .+1<CR>==", desc = "Move line down", mode = "n" },
+	{ "<A-Up>", ":m '<-2<CR>gv=gv", desc = "Move line up", mode = "v" },
+	{ "<A-Down>", ":m '>+1<CR>gv=gv", desc = "Move line down", mode = "v" },
 
 	{ "<leader>b", group = "Buffer" },
 	{ "<leader>bx", "<CMD>:bd<CR>", desc = "Delete current buffer & window" },
@@ -119,6 +175,36 @@ wk.add({
 	{ "<leader>wj", "<C-W>j", desc = "Window below" },
 	{ "<leader>wk", "<C-W>k", desc = "Window up" },
 	{ "<leader>wl", "<C-W>l", desc = "Window right" },
+
+	-- Smart-splits buffer swapping (using your custom layout)
+	{
+		"<leader>wn",
+		function()
+			require("smart-splits").swap_buf_left()
+		end,
+		desc = "Swap buffer left",
+	},
+	{
+		"<leader>wi",
+		function()
+			require("smart-splits").swap_buf_right()
+		end,
+		desc = "Swap buffer right",
+	},
+	{
+		"<leader>wu",
+		function()
+			require("smart-splits").swap_buf_up()
+		end,
+		desc = "Swap buffer up",
+	},
+	{
+		"<leader>we",
+		function()
+			require("smart-splits").swap_buf_down()
+		end,
+		desc = "Swap buffer down",
+	},
 
 	{ "<leader>h", group = "Help" },
 	{ "<leader>hp", group = "Package Management" },
