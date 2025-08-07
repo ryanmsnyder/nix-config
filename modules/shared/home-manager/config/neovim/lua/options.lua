@@ -23,17 +23,18 @@ opt.completeopt = "menu,menuone,noselect"
 opt.splitbelow = true
 opt.splitright = true
 
--- -- disable providers
--- g.python_host_skip_check = 0
--- g.loaded_python_provider = 0
--- g.loaded_node_provider = 0
--- g.loaded_ruby_provider = 0
--- g.loaded_perl_provider = 0
-
 -- number stuff
 opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 4
+
+opt.guicursor = {
+  "n-v-c-sm:block",        -- normal, visual, command: block
+  "i-ci-ve:ver25",         -- insert, command-insert, visual-excl: vertical bar
+  "r-cr-o:hor20",          -- replace modes: horizontal bar
+  "t:block",               -- terminal: block (no blink)
+  "a:blinkon0",            -- disable blinking everywhere
+}
 
 -- tab stuff
 opt.tabstop = 2

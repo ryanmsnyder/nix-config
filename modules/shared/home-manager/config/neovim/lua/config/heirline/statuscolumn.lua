@@ -1,5 +1,10 @@
 local M = {}
 
+local function is_ui_buffer()
+	local ft = vim.bo.filetype
+	return ft == "neo-tree" or ft == "aerial" or ft == "trouble" or ft == "toggleterm"
+end
+
 -- Utility function to extend tables (similar to heirline-components utils)
 local function extend_tbl(default, opts)
 	opts = opts or {}
@@ -17,17 +22,17 @@ end
 
 -- Condition function to check if signcolumn is enabled
 local function signcolumn_enabled()
-	return vim.opt.signcolumn:get() ~= "no"
+	return not is_ui_buffer() and vim.wo.signcolumn ~= "no"
 end
 
 -- Condition function to check if numbercolumn is enabled
 local function numbercolumn_enabled()
-	return vim.opt.number:get() or vim.opt.relativenumber:get()
+	return not is_ui_buffer() and (vim.wo.number or vim.wo.relativenumber)
 end
 
 -- Condition function to check if foldcolumn is enabled
 local function foldcolumn_enabled()
-	return vim.opt.foldcolumn:get() ~= "0"
+	return not is_ui_buffer() and vim.wo.foldcolumn ~= "0"
 end
 
 -- Helper function to get signs for a specific line

@@ -38,51 +38,48 @@ cmp.setup({
 	},
 
 	mapping = {
-
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
-		["<Up>"] = cmp.mapping.select_prev_item(),
-		["<Down>"] = cmp.mapping.select_next_item(),
+
+		-- Try these more explicit arrow key mappings
+		["<Up>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			else
+				fallback()
+			end
+		end, { "i", "c" }),
+
+		["<Down>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				fallback()
+			end
+		end, { "i", "c" }),
+
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-u>"] = cmp.mapping.scroll_docs(4),
-		-- ["<C-Space>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.close(),
-		-- ["<CR>"] = cmp.mapping.confirm {
-		--   behavior = cmp.ConfirmBehavior.Insert,
-		--   select = true,
-		-- },
-		-- ["<CR>"] = cmp.mapping {
-		--   c = function(default)
-		--     if cmp.visible() then
-		--       return cmp.confirm { select = false }
-		--     end
-		--
-		--     default()
-		--   end,
-		-- },
-		-- ["<CR>"] = cmp.mapping(cmp.mapping.confirm { select = true }, { "i", "c" }), -- prevents executing an autocompleted command in cmd mode
+
 		["<CR>"] = cmp.mapping({
 			-- insert mode
 			i = function(fallback)
 				if cmp.visible() and cmp.get_selected_entry() then
 					return cmp.confirm({ select = true })
 				end
-
 				fallback()
 			end,
 			-- command mode
-			-- if cmp menu is visible and an entry is selected, when Enter is pressed, confirm the selection
 			c = function(fallback)
 				if cmp.visible() and cmp.get_selected_entry() then
 					cmp.confirm({ select = false })
 					return
-					-- local CR = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
-					-- return vim.api.nvim_feedkeys(CR, "n", true)
 				end
-
 				fallback()
 			end,
 		}),
+
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
@@ -91,10 +88,8 @@ cmp.setup({
 			else
 				fallback()
 			end
-		end, {
-			"i",
-			"s",
-		}),
+		end, { "i", "s" }),
+
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
@@ -103,10 +98,7 @@ cmp.setup({
 			else
 				fallback()
 			end
-		end, {
-			"i",
-			"s",
-		}),
+		end, { "i", "s" }),
 	},
 
 	formatting = {

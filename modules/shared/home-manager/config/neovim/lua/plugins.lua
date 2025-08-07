@@ -327,21 +327,6 @@ return {
 			{ "kevinhwang91/promise-async" },
 		},
 		event = "BufReadPost",
-		init = function()
-			-- Use minimal foldcolumn to avoid line number display issues
-			vim.o.foldcolumn = "1"
-			vim.o.foldlevel = 99 -- Using ufo provider need a large value
-			vim.o.foldlevelstart = 99
-			vim.o.foldenable = true
-
-			-- Ensure fold column is disabled in special buffers
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "toggleterm", "neo-tree", "aerial", "trouble" },
-				callback = function()
-					vim.wo.foldcolumn = "0"
-				end,
-			})
-		end,
 		config = function()
 			require("config.nvim-ufo")
 		end,
