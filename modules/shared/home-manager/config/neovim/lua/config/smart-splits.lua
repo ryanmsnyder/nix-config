@@ -14,7 +14,7 @@ smartsplits.setup({
 	ignored_buftypes = { "neo-tree" },
 	-- the default number of lines/columns to resize by at a time
 	default_amount = 3,
-	at_edge = "wrap",
+	at_edge = "stop",
 	-- when moving cursor between splits left or right,
 	-- place the cursor on the same row of the *screen*
 	-- regardless of line numbers. False by default.
