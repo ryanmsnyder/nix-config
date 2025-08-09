@@ -97,9 +97,25 @@ local function diagnostic_signcolumn_provider(opts)
 		local buf = self.bufnr or vim.api.nvim_get_current_buf()
 		local signs = get_signs(buf, vim.v.lnum)
 
-		-- Look for diagnostic signs (highest priority first due to sorting)
+		-- First priority: Look for DAP/breakpoint signs - they always override diagnostics
 		for _, sign in ipairs(signs) do
-			if sign.name and (sign.name:match("^DiagnosticSign") or sign.name:match("^Dap")) then
+			if sign.name and sign.name:match("^Dap") then
+				local text = sign.text or " "
+				-- Ensure breakpoint icons have proper width (2 characters)
+				if #text == 1 then
+					text = text .. " "
+				end
+				if sign.texthl then
+					return "%#" .. sign.texthl .. "#" .. text .. "%*"
+				else
+					return text
+				end
+			end
+		end
+
+		-- Second priority: Look for diagnostic signs only if no breakpoints exist
+		for _, sign in ipairs(signs) do
+			if sign.name and sign.name:match("^DiagnosticSign") then
 				local text = sign.text or " "
 				-- Ensure diagnostic icons have proper width (2 characters)
 				if #text == 1 then

@@ -47,3 +47,11 @@ if vim.fn.executable("python") then
 
 	require("dap").configurations.python = configurations
 end
+
+-- DAP sign definitions
+local icons = require("icons.icons")
+local sign = vim.fn.sign_define
+
+sign("DapBreakpoint", { text = icons.Circle, texthl = "DapBreakpoint", linehl = "", numhl = "" })
+sign("DapBreakpointCondition", { text = icons.Circle, texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
+sign("DapLogPoint", { text = icons.DapLogPoint, texthl = "DapLogPoint", linehl = "", numhl = "" })

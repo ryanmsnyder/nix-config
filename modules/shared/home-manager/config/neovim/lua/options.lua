@@ -153,11 +153,6 @@ vim.diagnostic.config({
 	},
 })
 
--- DAP signs still use the old method (these are not diagnostic signs)
-local sign = vim.fn.sign_define
-sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
-sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
-sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
 
 opt.fillchars = {
 	-- vert = "▏", -- fixes vertical window split between neo-tree and buffer
