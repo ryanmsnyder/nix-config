@@ -47,8 +47,6 @@
             nvim = "env TERM=wezterm nvim";
             vim = "env TERM=wezterm nvim";
 
-            # Always color ls and group directories
-            alias ls='ls --color=auto'
         };
 
         initContent = lib.mkBefore ''
