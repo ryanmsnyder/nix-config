@@ -29,11 +29,11 @@ opt.relativenumber = true
 opt.numberwidth = 4
 
 opt.guicursor = {
-  "n-v-c-sm:block",        -- normal, visual, command: block
-  "i-ci-ve:ver25",         -- insert, command-insert, visual-excl: vertical bar
-  "r-cr-o:hor20",          -- replace modes: horizontal bar
-  "t:block",               -- terminal: block (no blink)
-  "a:blinkon0",            -- disable blinking everywhere
+	"n-v-c-sm:block", -- normal, visual, command: block
+	"i-ci-ve:ver25", -- insert, command-insert, visual-excl: vertical bar
+	"r-cr-o:hor20", -- replace modes: horizontal bar
+	"t:block", -- terminal: block (no blink)
+	"a:blinkon0", -- disable blinking everywhere
 }
 
 -- tab stuff
@@ -137,12 +137,15 @@ g.do_filetype_lua = 1
 -- }
 
 -- set diagnostic floating window to round border
+-- Consolidated diagnostic configuration
 vim.diagnostic.config({
+	-- Float window styling
 	float = { border = "rounded" },
-})
 
--- set signs for diagnostics (new way)
-vim.diagnostic.config({
+	-- Explicitly enable underlines (default: true)
+	underline = true,
+
+	-- Configure signs for diagnostics
 	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = icons.Error,
@@ -151,8 +154,13 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.HINT] = icons.Hint,
 		},
 	},
-})
 
+	-- Optional: Configure virtual text
+	virtual_text = {
+		spacing = 2,
+		prefix = "●",
+	},
+})
 
 opt.fillchars = {
 	-- vert = "▏", -- fixes vertical window split between neo-tree and buffer

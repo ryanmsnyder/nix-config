@@ -43,6 +43,12 @@
             nd = "nix develop --command zsh";
 
             diff = "difft";
+            
+            nvim = "env TERM=wezterm nvim";
+            vim = "env TERM=wezterm nvim";
+
+            # Always color ls and group directories
+            alias ls='ls --color=auto'
         };
 
         initContent = lib.mkBefore ''
@@ -72,9 +78,6 @@
             # Use difftastic, syntax-aware diffing
             #alias diff=difft
 
-            # Always color ls and group directories
-            alias ls='ls --color=auto'
-            
             # Workaround for lf's limitation of changing the working directory. This changes the working
             # directory to the current directory in lf when lf is quit
             lfcd() {
