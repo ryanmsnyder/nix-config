@@ -7,7 +7,7 @@ self: super: with super; {
     version = "1.0";
     pname = "berkeley-mono-font";
     # Directly specify the path to the TTF file relative to this Nix file
-    ttfFile = "${basePath}/modules/shared/home-manager/files/BerkeleyMono-Regular.ttf";
+    ttfFile = "${basePath}/modules/home-manager/files/BerkeleyMono-Regular.ttf";
   in stdenv.mkDerivation {
     name = "${pname}-${version}";
 

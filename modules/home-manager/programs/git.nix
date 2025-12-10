@@ -4,16 +4,18 @@
     programs.git = {
         enable = true;
         ignores = [ "*.swp" ];
-        userName = fullName;
-        userEmail = email;
 
         lfs = {
             enable = true;
         };
 
-        extraConfig = {
+        settings = {
+            user = {
+                name = fullName;
+                email = email;
+            };
             init.defaultBranch = "main";
-            core = { 
+            core = {
                 editor = "vim";
                 autocrlf = "input";
                 pager = "bat --paging=always";

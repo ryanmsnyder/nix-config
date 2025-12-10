@@ -1,17 +1,15 @@
-# Nix Config for MacOS + NixOS
+# Nix Config for MacOS
 
 This is a modified version of [this repo](https://github.com/dustinlyons/nixos-config).
 
 ## Overview
 
-Nix is a powerful package manager for Linux and Unix systems that ensures reproducible, declarative, and reliable software management.
+Nix is a powerful package manager that ensures reproducible, declarative, and reliable software management.
 
 This repository contains my configuration for:
 
 -   personal M1 MacBook Pro
--   work M1 MacBook Pro (haven't tested yet)
--   NixOS desktop (haven't tested yet because I don't have an environment to test with yet)
--   NixOS server (tested on a Hetzner base VM)
+-   work M1 MacBook Pro
 
 ## Table of Contents
 

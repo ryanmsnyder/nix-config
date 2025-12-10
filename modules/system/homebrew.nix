@@ -24,13 +24,11 @@
 
     brews = [
       "blueutil"
-      "rom-tools" # supplies chdman (convert files to .chd for retro gaming)
     ];
 
     casks = [
       "claude"
       "microsoft-excel"
-      "calibre"
     ];
 
     # These app IDs are from using the mas CLI app

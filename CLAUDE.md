@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a Nix Flakes-based configuration for managing macOS and NixOS systems. It uses nix-darwin for macOS system configuration, Home Manager for user environment configuration, and supports multi-platform deployments including personal Mac, work MacBook, and Linux servers.
+This is a Nix Flakes-based configuration for managing macOS systems. It uses nix-darwin for macOS system configuration and Home Manager for user environment configuration, supporting both personal and work Mac configurations.
 
 ## Build and Development Commands
 
@@ -17,7 +17,6 @@ This is a Nix Flakes-based configuration for managing macOS and NixOS systems. I
 The system automatically detects hostname and maps to appropriate flake configuration via `hostname-to-flake-map.txt`:
 - `personal-mac` - Personal M1 MacBook Pro configuration
 - `work-macbookpro` - Work MacBook Pro configuration
-- `hetzner-vps` - NixOS server configuration
 
 ### Key Management (for secrets using agenix)
 - `nix run .#create-keys` - Create new SSH keys for agenix encryption
@@ -42,11 +41,13 @@ nix run --extra-experimental-features nix-command --extra-experimental-features 
 ### Directory Layout
 ```
 ├── apps/           # Platform-specific executable scripts for build/deployment
-├── hosts/          # Host-specific configurations (personal-mac, work-macbookpro, hetzner-vps)
+├── hosts/          # Host-specific configurations (personal-mac, work-macbookpro)
 ├── modules/        # Reusable configuration modules
-│   ├── darwin/     # macOS-specific modules (system defaults, homebrew, dock)
-│   ├── nixos/      # NixOS-specific modules
-│   └── shared/     # Cross-platform modules (home-manager configs)
+│   ├── system/     # macOS system-level configuration (dock, defaults, homebrew)
+│   ├── home-manager/ # User environment configuration (programs, dotfiles, themes)
+│   ├── cachix/     # Binary cache configuration
+│   ├── default.nix # Module entry point (nixpkgs config, overlays)
+│   └── files.nix   # Shared file definitions
 ├── overlays/       # Nix package overlays for custom/patched packages
 └── templates/      # Development environment templates
 ```
@@ -54,13 +55,13 @@ nix run --extra-experimental-features nix-command --extra-experimental-features 
 ### Key Configuration Files
 - `flake.nix` - Main flake configuration defining inputs, outputs, and system configurations
 - `hostname-to-flake-map.txt` - Maps hostnames to flake configurations for automatic detection
-- `modules/shared/home-manager/` - User environment configuration (dotfiles, programs, themes)
-- `modules/shared/home-manager/config/neovim/` - Comprehensive Neovim configuration with LSPs, DAPs, and plugins
+- `modules/home-manager/` - User environment configuration (dotfiles, programs, themes)
+- `modules/home-manager/config/neovim/` - Comprehensive Neovim configuration with LSPs, DAPs, and plugins
+- `modules/system/` - macOS system-level configuration modules
 
 ### Flake Architecture
-The flake.nix defines multiple system configurations:
+The flake.nix defines macOS system configurations:
 - `darwinConfigurations` - macOS systems using nix-darwin
-- `nixosConfigurations` - Linux systems using NixOS
 - Variables are defined for user information (personal vs work profiles)
 - Home Manager is integrated for user-level package management
 
@@ -72,14 +73,13 @@ Uses `agenix` for declarative secrets management:
 
 ### Key Features
 - **Hostname-based Configuration**: System automatically detects hostname and applies appropriate configuration
-- **Cross-Platform Home Manager**: Shared user configurations work across macOS and Linux
 - **Declarative macOS**: Full system configuration including dock, system preferences, and App Store apps
 - **Modular Architecture**: Configurations are split into reusable modules
 - **Auto-loading Overlays**: Drop overlay files in `overlays/` directory and they're automatically loaded
 - **Comprehensive Neovim Setup**: Pre-configured with LSPs, formatters, DAPs, and modern plugin ecosystem
 
 ### Package Management Strategy
-- System packages installed via nix-darwin (macOS) or NixOS configuration
+- System packages installed via nix-darwin
 - User packages managed through Home Manager
 - macOS App Store apps installed via `mas` through nix-homebrew
 - Custom packages and patches applied through overlays

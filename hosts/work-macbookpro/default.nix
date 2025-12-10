@@ -18,9 +18,9 @@ in
   imports = [
     ./home-manager
     ./dock.nix
-    ../../modules/darwin
-    ../../modules/shared
-    ../../modules/shared/cachix
+    ../../modules/system
+    ../../modules
+    ../../modules/cachix
   ];
 
   # Dock configuration imported from ./dock.nix

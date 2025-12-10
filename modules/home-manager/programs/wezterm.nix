@@ -5,8 +5,6 @@
   user,
   ...
 }: let
-  inherit (lib.modules) mkIf;
-  inherit (pkgs.stdenv) isLinux;
 
   capitalize = str:
     let
@@ -266,7 +264,5 @@
   '';
 
 in {
-  home.packages = mkIf isLinux [pkgs.wezterm];
-
   xdg.configFile."wezterm/wezterm.lua".text = luaScript;
 }

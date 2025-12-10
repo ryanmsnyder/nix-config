@@ -38,14 +38,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, catppuccin } @inputs:
+  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, catppuccin } @inputs:
     let
       variables = {
         fullName = "Ryan Snyder";
@@ -58,9 +54,8 @@
           email = "ryan.snyder@rakuten.com";
         };
       };
-      linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+      forAllSystems = f: nixpkgs.lib.genAttrs darwinSystems f;
       devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
         default = with pkgs; mkShell {
           nativeBuildInputs = with pkgs; [ bashInteractive git ];
@@ -79,14 +74,6 @@
           exec ${self}/apps/${system}/${scriptfullName}
         '')}/bin/${scriptfullName}";
       };
-      mkLinuxApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "install" = mkApp "install" system;
-      };
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;
@@ -98,7 +85,7 @@
     in
     {
       devShells = forAllSystems devShell;
-      apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
       templates = import ./templates;
 
       darwinConfigurations = {
@@ -149,39 +136,5 @@
         };
       };
 
-    #   nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
-    #     inherit system;
-    #     specialArgs = inputs;
-    #     modules = [
-    #       disko.nixosModules.disko
-    #       home-manager.nixosModules.home-manager {
-    #         home-manager = {
-    #           useGlobalPkgs = true;
-    #           useUserPackages = true;
-    #           users.${user} = import ./modules/nixos/desktop/home-manager-desktop.nix;
-    #         };
-    #       }
-    #       ./hosts/nixos
-    #     ];
-    #  });
-
-      nixosConfigurations = {
-        hetzner-vps = let fullName = variables.fullName; user = variables.personal.user; email = variables.personal.email; in nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs fullName user email; }; # this allows inputs to be passed explicitly to other modules
-          modules = [
-            disko.nixosModules.disko
-            ./hosts/hetzner-vps
-            home-manager.nixosModules.home-manager {
-              home-manager = {
-                # extraSpecialArgs = { inherit user; };
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user} = import ./modules/nixos/home-manager.nix;
-              };
-            }
-          ];
-        };
-      };
   };
 }

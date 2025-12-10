@@ -11,7 +11,7 @@
     "/Applications/Claude.app"
     "${pkgs.bruno}/Applications/Bruno.app/"
     "${pkgs.obsidian}/Applications/Obsidian.app"
-    "${pkgs.spotify}/Applications/Spotify.app"
+    # "${pkgs.spotify}/Applications/Spotify.app"
     "/System/Applications/Reminders.app"
     "/System/Applications/Calendar.app"
     # Add personal-specific apps here

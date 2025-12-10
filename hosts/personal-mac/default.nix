@@ -4,9 +4,10 @@
   imports = [
     ./home-manager
     ./dock.nix
-    ../../modules/darwin
-    ../../modules/shared
-    ../../modules/shared/cachix
+    ./homebrew.nix
+    ../../modules/system
+    ../../modules
+    ../../modules/cachix
   ];
 
   # Dock configuration imported from ./dock.nix

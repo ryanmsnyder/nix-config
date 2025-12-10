@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./home-manager.nix
     ./dock.nix
     ./users.nix
     ./homebrew.nix
