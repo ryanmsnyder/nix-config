@@ -36,6 +36,10 @@
       i = "Right",
       u = "Up",
       e = "Down",
+      h = "Left",
+      j = "Down",
+      k = "Up",
+      l = "Right",
     }
 
     local function pane_nav_and_resize(resize_or_move, key, mods)
@@ -48,6 +52,10 @@
             i = "Right",
             u = "Up",
             e = "Down",
+            h = "Left",
+            j = "Down",
+            k = "Up",
+            l = "Right",
           }
 
           if is_vim(pane) then
@@ -55,7 +63,7 @@
               win:perform_action({SendKey = {key = "a", mods = "CTRL"}}, pane)
               win:perform_action({SendKey = {key = "r"}}, pane)
             else
-              win:perform_action({SendKey = {key = key, mods = "ALT"}}, pane)
+              win:perform_action({SendKey = {key = key, mods = mods}}, pane)
             end
           else
             if resize_or_move == "resize" then
@@ -163,6 +171,10 @@
         pane_nav_and_resize("move", "i", "ALT"),
         pane_nav_and_resize("move", "u", "ALT"),
         pane_nav_and_resize("move", "e", "ALT"),
+        pane_nav_and_resize("move", "h", "CTRL"),
+        pane_nav_and_resize("move", "j", "CTRL"),
+        pane_nav_and_resize("move", "k", "CTRL"),
+        pane_nav_and_resize("move", "l", "CTRL"),
         pane_nav_and_resize("resize", "r"),
       },
       key_tables = {

@@ -60,10 +60,10 @@
   # can't use the catppuccin module's builtin  
   # catppuccin.nvim.enable = true; 
 
-  # Symlink entire nvim directory. mkOutOfStoreSymlink is supposed to create a symlink outside of the nix 
+  # Symlink entire nvim directory. mkOutOfStoreSymlink is supposed to create a symlink outside of the nix
   # store (in this case, directly to the modules/config/neovim directory). However, it appears to not work correctly on MacOS
   # because ~/.config/nvim is still symlinked to the nix store. However, it still solved my issue, which was that my
   # lazy-lock.json file wasn't writeable. Using mkOutOfStoreSymlink gave the file write permissions.
-  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/modules/shared/home-manager/config/neovim";
+  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/modules/home-manager/config/neovim";
 
 }
