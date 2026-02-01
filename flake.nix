@@ -1,6 +1,11 @@
 {
   description = "Configuration for MacOS";
 
+  nixConfig = {
+    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-trusted-public-keys = [ "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgs.url = "github:nixos/nixpkgs/24.11-beta";
@@ -39,9 +44,10 @@
       flake = false;
     };
     catppuccin.url = "github:catppuccin/nix";
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
-  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, catppuccin } @inputs:
+  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, catppuccin, llm-agents } @inputs:
     let
       variables = {
         fullName = "Ryan Snyder";

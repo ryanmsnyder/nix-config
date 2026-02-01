@@ -11,6 +11,6 @@
     "${pkgs.bruno}/Applications/Bruno.app/"
     "${pkgs.obsidian}/Applications/Obsidian.app"
     "/System/Applications/Calendar.app"
-    "${pkgs.slack}/Applications/Slack.app/"
+    "/Applications/Slack.app"
   ];
 }

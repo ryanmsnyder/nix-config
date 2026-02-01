@@ -10,7 +10,6 @@ let
   # Define other host-specific packages (if any)
   hostSpecificPackages = with pkgs; [
     chatgpt
-    betterdisplay
     discord
     qbittorrent
   ];

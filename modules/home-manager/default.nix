@@ -25,6 +25,7 @@ in
     ./programs/neovim.nix
     ./programs/fzf.nix
     ./programs/btop.nix
+    ./programs/htop.nix
     ./programs/direnv.nix
     ./programs/fd.nix
     ./programs/kitty.nix
@@ -41,7 +42,7 @@ in
     home = {
       enableNixpkgsReleaseCheck = false;
       # Packages/apps that will only be exposed to the user via ~/.nix-profile
-      packages = pkgs.callPackage ./packages.nix {} ++ darwinScripts;
+      packages = pkgs.callPackage ./packages.nix { inherit inputs; } ++ darwinScripts;
 
       file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
 
@@ -51,6 +52,8 @@ in
       sessionVariables = {
         LESS = "-R";
         PAGER = "bat";
+        GOOGLE_CLOUD_PROJECT = "rm-gcp-bsa-dev";
+        GOOGLE_CLOUD_LOCATION = "us-east4";
       };
     };
 

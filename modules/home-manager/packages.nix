@@ -1,9 +1,12 @@
-{ pkgs }:
+{ pkgs, inputs }:
 
 with pkgs; [
   # AI
   ollama
   yek # Rust based tool to serialize text-based files in a repository or directory for LLM consumption
+  inputs.llm-agents.packages.${pkgs.system}.claude-code
+  inputs.llm-agents.packages.${pkgs.system}.codex
+  inputs.llm-agents.packages.${pkgs.system}.gemini-cli
 
   # Development Tools
   nodejs_24
@@ -15,13 +18,15 @@ with pkgs; [
   wget
   zip
   difftastic # syntax-aware diffing
+  ast-grep # structural code search and replace using ASTs
   bun
 
   # Database
   postgresql
 
   # Cloud
-  google-cloud-sdk
+  (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+  kubectl
   terraform
 
   # Virtualization
@@ -45,7 +50,6 @@ with pkgs; [
 
   # GUI Applications
   wezterm
-  slack
   vscode
   obsidian
   # spotify  # Disabled: hash mismatch - nixpkgs needs update
@@ -56,11 +60,11 @@ with pkgs; [
   # macOS-specific Applications
   raycast
   bartender
+  betterdisplay
   iina
   forklift
   homerow
   aerospace
   macwhisper
-  claude-code
   duti
 ]

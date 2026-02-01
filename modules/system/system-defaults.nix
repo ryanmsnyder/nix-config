@@ -169,36 +169,38 @@
         ShowRemovableMediaOnDesktop = false;
       };
 
-      "com.apple.Safari" = {
-        # Privacy: don't send search queries to Apple
-        UniversalSearchEnabled = false;
-        SuppressSearchSuggestions = false;
-        # Press Tab to highlight each item on a web page
-        WebKitTabToLinksPreferenceKey = true;
-        ShowFullURLInSmartSearchField = true;
-        # Prevent Safari from opening 'safe' files automatically after downloading
-        AutoOpenSafeDownloads = false;
-        ShowFavoritesBar = true;
-        ShowFavoritesBar-v2 = true; 
-        IncludeInternalDebugMenu = false;
-        IncludeDevelopMenu = true;
-        WebKitDeveloperExtrasEnabledPreferenceKey = true;
-        WebContinuousSpellCheckingEnabled = true;
-        WebAutomaticSpellingCorrectionEnabled = false;
-        AutoFillFromAddressBook = true;
-        AutoFillCreditCardData = true;
-        AutoFillMiscellaneousForms = true;
-        WarnAboutFraudulentWebsites = true;
-        WebKitJavaEnabled = false;
-        WebKitJavaScriptCanOpenWindowsAutomatically = false;
-        "PreferencesModulesMinimumWidths.MinimumWidths.DeveloperMenuVisibility" = true;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
-      };
+      # Safari settings - commented out due to macOS sandbox restrictions
+      # Safari's preferences are protected and cannot be modified by nix-darwin
+      # "com.apple.Safari" = {
+      #   # Privacy: don't send search queries to Apple
+      #   UniversalSearchEnabled = false;
+      #   SuppressSearchSuggestions = false;
+      #   # Press Tab to highlight each item on a web page
+      #   WebKitTabToLinksPreferenceKey = true;
+      #   ShowFullURLInSmartSearchField = true;
+      #   # Prevent Safari from opening 'safe' files automatically after downloading
+      #   AutoOpenSafeDownloads = false;
+      #   ShowFavoritesBar = true;
+      #   ShowFavoritesBar-v2 = true; 
+      #   IncludeInternalDebugMenu = false;
+      #   IncludeDevelopMenu = true;
+      #   WebKitDeveloperExtrasEnabledPreferenceKey = true;
+      #   WebContinuousSpellCheckingEnabled = true;
+      #   WebAutomaticSpellingCorrectionEnabled = false;
+      #   AutoFillFromAddressBook = true;
+      #   AutoFillCreditCardData = true;
+      #   AutoFillMiscellaneousForms = true;
+      #   WarnAboutFraudulentWebsites = true;
+      #   WebKitJavaEnabled = false;
+      #   WebKitJavaScriptCanOpenWindowsAutomatically = false;
+      #   "PreferencesModulesMinimumWidths.MinimumWidths.DeveloperMenuVisibility" = true;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
+      #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
+      # };
 
       "com.apple.screensaver" = {
         # Don't require password until 10 minutes after sleep or screen saver begins

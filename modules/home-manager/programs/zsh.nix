@@ -43,7 +43,7 @@
             nd = "nix develop --command zsh";
 
             diff = "difft";
-            
+
             nvim = "env TERM=wezterm nvim";
             vim = "env TERM=wezterm nvim";
 

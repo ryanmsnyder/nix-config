@@ -1,6 +1,26 @@
 { pkgs }:
 
 {
+  # Wrapper script for Claude Code VS Code extension to inherit Nix environment
+  claudeWrapper = pkgs.writeScriptBin "claude-wrapper" ''
+    #!${pkgs.bash}/bin/bash
+    # Source nix-daemon to get proper PATH
+    if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+      . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+    fi
+    # Source home-manager environment if available
+    if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+    fi
+    # Add nix profile paths
+    export PATH="/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
+    # Load direnv environment if available for current directory
+    if command -v direnv &> /dev/null && [ -f .envrc ]; then
+      eval "$(direnv export bash 2>/dev/null)"
+    fi
+    # VS Code passes the claude binary path as first arg, rest are arguments
+    exec "$@"
+  '';
   # create script that converts timestamp to date
   # automatically installs node because of the shebang {pkgs.nodejs}
   tsScript = pkgs.writeScriptBin "ts" ''

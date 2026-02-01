@@ -1,4 +1,3 @@
-local lsp = require("lspconfig")
 local lsp_utils = require("config.lsp.lsp_utils")
 -- local on_attach = require("plugins.lsp.on_attach")
 
@@ -204,9 +203,9 @@ local server_configs = {
 			lsp_utils.on_attach(client, bufnr)
 			-- ccls is UTF-32 only, and that gives me a SUPER annoying error message.
 			-- I need to change the encoding prevent this warning madness.
-			local filetypes_to_change = require("lspconfig").ccls.document_config.default_config.filetypes
+			local ccls_filetypes = { "c", "cpp", "objc", "objcpp" }
 			local current_filetype = vim.bo.filetype
-			for _, filetype in ipairs(filetypes_to_change) do
+			for _, filetype in ipairs(ccls_filetypes) do
 				if filetype == current_filetype then
 					client.offset_encoding = "utf-32"
 				end
@@ -281,5 +280,7 @@ for _, server in pairs(servers) do
 		end
 	end
 
-	lsp[server].setup(config)
+	-- New API for Neovim 0.11+
+	vim.lsp.config(server, config)
+	vim.lsp.enable(server)
 end

@@ -96,7 +96,7 @@
       font_size = 13,
       freetype_load_flags = "NO_HINTING",
       freetype_load_target = "Normal",
-      front_end = "OpenGL",
+      front_end = "WebGpu",
       allow_square_glyphs_to_overflow_width = "Always",
       unicode_version = 14,
       window_padding = {left = 5, right = 0, top = 0, bottom = 0},

@@ -8,7 +8,8 @@ let
   hostSpecificScripts = builtins.attrValues scripts;
 
   # Define other host-specific packages (if any)
-  hostSpecificPackages = with pkgs; [ 
+  hostSpecificPackages = with pkgs; [
+    acli
   ];
 
   # Import secrets

@@ -110,3 +110,4 @@ vim.api.nvim_create_autocmd("BufUnload", {
 	end,
 	group = "telescope",
 })
+
