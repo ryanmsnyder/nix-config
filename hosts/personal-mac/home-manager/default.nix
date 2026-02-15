@@ -33,7 +33,7 @@ in
 
         # Symlink GitHub public key to .ssh directory
         ".ssh/home-assistant-id_ed25519.pub".source = ./public-keys/home-assistant-id_ed25519.pub;
-        ".ssh/ddc-switcher-id_ed25519.pub".source = ./public-keys/ddc-switcher-id_ed25519.pub;
+        ".ssh/office-pi-id_ed25519.pub".source = ./public-keys/office-pi-id_ed25519.pub;
 
       };
     };

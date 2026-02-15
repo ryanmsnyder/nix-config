@@ -13,10 +13,10 @@
         mode = "600";
       };
 
-      ddc-switcher-ssh-private-key = {
+      office-pi-ssh-private-key = {
         symlink = true;
-        path = "/Users/${user}/.ssh/ddc-switcher-id_ed25519";
-        file = "${inputs.secrets}/ddc-switcher-ssh-private-key.age";
+        path = "/Users/${user}/.ssh/office-pi-id_ed25519";
+        file = "${inputs.secrets}/office-pi-ssh-private-key.age";
         mode = "600";
       };
     };

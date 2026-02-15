@@ -13,7 +13,7 @@ in
   # Import config for home-manager programs
   imports = [
     ./theme.nix
-    ./programs/wezterm.nix
+    # ./programs/wezterm.nix  # disabled for local plugin development
     ./programs/bat.nix
     ./programs/git.nix
     ./programs/lf.nix

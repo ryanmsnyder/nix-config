@@ -6,11 +6,11 @@
   programs.ssh.matchBlocks = {
     
     # Raspberry pi zero w used as ddc monitor input switcher and usb switcher
-    "ddc-switcher" = {
-      hostname = "ddc-switcher.local";
+    "office-pi" = {
+      hostname = "office-pi.local";
       user = "ryan";
       port = 22;
-      identityFile = "~/.ssh/ddc-switcher-id_ed25519";
+      identityFile = "~/.ssh/office-pi-id_ed25519";
 
     };
     
