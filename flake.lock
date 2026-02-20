@@ -316,17 +316,18 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1771134637,
-        "narHash": "sha256-/rkcnBq9RSin+xMniS1WxyFWVI6LRQNI9tXoJJntFwA=",
-        "ref": "refs/heads/main",
-        "rev": "7807491ad3682da017ea52f22879c44f669f268e",
-        "revCount": 10,
+        "lastModified": 1771564870,
+        "narHash": "sha256-lBB19EOgotYNPbTvhdc60icbWYZBPoUuS04lsEsYHlA=",
+        "ref": "main",
+        "rev": "9d1ae583bea27dffdb5defd3952f2abf1d30ae62",
+        "revCount": 11,
         "type": "git",
-        "url": "ssh://git@github.com/ryanmsnyder/nix-secrets.git"
+        "url": "ssh://ha/root/git/nix-secrets.git"
       },
       "original": {
+        "ref": "main",
         "type": "git",
-        "url": "ssh://git@github.com/ryanmsnyder/nix-secrets.git"
+        "url": "ssh://ha/root/git/nix-secrets.git"
       }
     },
     "systems": {
