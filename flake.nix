@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     secrets = {
-      url = "git+ssh://git@github.com/ryanmsnyder/nix-secrets.git";
+      url = "git+ssh://ha/root/git/nix-secrets.git";
       flake = false;
     };
     home-manager = {
