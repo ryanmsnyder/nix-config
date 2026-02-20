@@ -7,7 +7,7 @@
 
     onActivation = {
       autoUpdate = false;
-      cleanup = "zap"; # Uninstall packages/casks not in Brewfile
+      cleanup = "uninstall"; # Uninstall packages/casks not in Brewfile (less aggressive than "zap")
       upgrade = false;
     };
 
@@ -27,6 +27,7 @@
     ];
 
     casks = [
+      "claude"
     ];
 
     # These app IDs are from using the mas CLI app

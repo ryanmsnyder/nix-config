@@ -1,0 +1,21 @@
+{
+  "name": "claude-jira-skills",
+  "version": "1.0.0",
+  "description": "Shared dependencies for Claude Jira skills (comments, manage, search)",
+  "scripts": {
+    "md2adf": "node scripts/md2adf.js"
+  },
+  "dependencies": {
+    "@atlaskit/adf-schema": "*",
+    "@atlaskit/editor-json-transformer": "*",
+    "@atlaskit/editor-markdown-transformer": "*"
+  },
+  "keywords": [
+    "jira",
+    "atlassian",
+    "claude",
+    "skill"
+  ],
+  "author": "",
+  "license": "MIT"
+}

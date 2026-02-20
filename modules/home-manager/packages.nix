@@ -4,9 +4,10 @@ with pkgs; [
   # AI
   ollama
   yek # Rust based tool to serialize text-based files in a repository or directory for LLM consumption
-  inputs.llm-agents.packages.${pkgs.system}.claude-code
-  inputs.llm-agents.packages.${pkgs.system}.codex
-  inputs.llm-agents.packages.${pkgs.system}.gemini-cli
+  # claude-code now managed via programs.claude-code in programs/claude.nix
+  inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.ccusage # Claude Code usage tracking
+  inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex
+  inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli
 
   # Development Tools
   nodejs_24

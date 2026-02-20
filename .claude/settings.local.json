@@ -6,7 +6,9 @@
       "mcp__context7__get-library-docs",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebSearch",
-      "WebFetch(domain:wezterm.org)"
+      "WebFetch(domain:wezterm.org)",
+      "Bash(fd:*)",
+      "mcp__context7__query-docs"
     ],
     "deny": []
   }

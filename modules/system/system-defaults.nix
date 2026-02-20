@@ -64,8 +64,9 @@
     # manages Apple plist settings in ~/Library/Preferences
     CustomUserPreferences = {
       # Raycast settings. Launch Raycast with CMD-SPC
+      # Note: Script directory (NSOSPLastRootDirectory) must be set manually in Raycast UI
+      # as it uses a binary bookmark format. Scripts are managed via home-manager at ~/.config/raycast/scripts
       "com.raycast.macos" = {
-        NSNavLastRootDirectory = "~/src/scripts/raycast";
         "NSStatusItem Visible raycastIcon" = 0;
         commandsPreferencesExpandedItemIds = [
           "extension_noteplan-3__00cda425-a991-4e4e-8031-e5973b8b24f6"

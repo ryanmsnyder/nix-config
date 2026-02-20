@@ -15,6 +15,7 @@ in
     ./theme.nix
     # ./programs/wezterm.nix  # disabled for local plugin development
     ./programs/bat.nix
+    ./programs/claude.nix
     ./programs/git.nix
     ./programs/lf.nix
     ./programs/lsd.nix
@@ -31,6 +32,7 @@ in
     ./programs/kitty.nix
     ./programs/ripgrep.nix
     ./programs/jq.nix
+    ./programs/raycast-scripts.nix
     ./launchd-agents
   ];
 

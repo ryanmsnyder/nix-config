@@ -2,7 +2,7 @@
 
 with lib;
 let
-  isAarch64 = pkgs.stdenv.system == "aarch64-darwin"; # Detect Apple Silicon
+  isAarch64 = pkgs.stdenv.hostPlatform.system == "aarch64-darwin"; # Detect Apple Silicon
 in
 {
   launchd.agents.colima = {
