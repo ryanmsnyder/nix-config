@@ -96,7 +96,7 @@ fi
 
 # Check if ccusage is available
 CCUSAGE_AVAILABLE=false
-if command -v ccusage >/dev/null 2>&1; then
+if command -v ccusage >/dev/null 2>&1 || command -v bunx >/dev/null 2>&1; then
     CCUSAGE_AVAILABLE=true
 fi
 
@@ -126,8 +126,13 @@ if [ "$CCUSAGE_AVAILABLE" = true ]; then
     fi
 
     # Use ccusage to get daily costs for the last 7 days
+    CCUSAGE_CMD="ccusage"
+    if ! command -v ccusage >/dev/null 2>&1 && command -v bunx >/dev/null 2>&1; then
+        CCUSAGE_CMD="bunx ccusage"
+    fi
+
     # Get daily cost data (last 7 days) in JSON format
-    DAILY_DATA=$(ccusage daily --since "$WEEK_START" --json 2>/dev/null)
+    DAILY_DATA=$($CCUSAGE_CMD daily --since "$WEEK_START" --json 2>/dev/null)
 
     if [ -n "$DAILY_DATA" ]; then
         # Extract today's cost (ccusage returns dates in YYYY-MM-DD format in JSON)
