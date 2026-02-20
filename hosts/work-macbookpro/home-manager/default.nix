@@ -18,7 +18,10 @@ in
 
 {
   home-manager.users.${user} = {
-    imports = [ inputs.agenix.homeManagerModules.default ];
+    imports = [
+      inputs.agenix.homeManagerModules.default
+      ./programs/ssh.nix
+    ];
 
     home = {
       # Install combined packages and scripts specific to this host/machine
