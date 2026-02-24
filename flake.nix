@@ -123,6 +123,7 @@
           system = "aarch64-darwin";
           specialArgs = { inherit inputs fullName user email;}; # this allows inputs to be passed explicitly to other modules
           modules = [
+            agenix.darwinModules.default
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew  # for installing Mac App Store apps
             ./hosts/work-macbookpro

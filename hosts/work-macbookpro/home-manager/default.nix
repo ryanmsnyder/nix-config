@@ -13,13 +13,14 @@ let
   ];
 
   # Import secrets
-  # secretConfig = import ./secrets { inherit pkgs user inputs; };
+  secretConfig = import ./secrets { inherit pkgs user inputs; };
 in
 
 {
   home-manager.users.${user} = {
     imports = [
       inputs.agenix.homeManagerModules.default
+      secretConfig
       ./programs/ssh.nix
     ];
 

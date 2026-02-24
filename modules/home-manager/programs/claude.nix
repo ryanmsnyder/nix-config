@@ -42,6 +42,33 @@
 
     # Skills directory (symlink entire directory for runtime files)
     skillsDir = ../config/claude/skills;
+
+    # MCP servers (top-level option - gets passed as --mcp-config flag to claude binary)
+    mcpServers = {
+      CodeGraphContext = {
+        type = "stdio";
+        command = "${config.home.homeDirectory}/.local/bin/cgc";
+        args = [ "mcp" "start" ];
+      };
+      pal = {
+        type = "stdio";
+        command = "${config.home.homeDirectory}/local-mcp-servers/pal-mcp-server/.pal_venv/bin/python";
+        args = [ "${config.home.homeDirectory}/local-mcp-servers/pal-mcp-server/server.py" ];
+        cwd = "${config.home.homeDirectory}/local-mcp-servers/pal-mcp-server";
+        env = {
+          DEFAULT_MODEL = "auto";
+          DEFAULT_THINKING_MODE_THINKDEEP = "high";
+          CONVERSATION_TIMEOUT_HOURS = "24";
+          MAX_CONVERSATION_TURNS = "40";
+          LOG_LEVEL = "DEBUG";
+          DISABLED_TOOLS = "analyze,refactor,testgen,secaudit,docgen,tracer";
+          PAL_MCP_FORCE_ENV_OVERRIDE = "false";
+          COMPOSE_PROJECT_NAME = "pal-mcp";
+          TZ = "UTC";
+          LOG_MAX_SIZE = "10MB";
+        };
+      };
+    };
   };
 
   # Statusline script needs to be placed manually (executable)
@@ -49,4 +76,31 @@
     source = ../config/claude/statusline.sh;
     executable = true;
   };
+
+  # Install codegraphcontext CLI via uv tool (not in nixpkgs)
+  home.activation.installCodeGraphContext = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if ! ${pkgs.uv}/bin/uv tool list 2>/dev/null | grep -q "codegraphcontext"; then
+      ${pkgs.uv}/bin/uv tool install codegraphcontext
+    fi
+  '';
+
+  # Write context7 MCP server config into ~/.claude.json using agenix-decrypted API key.
+  # context7 uses HTTP transport with a secret API key in headers, so it can't go in the
+  # nix store via mcpServers. Instead we template it in at activation time.
+  home.activation.setupContext7Mcp = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    KEY_FILE="${config.home.homeDirectory}/.config/claude/context7-api-key"
+    CLAUDE_JSON="${config.home.homeDirectory}/.claude.json"
+    if [ -f "$KEY_FILE" ]; then
+      API_KEY=$(cat "$KEY_FILE")
+      CONTEXT7_CONFIG=$(${pkgs.jq}/bin/jq -n \
+        --arg key "$API_KEY" \
+        '{mcpServers: {context7: {type: "http", url: "https://mcp.context7.com/mcp", headers: {CONTEXT7_API_KEY: $key}}}}')
+      if [ -f "$CLAUDE_JSON" ]; then
+        ${pkgs.jq}/bin/jq -s '.[0] * .[1]' "$CLAUDE_JSON" <(echo "$CONTEXT7_CONFIG") > "$CLAUDE_JSON.tmp" \
+          && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
+      else
+        echo "$CONTEXT7_CONFIG" > "$CLAUDE_JSON"
+      fi
+    fi
+  '';
 }

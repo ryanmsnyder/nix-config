@@ -19,6 +19,13 @@
         file = "${inputs.secrets}/office-pi-ssh-private-key.age";
         mode = "600";
       };
+
+      context7-api-key = {
+        symlink = false;
+        path = "/Users/${user}/.config/claude/context7-api-key";
+        file = "${inputs.secrets}/context7-api-key.age";
+        mode = "600";
+      };
     };
   };
 }
