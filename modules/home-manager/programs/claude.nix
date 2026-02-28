@@ -17,9 +17,6 @@
         command = "~/.claude/statusline.sh";
         padding = 0;
       };
-      enabledPlugins = {
-        "claude-notifications-go@claude-notifications-go" = true;
-      };
     };
 
     # Global memory/instructions (maps to ~/.claude/CLAUDE.md)
