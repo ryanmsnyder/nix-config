@@ -82,7 +82,7 @@
   # Install codegraphcontext CLI via uv tool (not in nixpkgs)
   home.activation.installCodeGraphContext = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if ! ${pkgs.uv}/bin/uv tool list 2>/dev/null | grep -q "codegraphcontext"; then
-      ${pkgs.uv}/bin/uv tool install codegraphcontext
+      ${pkgs.uv}/bin/uv tool install codegraphcontext --python 3.12
     fi
   '';
 
