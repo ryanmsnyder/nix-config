@@ -45,6 +45,11 @@
 
     # MCP servers (top-level option - gets passed as --mcp-config flag to claude binary)
     mcpServers = {
+      chrome-devtools = {
+        type = "stdio";
+        command = "${pkgs.nodejs_24}/bin/npx";
+        args = [ "-y" "chrome-devtools-mcp@latest" ];
+      };
       CodeGraphContext = {
         type = "stdio";
         command = "${config.home.homeDirectory}/.local/bin/cgc";
