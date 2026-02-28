@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     secrets = {
-      url = "git+ssh://ha/root/git/nix-secrets.git?ref=main";
+      url = "git+ssh://ha/share/git/nix-secrets.git?ref=main";
       flake = false;
     };
     home-manager = {
