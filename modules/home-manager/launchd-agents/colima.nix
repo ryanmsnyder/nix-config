@@ -15,6 +15,8 @@ in
         "${pkgs.colima}/bin/colima"
         "start"
         "--foreground"
+        "--cpu" "4"
+        "--memory" "6"
       ];
       RunAtLoad = true;
       KeepAlive = {
