@@ -33,7 +33,7 @@
     # Note: .md extension is added automatically by the module
     commands = {
       "commit" = ''
-        Add the relevant files to git staging and create a conventional git commit. Don't mention Claude in the commit message.
+        Add the relevant files to git staging and create a conventional git commit. Don't mention Claude in the commit message. Do NOT include a "Co-Authored-By" trailer or any similar attribution in the commit message.
       '';
     };
 
