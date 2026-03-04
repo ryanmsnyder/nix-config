@@ -45,7 +45,7 @@
       chrome-devtools = {
         type = "stdio";
         command = "${pkgs.nodejs_24}/bin/npx";
-        args = [ "-y" "chrome-devtools-mcp@latest" ];
+        args = [ "-y" "chrome-devtools-mcp@latest" "--executable-path=/etc/profiles/per-user/${config.home.username}/bin/google-chrome-stable" ];
       };
       CodeGraphContext = {
         type = "stdio";
