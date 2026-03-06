@@ -3,16 +3,14 @@
 import os, sys, json, argparse, requests, subprocess
 from pathlib import Path
 
-SKILL_DIR = Path(__file__).parent.parent.parent / "jira"
-
 # Load .env
-env_file = SKILL_DIR / ".env"
+env_file = Path(os.environ.get("JIRA_ENV_FILE", os.path.expanduser("~/.claude/skills/jira/.env")))
 if env_file.exists():
     for line in open(env_file):
         line = line.strip()
         if line and not line.startswith("#") and "=" in line:
             key, val = line.split("=", 1)
-            os.environ[key] = val
+            os.environ.setdefault(key, val)
 
 def get_latest_commit_url():
     """Get the GitHub URL for the latest commit."""

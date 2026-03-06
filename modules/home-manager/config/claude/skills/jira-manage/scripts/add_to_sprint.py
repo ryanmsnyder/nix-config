@@ -10,14 +10,14 @@ import requests
 from pathlib import Path
 
 # Load .env file if it exists
-env_file = Path(__file__).parent.parent / ".env"
+env_file = Path(os.environ.get("JIRA_ENV_FILE", os.path.expanduser("~/.claude/skills/jira/.env")))
 if env_file.exists():
     with open(env_file) as f:
         for line in f:
             line = line.strip()
-            if line and not line.startswith("#"):
+            if line and not line.startswith("#") and "=" in line:
                 key, value = line.split("=", 1)
-                os.environ[key] = value
+                os.environ.setdefault(key, value)
 
 def get_board_id(project_key, auth):
     """Get the board ID for a project. Prefers scrum boards over kanban."""

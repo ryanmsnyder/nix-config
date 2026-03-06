@@ -9,18 +9,13 @@ Communicate on tickets with formatted comments.
 
 ## Setup (one-time)
 
-```bash
-cd ~/.claude/skills/jira
-cp .env.example .env
-# Edit .env with your credentials
-./setup.sh
-```
+Create `~/.claude/skills/jira/.env` with your credentials (see `.env.example`).
 
 ## Add Comment
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-comments/scripts/add_comment.py \
+NODE_PATH=$HOME/.claude/skills/jira/node_modules \
+  ~/.claude/skills/jira/python ~/.claude/skills/jira-comments/scripts/add_comment.py \
   --key PROJ-123 \
   --comment "**Status:** Complete ✅
 
@@ -32,8 +27,8 @@ Changes:
 ## Update Comment
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-comments/scripts/update_comment.py \
+NODE_PATH=$HOME/.claude/skills/jira/node_modules \
+  ~/.claude/skills/jira/python ~/.claude/skills/jira-comments/scripts/update_comment.py \
   --key PROJ-123 \
   --comment-id 10001 \
   --comment "**Updated** info"
@@ -42,8 +37,7 @@ python3 ../jira-comments/scripts/update_comment.py \
 ## View Comments
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-comments/scripts/view_comments.py --key PROJ-123
+~/.claude/skills/jira/python ~/.claude/skills/jira-comments/scripts/view_comments.py --key PROJ-123
 ```
 
 ## Markdown Support

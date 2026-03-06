@@ -9,18 +9,13 @@ Search for tickets and view ticket details.
 
 ## Setup (one-time)
 
-```bash
-cd ~/.claude/skills/jira
-cp .env.example .env
-# Edit .env with your credentials
-./setup.sh
-```
+Create `~/.claude/skills/jira/.env` with your credentials (see `.env.example`).
 
 ## Search Tickets
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-search/scripts/search.py --jql "assignee = currentUser() AND status != Done"
+~/.claude/skills/jira/python ~/.claude/skills/jira-search/scripts/search.py \
+  --jql "assignee = currentUser() AND status != Done"
 ```
 
 **Common JQL patterns:**
@@ -33,8 +28,7 @@ python3 ../jira-search/scripts/search.py --jql "assignee = currentUser() AND sta
 ## View Ticket Details
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-search/scripts/view_ticket.py --key PROJ-123
+~/.claude/skills/jira/python ~/.claude/skills/jira-search/scripts/view_ticket.py --key PROJ-123
 ```
 
 Shows summary, description, status, priority, assignee.

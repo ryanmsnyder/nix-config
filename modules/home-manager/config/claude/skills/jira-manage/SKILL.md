@@ -9,18 +9,13 @@ Create, update, and transition tickets.
 
 ## Setup (one-time)
 
-```bash
-cd ~/.claude/skills/jira
-cp .env.example .env
-# Edit .env with your credentials
-./setup.sh
-```
+Create `~/.claude/skills/jira/.env` with your credentials (see `.env.example`).
 
 ## Create Ticket
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-manage/scripts/create_ticket.py \
+NODE_PATH=$HOME/.claude/skills/jira/node_modules \
+  ~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/create_ticket.py \
   --project PROJ \
   --type Bug \
   --summary "Fix login issue" \
@@ -35,8 +30,8 @@ python3 ../jira-manage/scripts/create_ticket.py \
 ## Update Ticket
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-manage/scripts/update_ticket.py \
+NODE_PATH=$HOME/.claude/skills/jira/node_modules \
+  ~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/update_ticket.py \
   --key PROJ-123 \
   --summary "New title" \
   --priority High
@@ -45,8 +40,8 @@ python3 ../jira-manage/scripts/update_ticket.py \
 ## Change Status
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-manage/scripts/transition_ticket.py \
+NODE_PATH=$HOME/.claude/skills/jira/node_modules \
+  ~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/transition_ticket.py \
   --key PROJ-123 \
   --status "In Progress"
 ```
@@ -66,8 +61,7 @@ python3 ../jira-manage/scripts/transition_ticket.py \
 ## Assign Ticket
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-manage/scripts/assign_ticket.py \
+~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/assign_ticket.py \
   --key PROJ-123 \
   --assignee "user@example.com"
 ```
@@ -77,21 +71,19 @@ Use `--assignee me` to assign to yourself.
 ## Add to Sprint
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-manage/scripts/add_to_sprint.py --key PROJ-123
+~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/add_to_sprint.py --key PROJ-123
 ```
 
 Adds ticket to the current active sprint. Optionally specify a sprint ID:
 
 ```bash
-python3 ../jira-manage/scripts/add_to_sprint.py --key PROJ-123 --sprint-id 456
+~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/add_to_sprint.py --key PROJ-123 --sprint-id 456
 ```
 
 ## List Available Transitions
 
 ```bash
-cd ~/.claude/skills/jira && source .venv/bin/activate && \
-python3 ../jira-manage/scripts/list_transitions.py --key PROJ-123
+~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/list_transitions.py --key PROJ-123
 ```
 
 ## Markdown Support
