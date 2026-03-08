@@ -9,7 +9,7 @@
       context7-api-key = {
         symlink = false;
         path = "/Users/${user}/.config/claude/context7-api-key";
-        file = "${inputs.secrets}/context7-api-key.age";
+        file = "${inputs.secrets}/context7-api-key-work.age";
         mode = "600";
       };
     };
