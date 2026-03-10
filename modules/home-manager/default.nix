@@ -32,7 +32,6 @@ in
     ./programs/kitty.nix
     ./programs/ripgrep.nix
     ./programs/jq.nix
-    ./programs/raycast-scripts.nix
     ./launchd-agents
   ];
 

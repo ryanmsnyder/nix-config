@@ -4,6 +4,7 @@ let
   jiraPython = pkgs.python3.withPackages (ps: with ps; [
     requests
     urllib3
+    mistune
   ]);
 in
 
@@ -90,14 +91,6 @@ in
   home.file.".claude/skills/jira/python" = {
     source = "${jiraPython}/bin/python3";
   };
-
-  # Install Node.js deps for Jira skills md2adf conversion (runs npm install if node_modules missing)
-  home.activation.installJiraNodeDeps = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    JIRA_DIR="${config.home.homeDirectory}/.claude/skills/jira"
-    if [ -f "$JIRA_DIR/package.json" ] && [ ! -d "$JIRA_DIR/node_modules" ]; then
-      cd "$JIRA_DIR" && ${pkgs.nodejs_24}/bin/npm install --silent 2>/dev/null || true
-    fi
-  '';
 
   # Install codegraphcontext CLI via uv tool (not in nixpkgs)
   home.activation.installCodeGraphContext = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

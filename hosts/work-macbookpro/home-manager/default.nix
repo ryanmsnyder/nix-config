@@ -22,6 +22,7 @@ in
       inputs.agenix.homeManagerModules.default
       secretConfig
       ./programs/ssh.nix
+      ../../../modules/home-manager/programs/raycast-scripts.nix
     ];
 
     home = {

@@ -15,7 +15,7 @@
         # @raycast.icon 🔒
         # @raycast.packageName VPN
 
-        MASTER_PASS=$(security find-generic-password -s "cisco-vpn" -a "ryan.snyder" -w 2>/dev/null)
+        MASTER_PASS=$(security find-generic-password -s "master-password" -a "ryan.snyder" -w 2>/dev/null)
 
         if [ -z "$MASTER_PASS" ]; then
           osascript -e 'display notification "Could not retrieve password from Keychain" with title "❌ VPN Error" sound name "Basso"'

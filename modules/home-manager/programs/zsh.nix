@@ -73,6 +73,15 @@
                 nix-shell '<nixpkgs>' -A "$1"
             }
 
+            nix-switch() {
+                local pass=$(security find-generic-password -s "master-password" -a "ryan.snyder" -w 2>/dev/null)
+                if [ -z "$pass" ]; then
+                    echo "Error: Could not retrieve password from Keychain" >&2
+                    return 1
+                fi
+                echo "$pass" | sudo -S nix run "$HOME/nix-config#build-switch"
+            }
+
             # Use difftastic, syntax-aware diffing
             #alias diff=difft
 

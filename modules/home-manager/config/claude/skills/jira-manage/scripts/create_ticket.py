@@ -6,9 +6,11 @@ import os
 import sys
 import json
 import argparse
-import subprocess
 import requests
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parents[2] / "jira"))
+from md2adf import convert as md_to_adf
 
 # Load .env file if it exists
 env_file = Path(os.environ.get("JIRA_ENV_FILE", os.path.expanduser("~/.claude/skills/jira/.env")))
@@ -19,38 +21,6 @@ if env_file.exists():
             if line and not line.startswith("#") and "=" in line:
                 key, value = line.split("=", 1)
                 os.environ.setdefault(key, value)
-
-def md_to_adf(markdown_text):
-    """Convert markdown to ADF using the md2adf.js script."""
-    script_dir = Path(__file__).parent
-    md2adf_script = script_dir / "md2adf.js"
-    
-    if not md2adf_script.exists():
-        print(f"Error: md2adf.js not found at {md2adf_script}", file=sys.stderr)
-        sys.exit(1)
-    
-    try:
-        result = subprocess.run(
-            ["node", str(md2adf_script)],
-            input=markdown_text,
-            capture_output=True,
-            text=True,
-            check=False
-        )
-        
-        if result.returncode != 0:
-            print(f"Error converting markdown to ADF:", file=sys.stderr)
-            print(result.stderr, file=sys.stderr)
-            sys.exit(1)
-        
-        return json.loads(result.stdout)
-    except json.JSONDecodeError as e:
-        print(f"Error parsing ADF JSON: {e}", file=sys.stderr)
-        print(f"Output was: {result.stdout}", file=sys.stderr)
-        sys.exit(1)
-    except Exception as e:
-        print(f"Error running md2adf.js: {e}", file=sys.stderr)
-        sys.exit(1)
 
 def get_account_id_by_email(base_url, email, token, search_email):
     """Look up a Jira user's account ID by email."""
