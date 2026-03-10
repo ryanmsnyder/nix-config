@@ -666,6 +666,30 @@ With Nix, changes to your system are made by
 nix run .#build-switch
 ```
 
+## nix-switch (password-free rebuilds)
+
+`nix-switch` is a shell function that automatically retrieves your sudo password from the macOS Keychain so you don't have to type it on every rebuild.
+
+### One-time setup
+
+Add your sudo password to the Keychain under the service name `master-password`:
+
+```sh
+security add-generic-password -s "master-password" -a "$USER" -w
+```
+
+You'll be prompted to enter the password once. It's stored securely in your login keychain and only accessible by your user account.
+
+### Usage
+
+After rebuilding with the updated config, simply run:
+
+```sh
+nix-switch
+```
+
+This will build and switch to the new generation without prompting for a password.
+
 ## Update dependencies
 
 ```sh
