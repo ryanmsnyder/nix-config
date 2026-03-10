@@ -44,6 +44,7 @@ def view_ticket(key):
     
     r = requests.get(
         f"{base_url}/rest/api/3/issue/{key}",
+        params={"fields": "summary,issuetype,status,priority,assignee,reporter,description,labels,attachment,created,updated"},
         auth=(email, token),
         timeout=30
     )
@@ -80,7 +81,23 @@ def view_ticket(key):
     labels = fields.get("labels", [])
     if labels:
         print(f"\nLabels: {', '.join(labels)}")
-    
+
+    attachments = fields.get("attachment", [])
+    if attachments:
+        print(f"\nAttachments ({len(attachments)}):")
+        for a in attachments:
+            print(f"  [{a['id']}] {a['filename']} ({a['mimeType']}, {a['size']} bytes)")
+            if a["mimeType"].startswith("text/"):
+                r2 = requests.get(
+                    f"{base_url}/rest/api/3/attachment/content/{a['id']}",
+                    auth=(email, token),
+                    timeout=30
+                )
+                if r2.status_code == 200:
+                    print(f"\n--- {a['filename']} ---")
+                    print(r2.text)
+                    print(f"--- end {a['filename']} ---")
+
     print(f"\nCreated: {fields.get('created', '')}")
     print(f"Updated: {fields.get('updated', '')}")
 
