@@ -31,13 +31,14 @@ RED='\033[1;31m'
 NC='\033[0m'
 
 export NIXPKGS_ALLOW_UNFREE=1
+export PATH="/nix/var/nix/profiles/default/bin:$PATH"
 
 echo "${YELLOW}Detected flake for hostname ${CURRENT_HOSTNAME}: ${FLAKE}${NC}"
 echo "${YELLOW}Starting build...${NC}"
 nix --experimental-features 'nix-command flakes' build .#$SYSTEM $@
 
 echo "${YELLOW}Switching to new generation...${NC}"
-sudo ./result/sw/bin/darwin-rebuild switch --flake .#$FLAKE $@
+sudo -A ./result/sw/bin/darwin-rebuild switch --flake .#$FLAKE $@
 
 echo "${YELLOW}Cleaning up...${NC}"
 unlink ./result

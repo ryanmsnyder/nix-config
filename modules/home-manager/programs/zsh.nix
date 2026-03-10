@@ -79,7 +79,12 @@
                     echo "Error: Could not retrieve password from Keychain" >&2
                     return 1
                 fi
-                echo "$pass" | sudo -S /nix/var/nix/profiles/default/bin/nix run "$HOME/nix-config#build-switch"
+                local askpass=$(mktemp)
+                chmod 700 "$askpass"
+                trap "rm -f '$askpass'" EXIT INT TERM
+                printf '#!/bin/sh\necho "%s"\n' "$pass" > "$askpass"
+                SUDO_ASKPASS="$askpass" nix run "$HOME/nix-config#build-switch"
+                rm -f "$askpass"
             }
 
             # Use difftastic, syntax-aware diffing

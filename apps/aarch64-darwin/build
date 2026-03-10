@@ -31,6 +31,7 @@ RED='\033[1;31m'
 NC='\033[0m'
 
 export NIXPKGS_ALLOW_UNFREE=1
+export PATH="/nix/var/nix/profiles/default/bin:$PATH"
 
 echo "${YELLOW}Detected flake for hostname ${CURRENT_HOSTNAME}: ${FLAKE}${NC}"
 echo "${YELLOW}Starting build...${NC}"
