@@ -22,9 +22,7 @@
     #   "waydabber/betterdisplay"
     # ];
 
-    brews = [
-      "blueutil"
-    ];
+    brews = [];
 
     casks = [];
 
