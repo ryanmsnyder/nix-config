@@ -79,7 +79,7 @@
                     echo "Error: Could not retrieve password from Keychain" >&2
                     return 1
                 fi
-                echo "$pass" | sudo -S nix run "$HOME/nix-config#build-switch"
+                echo "$pass" | sudo -S /nix/var/nix/profiles/default/bin/nix run "$HOME/nix-config#build-switch"
             }
 
             # Use difftastic, syntax-aware diffing
