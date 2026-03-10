@@ -33,7 +33,7 @@ def extract_text_from_adf(adf):
     walk(adf)
     return " ".join(text_parts)
 
-def view_ticket(key):
+def view_ticket(key, no_comments=False):
     base_url = os.environ.get("JIRA_BASE_URL", "").rstrip("/")
     email = os.environ.get("JIRA_EMAIL")
     token = os.environ.get("JIRA_API_TOKEN")
@@ -101,9 +101,27 @@ def view_ticket(key):
     print(f"\nCreated: {fields.get('created', '')}")
     print(f"Updated: {fields.get('updated', '')}")
 
+    if not no_comments:
+        r2 = requests.get(
+            f"{base_url}/rest/api/3/issue/{key}/comment",
+            auth=(email, token),
+            timeout=30
+        )
+        if r2.status_code == 200:
+            comments = r2.json().get("comments", [])
+            if comments:
+                print(f"\nComments ({len(comments)}):\n")
+                for comment in comments:
+                    author = comment.get("author", {}).get("displayName", "Unknown")
+                    created = comment.get("created", "")
+                    comment_text = extract_text_from_adf(comment.get("body", {}))
+                    print(f"[{comment['id']}] {author} - {created}")
+                    print(f"{comment_text}\n")
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description="View Jira ticket details")
     p.add_argument("--key", required=True, help="Ticket key (e.g., PROJ-123)")
+    p.add_argument("--no-comments", action="store_true", help="Skip fetching comments")
     args = p.parse_args()
-    
-    view_ticket(args.key)
+
+    view_ticket(args.key, no_comments=args.no_comments)

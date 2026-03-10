@@ -31,7 +31,7 @@ Create `~/.claude/skills/jira/.env` with your credentials (see `.env.example`).
 ~/.claude/skills/jira/python ~/.claude/skills/jira-search/scripts/view_ticket.py --key PROJ-123
 ```
 
-Shows summary, description, status, priority, assignee.
+Shows summary, description, status, priority, assignee, and all comments. Use `--no-comments` to skip comments.
 
 ## Search Tips
 
