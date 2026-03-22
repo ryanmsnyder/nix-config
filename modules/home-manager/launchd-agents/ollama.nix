@@ -4,7 +4,7 @@ with lib;
 let
   homeDir = config.home.homeDirectory;
   notifyService = "${homeDir}/.nix-profile/bin/notify-service";
-  ollamaBinary = "${pkgs.ollama}/bin/ollama";
+  ollamaBinary = "/Users/${user}/.local/bin/ollama";
 in
 {
   launchd.agents.ollama = {

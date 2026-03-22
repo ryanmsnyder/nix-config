@@ -291,5 +291,5 @@
   '';
 
 in {
-  xdg.configFile."wezterm/wezterm.lua".text = luaScript;
+  # xdg.configFile."wezterm/wezterm.lua".text = luaScript;
 }

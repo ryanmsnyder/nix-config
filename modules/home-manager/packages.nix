@@ -2,7 +2,7 @@
 
 with pkgs; [
   # AI
-  ollama
+  # ollama managed via homebrew for Metal GPU support (nixpkgs build lacks libggml-metal)
   yek # Rust based tool to serialize text-based files in a repository or directory for LLM consumption
   # claude-code now managed via programs.claude-code in programs/claude.nix
   inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.ccusage # Claude Code usage tracking

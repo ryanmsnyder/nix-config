@@ -22,7 +22,9 @@
     #   "waydabber/betterdisplay"
     # ];
 
-    brews = [];
+    brews = [
+      "ollama" # nixpkgs build lacks Metal GPU support
+    ];
 
     casks = [
       "claude"
