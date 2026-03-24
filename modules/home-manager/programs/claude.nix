@@ -53,7 +53,7 @@ in
       chrome-devtools = {
         type = "stdio";
         command = "${pkgs.nodejs_24}/bin/npx";
-        args = [ "-y" "chrome-devtools-mcp@latest" "--executable-path=/etc/profiles/per-user/${config.home.username}/bin/google-chrome-stable" "--remote-debugging-port=9222" "--user-data-dir=/Users/${config.home.username}/Library/Application Support/Google/Chrome" ];
+        args = [ "-y" "chrome-devtools-mcp@latest" "--browserUrl=http://127.0.0.1:9222" ];
       };
       CodeGraphContext = {
         type = "stdio";
