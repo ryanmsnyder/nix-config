@@ -28,41 +28,32 @@ Follow these principles for ALL Langfuse work:
 
 ## 1. Langfuse API via CLI
 
-Use the `langfuse-cli` to interact with the full Langfuse REST API from the command line. Load credentials from `~/.claude/skills/langfuse/.env` and run via npx (no install required):
-
-```bash
-set -a && source ~/.claude/skills/langfuse/.env && set +a && npx langfuse-cli api __schema
-```
+Use the `langfuse-cli` to interact with the full Langfuse REST API from the command line. Run via npx (no install required). Always pass `--env ~/.config/langfuse/.env` for credentials:
 
 Start by discovering the schema and available arguments:
 
 ```bash
 # Discover all available resources
-set -a && source ~/.claude/skills/langfuse/.env && set +a && npx langfuse-cli api __schema
+npx langfuse-cli --env ~/.config/langfuse/.env api __schema
 
 # List actions for a resource
-set -a && source ~/.claude/skills/langfuse/.env && set +a && npx langfuse-cli api <resource> --help
+npx langfuse-cli --env ~/.config/langfuse/.env api <resource> --help
 
 # Show args/options for a specific action
-set -a && source ~/.claude/skills/langfuse/.env && set +a && npx langfuse-cli api <resource> <action> --help
+npx langfuse-cli --env ~/.config/langfuse/.env api <resource> <action> --help
 ```
 
 ### Credentials
 
-Credentials are stored in `~/.claude/skills/langfuse/.env`. Source it before running commands:
+Credentials are stored in `~/.config/langfuse/.env`. The file should contain:
 
-```bash
-set -a && source ~/.claude/skills/langfuse/.env && set +a
-```
-
-The `.env` file should contain:
 ```
 LANGFUSE_PUBLIC_KEY=pk-lf-...
 LANGFUSE_SECRET_KEY=sk-lf-...
 LANGFUSE_HOST=https://cloud.langfuse.com
 ```
 
-If the file doesn't exist, ask the user for their API keys (found in Langfuse UI → Settings → API Keys).
+If the file doesn't exist, ask the user to create it with their API keys (found in Langfuse UI → Settings → API Keys).
 
 ### Detailed CLI Reference
 
