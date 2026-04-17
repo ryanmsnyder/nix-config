@@ -118,4 +118,84 @@ in
       fi
     fi
   '';
+
+  # Write ha-mcp server config into ~/.claude.json using agenix-decrypted HA token.
+  # Runs after setupContext7Mcp so both entries are merged correctly.
+  home.activation.setupHaMcp = lib.hm.dag.entryAfter [ "setupContext7Mcp" ] ''
+    TOKEN_FILE="${config.home.homeDirectory}/.config/claude/ha-mcp-token"
+    CLAUDE_JSON="${config.home.homeDirectory}/.claude.json"
+    if [ -f "$TOKEN_FILE" ]; then
+      HA_TOKEN=$(cat "$TOKEN_FILE")
+      HA_CONFIG=$(${pkgs.jq}/bin/jq -n \
+        --arg token "$HA_TOKEN" \
+        '{mcpServers: {"ha-mcp": {type: "stdio", command: "${pkgs.uv}/bin/uvx", args: ["ha-mcp"], env: {HOMEASSISTANT_URL: "http://homeassistant.local:8123", HOMEASSISTANT_TOKEN: $token}}}}')
+      if [ -f "$CLAUDE_JSON" ]; then
+        ${pkgs.jq}/bin/jq -s '.[0] * .[1]' "$CLAUDE_JSON" <(echo "$HA_CONFIG") > "$CLAUDE_JSON.tmp" \
+          && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
+      else
+        echo "$HA_CONFIG" > "$CLAUDE_JSON"
+      fi
+    fi
+  '';
+
+  # Generate the full Claude Desktop config declaratively.
+  # Claude Desktop doesn't inherit the Nix PATH, so all commands use the /bin/sh PATH-wrapper pattern.
+  # Secrets (context7, ha-mcp) are merged in from agenix-decrypted files at activation time.
+  home.activation.setupClaudeDesktopConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    DESKTOP_DIR="${config.home.homeDirectory}/Library/Application Support/Claude"
+    DESKTOP_CONFIG="$DESKTOP_DIR/claude_desktop_config.json"
+    NIX_PATH="/etc/profiles/per-user/${config.home.username}/bin"
+
+    mkdir -p "$DESKTOP_DIR"
+
+    # Base config: non-secret servers + preserved preferences
+    BASE_CONFIG=$(${pkgs.jq}/bin/jq -n \
+      --arg nixPath "$NIX_PATH" \
+      --arg home "${config.home.homeDirectory}" \
+      '{
+        mcpServers: {
+          filesystem: {
+            command: "/bin/sh",
+            args: ["-c", ("PATH=" + $nixPath + ":$PATH exec npx -y @modelcontextprotocol/server-filesystem " + $home + "/Desktop " + $home + "/Documents " + $home + "/Downloads " + $home + "/nix-config")]
+          },
+          "chrome-devtools": {
+            command: "/bin/sh",
+            args: ["-c", ("PATH=" + $nixPath + ":$PATH exec npx -y chrome-devtools-mcp@latest")]
+          },
+          reddit: {
+            command: "/bin/sh",
+            args: ["-c", ("PATH=" + $nixPath + ":$PATH exec npx -y reddit-mcp-buddy")]
+          }
+        },
+        preferences: {
+          coworkScheduledTasksEnabled: true,
+          ccdScheduledTasksEnabled: false,
+          sidebarMode: "chat",
+          coworkWebSearchEnabled: true,
+          floatingAtollActive: true
+        }
+      }')
+
+    # Merge context7 (with agenix secret)
+    CTX7_KEY_FILE="${config.home.homeDirectory}/.config/claude/context7-api-key"
+    if [ -f "$CTX7_KEY_FILE" ]; then
+      CTX7_KEY=$(cat "$CTX7_KEY_FILE")
+      BASE_CONFIG=$(echo "$BASE_CONFIG" | ${pkgs.jq}/bin/jq \
+        --arg key "$CTX7_KEY" \
+        --arg nixPath "$NIX_PATH" \
+        '.mcpServers.context7 = {command: "/bin/sh", args: ["-c", ("PATH=" + $nixPath + ":$PATH exec npx -y @upstash/context7-mcp --api-key " + $key)]}')
+    fi
+
+    # Merge ha-mcp (with agenix secret)
+    HA_TOKEN_FILE="${config.home.homeDirectory}/.config/claude/ha-mcp-token"
+    if [ -f "$HA_TOKEN_FILE" ]; then
+      HA_TOKEN=$(cat "$HA_TOKEN_FILE")
+      BASE_CONFIG=$(echo "$BASE_CONFIG" | ${pkgs.jq}/bin/jq \
+        --arg token "$HA_TOKEN" \
+        --arg nixPath "$NIX_PATH" \
+        '.mcpServers."ha-mcp" = {command: "/bin/sh", args: ["-c", ("PATH=" + $nixPath + ":$PATH exec uvx ha-mcp")], env: {HOMEASSISTANT_URL: "http://homeassistant.local:8123", HOMEASSISTANT_TOKEN: $token}}')
+    fi
+
+    echo "$BASE_CONFIG" > "$DESKTOP_CONFIG.tmp" && mv "$DESKTOP_CONFIG.tmp" "$DESKTOP_CONFIG"
+  '';
 }

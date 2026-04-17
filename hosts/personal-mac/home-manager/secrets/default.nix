@@ -26,6 +26,13 @@
         file = "${inputs.secrets}/context7-api-key-personal.age";
         mode = "600";
       };
+
+      ha-mcp-token = {
+        symlink = false;
+        path = "/Users/${user}/.config/claude/ha-mcp-token";
+        file = "${inputs.secrets}/ha-mcp-token-personal.age";
+        mode = "600";
+      };
     };
   };
 }
