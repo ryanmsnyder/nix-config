@@ -14,8 +14,7 @@ Create `~/.claude/skills/jira/.env` with your credentials (see `.env.example`).
 ## Create Ticket
 
 ```bash
-NODE_PATH=$HOME/.claude/skills/jira/node_modules \
-  ~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/create_ticket.py \
+~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/create_ticket.py \
   --project PROJ \
   --type Bug \
   --summary "Fix login issue" \
@@ -30,8 +29,7 @@ NODE_PATH=$HOME/.claude/skills/jira/node_modules \
 ## Update Ticket
 
 ```bash
-NODE_PATH=$HOME/.claude/skills/jira/node_modules \
-  ~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/update_ticket.py \
+~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/update_ticket.py \
   --key PROJ-123 \
   --summary "New title" \
   --priority High
@@ -40,8 +38,7 @@ NODE_PATH=$HOME/.claude/skills/jira/node_modules \
 ## Change Status
 
 ```bash
-NODE_PATH=$HOME/.claude/skills/jira/node_modules \
-  ~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/transition_ticket.py \
+~/.claude/skills/jira/python ~/.claude/skills/jira-manage/scripts/transition_ticket.py \
   --key PROJ-123 \
   --status "In Progress"
 ```

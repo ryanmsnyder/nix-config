@@ -16,10 +16,12 @@
             };
             init.defaultBranch = "main";
             core = {
-                editor = "vim";
+                editor = "nvim";
                 autocrlf = "input";
                 pager = "bat --paging=always";
             };
+            merge.tool = "nvimdiff";
+            mergetool.keepBackup = false;
             pull.rebase = true;
             rebase.autoStash = true;
             pager = {

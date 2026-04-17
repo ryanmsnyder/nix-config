@@ -14,8 +14,7 @@ Create `~/.claude/skills/jira/.env` with your credentials (see `.env.example`).
 ## Add Comment
 
 ```bash
-NODE_PATH=$HOME/.claude/skills/jira/node_modules \
-  ~/.claude/skills/jira/python ~/.claude/skills/jira-comments/scripts/add_comment.py \
+~/.claude/skills/jira/python ~/.claude/skills/jira-comments/scripts/add_comment.py \
   --key PROJ-123 \
   --comment "**Status:** Complete ✅
 
@@ -27,8 +26,7 @@ Changes:
 ## Update Comment
 
 ```bash
-NODE_PATH=$HOME/.claude/skills/jira/node_modules \
-  ~/.claude/skills/jira/python ~/.claude/skills/jira-comments/scripts/update_comment.py \
+~/.claude/skills/jira/python ~/.claude/skills/jira-comments/scripts/update_comment.py \
   --key PROJ-123 \
   --comment-id 10001 \
   --comment "**Updated** info"
