@@ -30,10 +30,10 @@ langfuse api <resource> <action> --curl
 
 ## Credentials
 
-Source from `~/.claude/skills/langfuse/.env`:
+Pass `--env ~/.config/langfuse/.env` on every command:
 
 ```bash
-set -a && source ~/.claude/skills/langfuse/.env && set +a
+npx langfuse-cli --env ~/.config/langfuse/.env api <resource> <action>
 ```
 
 The `.env` file should contain:
@@ -43,12 +43,47 @@ LANGFUSE_SECRET_KEY=sk-lf-...
 LANGFUSE_HOST=https://cloud.langfuse.com
 ```
 
+## Common Examples
+
+```bash
+# List recent traces in development
+npx langfuse-cli --env ~/.config/langfuse/.env api traces list --environment development --fields core,metrics
+
+# List observations in development (GENERATION, SPAN, TOOL, AGENT, etc.)
+npx langfuse-cli --env ~/.config/langfuse/.env api observations list --environment development --fields core,basic,usage,model --limit 50
+
+# Filter observations by type
+npx langfuse-cli --env ~/.config/langfuse/.env api observations list --environment development --type GENERATION --fields core,basic,usage,model
+
+# Get all observations for a specific trace
+npx langfuse-cli --env ~/.config/langfuse/.env api observations list --trace-id <traceId> --fields core,basic,io
+
+# Get a single observation by ID (v2 — use --filter with id column)
+npx langfuse-cli --env ~/.config/langfuse/.env api observations list \
+  --filter '[{"type":"string","column":"id","operator":"=","value":"<observationId>"}]' \
+  --fields core,basic,io,model,usage
+
+# Paginate using cursor from previous response meta.cursor
+npx langfuse-cli --env ~/.config/langfuse/.env api observations list --environment development --cursor <cursor>
+```
+
+### Observation field groups
+
+| Group | Fields returned |
+|-------|----------------|
+| `core` | id, traceId, startTime, endTime, projectId, parentObservationId, type (always included) |
+| `basic` | name, level, statusMessage, version, environment, userId, sessionId |
+| `io` | input, output |
+| `model` | providedModelName, internalModelId, modelParameters |
+| `usage` | usageDetails, costDetails, totalCost |
+| `metrics` | latency, timeToFirstToken |
+| `prompt` | promptId, promptName, promptVersion |
+
 ## Tips
 
 - Use `--json` for machine-readable JSON output
 - Use `--curl` to preview the HTTP request without executing
 - Pagination: use `--limit` and `--page` on list endpoints
 - All list commands support filtering — check `<resource> <action> --help` for available options
-- Prefer `observations-v2s` over `observations` — the v2 endpoint returns richer data
-- Prefer `metrics-v2s` over `metrics` — the v2 endpoint returns richer data
-- Prefer `score-v2s` over `scores` — the v1 `scores` resource only supports create/delete; use `score-v2s` for list and get operations
+- Use `observations` for querying observations — it supports cursor-based pagination and rich field selection
+- Prefer `scores` over `legacy-score-v1s` for list and get operations
