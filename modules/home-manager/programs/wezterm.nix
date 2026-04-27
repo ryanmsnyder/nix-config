@@ -24,6 +24,35 @@
 
     local workspace_manager = wezterm.plugin.require("https://github.com/ryanmsnyder/workspace-manager.wezterm")
 
+    local mocha = {
+      base      = "#1e1e2e",
+      mantle    = "#181825",
+      crust     = "#11111b",
+      surface0  = "#313244",
+      surface1  = "#45475a",
+      surface2  = "#585b70",
+      overlay0  = "#6c7086",
+      overlay1  = "#7f849c",
+      overlay2  = "#9399b2",
+      subtext0  = "#a6adc8",
+      subtext1  = "#bac2de",
+      text      = "#cdd6f4",
+      lavender  = "#b4befe",
+      blue      = "#89b4fa",
+      sapphire  = "#74c7ec",
+      sky       = "#89dceb",
+      teal      = "#94e2d5",
+      green     = "#a6e3a1",
+      yellow    = "#f9e2af",
+      peach     = "#fab387",
+      maroon    = "#eba0ac",
+      red       = "#f38ba8",
+      mauve     = "#cba6f7",
+      pink      = "#f5c2e7",
+      flamingo  = "#f2cdcd",
+      rosewater = "#f5e0dc",
+    }
+
     local function is_vim(pane)
       return pane:get_user_vars().IS_NVIM == "true"
     end
@@ -65,41 +94,6 @@
     local function basename(s)
       return string.gsub(s, "(.*[/\\])(.*)", "%2")
     end
-
-    -- Catppuccin Mocha palette (for tab bar)
-    local mocha = {
-      -- Base
-      base     = "#1e1e2e",
-      mantle   = "#181825",
-      crust    = "#11111b",
-      -- Surface
-      surface0 = "#313244",
-      surface1 = "#45475a",
-      surface2 = "#585b70",
-      -- Overlay
-      overlay0 = "#6c7086",
-      overlay1 = "#7f849c",
-      overlay2 = "#9399b2",
-      -- Text
-      subtext0 = "#a6adc8",
-      subtext1 = "#bac2de",
-      text     = "#cdd6f4",
-      -- Colors
-      lavender = "#b4befe",
-      blue     = "#89b4fa",
-      sapphire = "#74c7ec",
-      sky      = "#89dceb",
-      teal     = "#94e2d5",
-      green    = "#a6e3a1",
-      yellow   = "#f9e2af",
-      peach    = "#fab387",
-      maroon   = "#eba0ac",
-      red      = "#f38ba8",
-      mauve    = "#cba6f7",
-      pink     = "#f5c2e7",
-      flamingo = "#f2cdcd",
-      rosewater = "#f5e0dc",
-    }
 
     local config = {
       color_scheme = "${colorScheme}",
@@ -229,15 +223,7 @@
       local choices = {}
       local seen = {}
 
-      -- Top 20 zoxide entries
-      for _, path in ipairs(workspace_manager.get_zoxide_paths(20)) do
-        if not seen[path] then
-          seen[path] = true
-          table.insert(choices, path)
-        end
-      end
-
-      -- All subdirs of ~/Code not already in zoxide list
+      -- All subdirs of ~/Code first
       local home = os.getenv("HOME") or ""
       local handle = io.popen('ls -d ' .. home .. '/Code/*/ 2>/dev/null')
       if handle then
@@ -249,6 +235,14 @@
           end
         end
         handle:close()
+      end
+
+      -- Top 20 zoxide entries not already in list
+      for _, path in ipairs(workspace_manager.get_zoxide_paths(20)) do
+        if not seen[path] then
+          seen[path] = true
+          table.insert(choices, path)
+        end
       end
 
       return choices
