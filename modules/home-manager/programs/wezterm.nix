@@ -22,7 +22,7 @@
     local mux = wezterm.mux
     local act = wezterm.action
 
-    local workspace_manager = wezterm.plugin.require("https://github.com/MLFlexer/workspace-manager.wezterm")
+    local workspace_manager = wezterm.plugin.require("https://github.com/ryanmsnyder/workspace-manager.wezterm")
 
     local function is_vim(pane)
       return pane:get_user_vars().IS_NVIM == "true"
@@ -63,18 +63,93 @@
     end
 
     local function basename(s)
-	    return string.gsub(s, "(.*[/\\])(.*)", "%2")
+      return string.gsub(s, "(.*[/\\])(.*)", "%2")
     end
+
+    -- Catppuccin Mocha palette (for tab bar)
+    local mocha = {
+      -- Base
+      base     = "#1e1e2e",
+      mantle   = "#181825",
+      crust    = "#11111b",
+      -- Surface
+      surface0 = "#313244",
+      surface1 = "#45475a",
+      surface2 = "#585b70",
+      -- Overlay
+      overlay0 = "#6c7086",
+      overlay1 = "#7f849c",
+      overlay2 = "#9399b2",
+      -- Text
+      subtext0 = "#a6adc8",
+      subtext1 = "#bac2de",
+      text     = "#cdd6f4",
+      -- Colors
+      lavender = "#b4befe",
+      blue     = "#89b4fa",
+      sapphire = "#74c7ec",
+      sky      = "#89dceb",
+      teal     = "#94e2d5",
+      green    = "#a6e3a1",
+      yellow   = "#f9e2af",
+      peach    = "#fab387",
+      maroon   = "#eba0ac",
+      red      = "#f38ba8",
+      mauve    = "#cba6f7",
+      pink     = "#f5c2e7",
+      flamingo = "#f2cdcd",
+      rosewater = "#f5e0dc",
+    }
 
     local config = {
       color_scheme = "${colorScheme}",
+      use_fancy_tab_bar = false,
+      tab_bar_at_bottom = false,
+      tab_max_width = 32,
+      colors = {
+        tab_bar = {
+          background = mocha.crust,
+          active_tab = {
+            bg_color = mocha.mantle,
+            fg_color = mocha.blue,
+            intensity = "Normal",
+            underline = "None",
+            italic = false,
+            strikethrough = false,
+          },
+          inactive_tab = {
+            bg_color = mocha.crust,
+            fg_color = mocha.subtext0,
+            intensity = "Normal",
+            underline = "None",
+            italic = false,
+            strikethrough = false,
+          },
+          inactive_tab_hover = {
+            bg_color = mocha.mantle,
+            fg_color = mocha.text,
+            italic = false,
+          },
+          new_tab = {
+            bg_color = mocha.crust,
+            fg_color = mocha.surface1,
+          },
+          new_tab_hover = {
+            bg_color = mocha.mantle,
+            fg_color = mocha.text,
+            italic = false,
+          },
+        },
+        input_selector_label_bg = { Color = mocha.base },
+        input_selector_label_fg = { Color = mocha.blue },
+      },
       automatically_reload_config = true,
       default_workspace = "~",
       inactive_pane_hsb = {
         saturation = 0.9,
         brightness = 0.7,
       },
-      enable_tab_bar = false,
+      enable_tab_bar = true,
       hide_tab_bar_if_only_one_tab = true,
       window_decorations = "RESIZE",
       underline_thickness = "2px",
@@ -95,7 +170,7 @@
         {key = "f", mods = "LEADER", action = act.ToggleFullScreen},
         {key = "\\", mods = "LEADER", action = act.SplitHorizontal({domain = "CurrentPaneDomain"})},
         {key = "-", mods = "LEADER", action = act.SplitVertical({domain = "CurrentPaneDomain"})},
-        {key = "x", mods = "LEADER", action = act.CloseCurrentPane({confirm = true})},
+        {key = "q", mods = "LEADER", action = act.CloseCurrentPane({confirm = true})},
         {key = "z", mods = "LEADER", action = act.TogglePaneZoomState},
         {key = "8", mods = "CTRL", action = act.PaneSelect},
         {key = "b", mods = "CTRL", action = act.RotatePanes("CounterClockwise")},
@@ -108,6 +183,7 @@
         pane_nav_and_resize("move", "k", "CTRL"),
         pane_nav_and_resize("move", "l", "CTRL"),
         pane_nav_and_resize("resize", "r"),
+        {key = "w", mods = "LEADER", action = workspace_manager.save_workspace()},
       },
       key_tables = {
         resize_pane = {
@@ -137,11 +213,31 @@
     workspace_manager.start_in_fuzzy_mode = false
     workspace_manager.session_enabled = true
     workspace_manager.session_restore_on_startup = true
+    workspace_manager.colors = {
+      prompt_accent            = mocha.green,
+      muted                    = mocha.surface2,
+      workspace_icon           = mocha.blue,
+      workspace_name           = mocha.blue,
+      workspace_counts         = { { Foreground = { Color = mocha.overlay1 } }, { Attribute = { Intensity = "Half" } } },
+      workspace_name_current   = mocha.green,
+      workspace_current_marker = mocha.green,
+      entry_icon               = mocha.subtext0,
+      entry_name               = mocha.subtext0,
+    }
 
     workspace_manager.get_choices = function()
       local choices = {}
       local seen = {}
 
+      -- Top 20 zoxide entries
+      for _, path in ipairs(workspace_manager.get_zoxide_paths(20)) do
+        if not seen[path] then
+          seen[path] = true
+          table.insert(choices, path)
+        end
+      end
+
+      -- All subdirs of ~/Code not already in zoxide list
       local home = os.getenv("HOME") or ""
       local handle = io.popen('ls -d ' .. home .. '/Code/*/ 2>/dev/null')
       if handle then
@@ -155,17 +251,22 @@
         handle:close()
       end
 
-      for _, path in ipairs(workspace_manager.get_zoxide_paths(10)) do
-        if not seen[path] then
-          seen[path] = true
-          table.insert(choices, path)
-        end
-      end
-
       return choices
     end
 
     workspace_manager.apply_to_config(config)
+
+    wezterm.on("update-right-status", function(window, pane)
+      local ws = window:active_workspace()
+      window:set_right_status(wezterm.format {
+        { Foreground = { Color = mocha.surface1 } },
+        { Text = "  " },
+        { Foreground = { Color = mocha.blue } },
+        { Text = ws },
+        { Text = " " },
+        "ResetAttributes",
+      })
+    end)
 
     wezterm.on("gui-attached", function(domain)
       local workspace = mux.get_active_workspace()
