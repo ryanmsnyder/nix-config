@@ -60,24 +60,6 @@ in
         command = "${config.home.homeDirectory}/.local/bin/cgc";
         args = [ "mcp" "start" ];
       };
-      pal = {
-        type = "stdio";
-        command = "${config.home.homeDirectory}/local-mcp-servers/pal-mcp-server/.pal_venv/bin/python";
-        args = [ "${config.home.homeDirectory}/local-mcp-servers/pal-mcp-server/server.py" ];
-        cwd = "${config.home.homeDirectory}/local-mcp-servers/pal-mcp-server";
-        env = {
-          DEFAULT_MODEL = "auto";
-          DEFAULT_THINKING_MODE_THINKDEEP = "high";
-          CONVERSATION_TIMEOUT_HOURS = "24";
-          MAX_CONVERSATION_TURNS = "40";
-          LOG_LEVEL = "DEBUG";
-          DISABLED_TOOLS = "analyze,refactor,testgen,secaudit,docgen,tracer";
-          PAL_MCP_FORCE_ENV_OVERRIDE = "false";
-          COMPOSE_PROJECT_NAME = "pal-mcp";
-          TZ = "UTC";
-          LOG_MAX_SIZE = "10MB";
-        };
-      };
     };
   };
 
