@@ -32,6 +32,7 @@ in
     ./programs/kitty.nix
     ./programs/ripgrep.nix
     ./programs/jq.nix
+    ./programs/vscode.nix
     ./launchd-agents
   ];
 

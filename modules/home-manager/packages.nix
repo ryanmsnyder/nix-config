@@ -51,7 +51,7 @@ with pkgs; [
 
   # GUI Applications
   wezterm
-  vscode
+
   obsidian
   # spotify  # Disabled: hash mismatch - nixpkgs needs update
   bruno

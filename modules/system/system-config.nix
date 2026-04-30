@@ -9,6 +9,7 @@
     ./system-defaults.nix
     ./launchd-services.nix
     ./activation-scripts.nix
+    ./claude-desktop.nix
   ];
 
   # Install karabiner-elements. The config file is symlinked as part of home-manager
