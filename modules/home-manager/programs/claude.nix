@@ -20,6 +20,9 @@ in
       apiKeyHelper = "~/.claude/anthropic_key.sh";
       model = "opusplan";
       alwaysThinkingEnabled = false;
+      env = {
+        ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-6[1m]";
+      };
       statusLine = {
         type = "command";
         command = "~/.claude/statusline.sh";
