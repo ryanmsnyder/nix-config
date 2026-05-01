@@ -20,14 +20,14 @@
           # ltex-ls
           lua-language-server
           # nil
-          nodePackages.bash-language-server
-          # nodePackages.graphql-language-service-cli
-          nodePackages.svelte-language-server
-          nodePackages.typescript-language-server
+          bash-language-server
+          # graphql-language-service-cli
+          svelte-language-server
+          typescript-language-server
           # prisma-ls
           pyright
           ruff
-          nodePackages.vscode-langservers-extracted
+          vscode-langservers-extracted
           # typst-lsp
 
           # efm-langserver sources
@@ -40,8 +40,8 @@
           efm-langserver
           gitlint
           # gofumpt
-          # nodePackages.alex
-          nodePackages.prettier
+          # alex
+          prettier
           python3Packages.flake8
           # shellcheck
           # shellharden

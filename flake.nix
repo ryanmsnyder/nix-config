@@ -45,9 +45,10 @@
     };
     catppuccin.url = "github:catppuccin/nix";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
-  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, catppuccin, llm-agents } @inputs:
+  outputs = { self, agenix, secrets, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, catppuccin, llm-agents, nix-vscode-extensions } @inputs:
     let
       variables = {
         fullName = "Ryan Snyder";

@@ -30,7 +30,7 @@ self: super: with super; {
       description = "Berkeley Mono, a monospaced font designed for coding and text";
       license = licenses.mit;
       maintainers = [ maintainers.ryanmsnyder ];
-      platforms = [ platforms.aarch64-darwin ];
+      platforms = [ "aarch64-darwin" ];
     };
   };
 }
