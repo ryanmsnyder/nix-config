@@ -38,6 +38,7 @@
         "extensions.autoCheckUpdates" = false;
         "telemetry.telemetryLevel" = "off";
         "workbench.colorTheme" = "Catppuccin Macchiato";
+        "window.zoomLevel" = 0.3;
       };
     };
   };
