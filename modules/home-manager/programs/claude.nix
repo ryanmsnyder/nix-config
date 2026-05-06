@@ -28,6 +28,20 @@ in
         command = "~/.claude/statusline.sh";
         padding = 0;
       };
+      hooks = {
+        WorktreeCreate = [{
+          hooks = [{
+            type = "command";
+            command = "${config.home.homeDirectory}/.claude/hooks/worktree-create.sh";
+          }];
+        }];
+        WorktreeRemove = [{
+          hooks = [{
+            type = "command";
+            command = "${config.home.homeDirectory}/.claude/hooks/worktree-remove.sh";
+          }];
+        }];
+      };
     };
 
     # Global memory/instructions (maps to ~/.claude/CLAUDE.md)
@@ -38,6 +52,12 @@ in
       Is it about finding CODE STRUCTURE? use 'ast-grep'
       Is it about interacting with JSON? use 'jq'
       Is it about interacting with YAML or XML? use 'yq'
+
+      ## Git worktree workflow
+      Worktrees are created via the `cwt <branch>` zsh function (not `claude --worktree`).
+      `cwt` creates the worktree at `<repo>/.claude/worktrees/<slug>`, copies gitignored config files, and opens a new Wezterm workspace with Claude running inside.
+      To add extra files to copy beyond the defaults (.env*, .envrc), add a `.claude/worktree-include` file to the repo root (gitignore syntax, one path per line).
+      To remove a worktree: run `wt-rm` from inside the worktree, or `wt-clean` for a multi-repo fzf sweep.
     '';
 
     # Custom commands (maps to ~/.claude/commands/)
@@ -69,6 +89,20 @@ in
   # Statusline script needs to be placed manually (executable)
   home.file.".claude/statusline.sh" = {
     source = ../config/claude/statusline.sh;
+    executable = true;
+  };
+
+  # Worktree hooks and shared copy helper
+  home.file.".claude/hooks/worktree-create.sh" = {
+    source = ../config/claude/hooks/worktree-create.sh;
+    executable = true;
+  };
+  home.file.".claude/hooks/worktree-remove.sh" = {
+    source = ../config/claude/hooks/worktree-remove.sh;
+    executable = true;
+  };
+  home.file.".claude/lib/worktree-copy.sh" = {
+    source = ../config/claude/lib/worktree-copy.sh;
     executable = true;
   };
 
