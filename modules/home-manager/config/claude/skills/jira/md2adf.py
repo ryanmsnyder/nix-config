@@ -26,6 +26,45 @@ def convert(markdown: str) -> Dict[str, Any]:
     return {"version": 1, "type": "doc", "content": content}
 
 
+# Languages Jira's ADF codeBlock accepts. Anything not in this set (or a known
+# alias for one of them) is omitted so Jira doesn't reject the whole comment.
+_JIRA_LANGUAGES = {
+    "abap", "actionscript", "ada", "applescript", "arduino", "autoit",
+    "bash", "c", "clojure", "coffeescript", "coldfusion", "cpp", "css",
+    "delphi", "diff", "elixir", "erlang", "fortran", "foxpro", "go",
+    "graphql", "groovy", "haskell", "html", "java", "javascript",
+    "jsx", "kotlin", "latex", "lisp", "livescript", "lua", "mathematica",
+    "matlab", "mermaid", "nasm", "nginx", "objective-c", "objectivec",
+    "perl", "php", "powershell", "prolog", "puppet", "python", "qml", "r",
+    "racket", "rst", "ruby", "rust", "scala", "shell", "sh", "smalltalk",
+    "sql", "swift", "tcl", "terraform", "toml", "tsx", "typescript", "vb",
+    "vbnet", "verilog", "vhdl", "vim", "visualbasic", "xml", "xquery",
+    "yaml", "zsh",
+}
+
+_LANGUAGE_ALIASES: Dict[str, str] = {
+    "js": "javascript",
+    "ts": "typescript",
+    "py": "python",
+    "rb": "ruby",
+    "rs": "rust",
+    "kt": "kotlin",
+    "yml": "yaml",
+    "sh": "shell",
+    "zsh": "shell",
+    "bash": "shell",
+    "json": "javascript",   # Jira doesn't support json — javascript is close enough
+    "jsonc": "javascript",
+}
+
+
+def _normalise_language(info: str) -> str:
+    """Map a fenced-code info string to a Jira-accepted language, or return '' to omit."""
+    lang = info.strip().lower()
+    lang = _LANGUAGE_ALIASES.get(lang, lang)
+    return lang if lang in _JIRA_LANGUAGES else ""
+
+
 def _convert_blocks(tokens: List[Dict]) -> List[Dict]:
     result = []
     for token in tokens:
@@ -60,7 +99,9 @@ def _convert_block(token: Dict) -> Optional[Any]:
         info = token.get("attrs", {}).get("info")
         node = {"type": "codeBlock"}
         if info:
-            node["attrs"] = {"language": info}
+            lang = _normalise_language(info)
+            if lang:
+                node["attrs"] = {"language": lang}
         node["content"] = [{"type": "text", "text": raw}]
         return node
 
@@ -181,7 +222,9 @@ def _convert_inlines(children: List[Dict], marks: Optional[List[Dict]] = None) -
 
         elif t == "codespan":
             node = {"type": "text", "text": token["raw"]}
-            node["marks"] = marks + [{"type": "code"}]
+            # Jira rejects combining "code" with other marks (e.g. strong+code).
+            # Use code mark alone — surrounding formatting is lost but the text is preserved.
+            node["marks"] = [{"type": "code"}]
             result.append(node)
 
         elif t == "softbreak":
