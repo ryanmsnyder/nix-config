@@ -103,20 +103,36 @@
             # Git worktree helpers
             # ---------------------------------------------------------------------------
 
-            # cwt <branch> — create a worktree and open it in a new Wezterm workspace.
-            # Run from anywhere inside a git repo.
+            # cwt <branch> [source-branch] — create a worktree and open it in a new Wezterm workspace.
+            # Run from anywhere inside a git repo, including from inside an existing worktree.
+            # source-branch defaults to the current branch; override to branch off main, etc.
             cwt() {
               if [[ -z "$1" ]]; then
-                echo "usage: cwt <branch-name>" >&2
+                echo "usage: cwt <branch-name> [source-branch]" >&2
                 return 1
               fi
 
               local BRANCH="$1"
-              local REPO
-              REPO=$(git rev-parse --show-toplevel 2>/dev/null) || {
+
+              # Resolve the main repo root regardless of whether we're in a worktree.
+              # --git-common-dir returns the shared .git dir (e.g. /repo/.git); strip /.git for the root.
+              local GIT_COMMON REPO
+              GIT_COMMON=$(git rev-parse --git-common-dir 2>/dev/null) || {
                 echo "cwt: not inside a git repo" >&2
                 return 1
               }
+              REPO="''${GIT_COMMON%/.git}"
+
+              # Source branch: explicit arg, or current branch, or repo default
+              local SOURCE
+              if [[ -n "$2" ]]; then
+                SOURCE="$2"
+              else
+                SOURCE=$(git branch --show-current 2>/dev/null)
+                if [[ -z "$SOURCE" ]]; then
+                  SOURCE=$(git -C "$REPO" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || echo "main")
+                fi
+              fi
 
               # Flatten slashes for the filesystem path; keep slashes in the branch name
               local SLUG
@@ -128,8 +144,8 @@
                 return 1
               fi
 
-              echo "cwt: creating worktree $WT on branch $BRANCH" >&2
-              git -C "$REPO" worktree add -b "$BRANCH" "$WT" || return 1
+              echo "cwt: creating worktree $WT on branch $BRANCH (from $SOURCE)" >&2
+              git -C "$REPO" worktree add -b "$BRANCH" "$WT" "$SOURCE" || return 1
 
               # Copy gitignored config files into the new tree
               source "$HOME/.claude/lib/worktree-copy.sh"
@@ -139,7 +155,6 @@
               WS_NAME="$(basename "$REPO"):$BRANCH"
 
               echo "cwt: spawning Wezterm workspace '$WS_NAME'" >&2
-              local PANE_ID
               local SHELL_PANE
               SHELL_PANE=$(wezterm cli spawn --new-window --workspace "$WS_NAME" --cwd "$WT" 2>/dev/null)
               wezterm cli split-pane --pane-id "$SHELL_PANE" --left --cwd "$WT" -- claude > /dev/null
