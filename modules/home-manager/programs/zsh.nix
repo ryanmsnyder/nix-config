@@ -115,13 +115,19 @@
               local BRANCH="$1"
 
               # Resolve the main repo root regardless of whether we're in a worktree.
-              # --git-common-dir returns the shared .git dir (e.g. /repo/.git); strip /.git for the root.
+              # --git-common-dir points to the shared .git directory; it may be relative
+              # when in the main checkout (".git"), so resolve to absolute then strip /.git.
               local GIT_COMMON REPO
               GIT_COMMON=$(git rev-parse --git-common-dir 2>/dev/null) || {
                 echo "cwt: not inside a git repo" >&2
                 return 1
               }
+              GIT_COMMON=$(cd "$GIT_COMMON" 2>/dev/null && pwd)
               REPO="''${GIT_COMMON%/.git}"
+              [[ -n "$REPO" ]] || {
+                echo "cwt: not inside a git repo" >&2
+                return 1
+              }
 
               # Source branch: explicit arg, or current branch, or repo default
               local SOURCE
@@ -144,8 +150,13 @@
                 return 1
               fi
 
-              echo "cwt: creating worktree $WT on branch $BRANCH (from $SOURCE)" >&2
-              git -C "$REPO" worktree add -b "$BRANCH" "$WT" "$SOURCE" || return 1
+              if git -C "$REPO" show-ref --verify --quiet "refs/heads/$BRANCH" 2>/dev/null; then
+                echo "cwt: creating worktree $WT on existing branch $BRANCH" >&2
+                git -C "$REPO" worktree add "$WT" "$BRANCH" || return 1
+              else
+                echo "cwt: creating worktree $WT on new branch $BRANCH (from $SOURCE)" >&2
+                git -C "$REPO" worktree add -b "$BRANCH" "$WT" "$SOURCE" || return 1
+              fi
 
               # Copy gitignored config files into the new tree
               source "$HOME/.claude/lib/worktree-copy.sh"
