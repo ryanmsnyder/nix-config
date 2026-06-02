@@ -175,7 +175,7 @@ in
         mcpServers: {
           filesystem: {
             command: "/bin/sh",
-            args: ["-c", ("PATH=" + $nixPath + ":$PATH exec npx -y @modelcontextprotocol/server-filesystem " + $home + "/Desktop " + $home + "/Documents " + $home + "/Downloads " + $home + "/nix-config")]
+            args: ["-c", ("PATH=" + $nixPath + ":$PATH exec npx -y @modelcontextprotocol/server-filesystem " + $home + "/Desktop " + $home + "/Documents " + $home + "/Downloads " + $home + "/nix-config " + $home + "/Notes")]
           },
           "chrome-devtools": {
             command: "/bin/sh",
