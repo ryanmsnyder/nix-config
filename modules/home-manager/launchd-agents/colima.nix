@@ -21,7 +21,6 @@ in
       RunAtLoad = true;
       KeepAlive = {
         Crashed = true;
-        SuccessfulExit = false;
       };
       ProcessType = "Interactive";
     };
